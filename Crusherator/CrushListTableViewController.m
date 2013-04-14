@@ -58,12 +58,13 @@
     // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
     // self.navigationItem.rightBarButtonItem = self.editButtonItem;
     
+    
     self.tableView.dataSource = self;
-    [self.tableView registerClass:[CrushListTableViewCell class] forCellReuseIdentifier:@"cell"];
-    
-    self.tableView.delegate = self;
-    
-    self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
+//    [self.tableView registerClass:[CrushListTableViewCell class] forCellReuseIdentifier:@"cell"];
+//    
+//    self.tableView.delegate = self;
+//    
+//    self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
     self.tableView.backgroundColor = [UIColor blackColor];
 }
 
@@ -88,46 +89,30 @@
     cell.backgroundColor = [self colorForIndex:indexPath.row];
 }
 
-#pragma mark - Table view data source
-
-- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
-{
-    // Return the number of sections.
-    return 1;
-}
-
-- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
-{
-    // Return the number of rows in the section.
+#pragma mark - CrushTableViewDataSource methods
+-(NSInteger)numberOfRows {
     return _toDoItems.count;
 }
 
-- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
-{
+-(UITableViewCell *)cellForRow:(NSInteger)row {
     NSString *ident = @"cell";
-    // re-use or create a cell
-    CrushListTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:ident forIndexPath:indexPath];
-    // find the to-do item for this index
-    int index = [indexPath row];
-    listItem *item = _toDoItems[index];
-    // set the text
-//    cell.textLabel.text = item.text;
-    cell.textLabel.backgroundColor = [UIColor clearColor];
-    
-    cell.delegate = self;
+    CrushListTableViewCell *cell = [[CrushListTableViewCell alloc] initWithStyle:UITableViewCellStyleValue1 reuseIdentifier:ident];
+    listItem *item = _toDoItems[row];
     cell.toDoItem = item;
+    cell.delegate = self;
+    cell.backgroundColor = [self colorForIndex:row];
     return cell;
 }
 
--(void)toDoItemDeleted:(id)todoItem {
-    // use the UITableView to animate the removal of this row
-    NSUInteger index = [_toDoItems indexOfObject:todoItem];
-    [self.tableView beginUpdates];
-    [_toDoItems removeObject:todoItem];
-    [self.tableView deleteRowsAtIndexPaths:@[[NSIndexPath indexPathForRow:index inSection:0]]
-                          withRowAnimation:UITableViewRowAnimationFade];
-    [self.tableView endUpdates];
-}
+//-(void)toDoItemDeleted:(id)todoItem {
+//    // use the UITableView to animate the removal of this row
+//    NSUInteger index = [_toDoItems indexOfObject:todoItem];
+//    [self.tableView beginUpdates];
+//    [_toDoItems removeObject:todoItem];
+//    [self.tableView deleteRowsAtIndexPaths:@[[NSIndexPath indexPathForRow:index inSection:0]]
+//                          withRowAnimation:UITableViewRowAnimationFade];
+//    [self.tableView endUpdates];
+//}
 
 /*
 // Override to support conditional editing of the table view.

@@ -12,7 +12,7 @@
 #import "CrushListTableViewCell.h"
 #import "CrushTableView.h"
 
-@interface CrushListTableViewController : UITableViewController
+@interface CrushListTableViewController : UIViewController
 <
 UITableViewDataSource,
 UITableViewDelegate,
@@ -20,5 +20,6 @@ CrushTableViewCellDelegate
 >
 
 @property (weak, nonatomic) IBOutlet CrushTableView *tableView;
+
 
 @end

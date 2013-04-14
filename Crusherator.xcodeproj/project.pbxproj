@@ -19,13 +19,12 @@
 		351C8735171775890014968D /* CrushWorkViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 351C8734171775890014968D /* CrushWorkViewController.m */; };
 		351C8737171775890014968D /* first.png in Resources */ = {isa = PBXBuildFile; fileRef = 351C8736171775890014968D /* first.png */; };
 		351C8739171775890014968D /* first@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 351C8738171775890014968D /* first@2x.png */; };
-		351C873C171775890014968D /* CrushSecondViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 351C873B171775890014968D /* CrushSecondViewController.m */; };
 		351C873E171775890014968D /* second.png in Resources */ = {isa = PBXBuildFile; fileRef = 351C873D171775890014968D /* second.png */; };
 		351C8740171775890014968D /* second@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 351C873F171775890014968D /* second@2x.png */; };
 		351C8743171775890014968D /* CrushWorkViewController_iPhone.xib in Resources */ = {isa = PBXBuildFile; fileRef = 351C8741171775890014968D /* CrushWorkViewController_iPhone.xib */; };
 		351C8746171775890014968D /* CrushWorkViewController_iPad.xib in Resources */ = {isa = PBXBuildFile; fileRef = 351C8744171775890014968D /* CrushWorkViewController_iPad.xib */; };
-		351C8749171775890014968D /* CrushSecondViewController_iPhone.xib in Resources */ = {isa = PBXBuildFile; fileRef = 351C8747171775890014968D /* CrushSecondViewController_iPhone.xib */; };
-		351C874C171775890014968D /* CrushSecondViewController_iPad.xib in Resources */ = {isa = PBXBuildFile; fileRef = 351C874A171775890014968D /* CrushSecondViewController_iPad.xib */; };
+		351C8749171775890014968D /* CrushListViewController_iPhone.xib in Resources */ = {isa = PBXBuildFile; fileRef = 351C8747171775890014968D /* CrushListViewController_iPhone.xib */; };
+		351C874C171775890014968D /* CrushListViewController_iPad.xib in Resources */ = {isa = PBXBuildFile; fileRef = 351C874A171775890014968D /* CrushListViewController_iPad.xib */; };
 		351C8754171775890014968D /* SenTestingKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 351C8753171775890014968D /* SenTestingKit.framework */; };
 		351C8755171775890014968D /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 351C871B171775890014968D /* UIKit.framework */; };
 		351C8756171775890014968D /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 351C871D171775890014968D /* Foundation.framework */; };
@@ -92,14 +91,12 @@
 		351C8734171775890014968D /* CrushWorkViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = CrushWorkViewController.m; sourceTree = "<group>"; };
 		351C8736171775890014968D /* first.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = first.png; sourceTree = "<group>"; };
 		351C8738171775890014968D /* first@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "first@2x.png"; sourceTree = "<group>"; };
-		351C873A171775890014968D /* CrushSecondViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CrushSecondViewController.h; sourceTree = "<group>"; };
-		351C873B171775890014968D /* CrushSecondViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = CrushSecondViewController.m; sourceTree = "<group>"; };
 		351C873D171775890014968D /* second.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = second.png; sourceTree = "<group>"; };
 		351C873F171775890014968D /* second@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "second@2x.png"; sourceTree = "<group>"; };
 		351C8742171775890014968D /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = en.lproj/CrushWorkViewController_iPhone.xib; sourceTree = "<group>"; };
 		351C8745171775890014968D /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = en.lproj/CrushWorkViewController_iPad.xib; sourceTree = "<group>"; };
-		351C8748171775890014968D /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = en.lproj/CrushSecondViewController_iPhone.xib; sourceTree = "<group>"; };
-		351C874B171775890014968D /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = en.lproj/CrushSecondViewController_iPad.xib; sourceTree = "<group>"; };
+		351C8748171775890014968D /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = en.lproj/CrushListViewController_iPhone.xib; sourceTree = "<group>"; };
+		351C874B171775890014968D /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = en.lproj/CrushListViewController_iPad.xib; sourceTree = "<group>"; };
 		351C8752171775890014968D /* CrusheratorTests.octest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = CrusheratorTests.octest; sourceTree = BUILT_PRODUCTS_DIR; };
 		351C8753171775890014968D /* SenTestingKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SenTestingKit.framework; path = Library/Frameworks/SenTestingKit.framework; sourceTree = DEVELOPER_DIR; };
 		351C875B171775890014968D /* CrusheratorTests-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "CrusheratorTests-Info.plist"; sourceTree = "<group>"; };
@@ -316,14 +313,12 @@
 			children = (
 				351C8736171775890014968D /* first.png */,
 				351C8738171775890014968D /* first@2x.png */,
-				351C873A171775890014968D /* CrushSecondViewController.h */,
-				351C873B171775890014968D /* CrushSecondViewController.m */,
 				351C873D171775890014968D /* second.png */,
 				351C873F171775890014968D /* second@2x.png */,
 				351C8741171775890014968D /* CrushWorkViewController_iPhone.xib */,
 				351C8744171775890014968D /* CrushWorkViewController_iPad.xib */,
-				351C8747171775890014968D /* CrushSecondViewController_iPhone.xib */,
-				351C874A171775890014968D /* CrushSecondViewController_iPad.xib */,
+				351C8747171775890014968D /* CrushListViewController_iPhone.xib */,
+				351C874A171775890014968D /* CrushListViewController_iPad.xib */,
 			);
 			name = Resources;
 			sourceTree = "<group>";
@@ -413,8 +408,8 @@
 				35A4B5DF1718C82200D1C36F /* Gotham-Light.ttf in Resources */,
 				351C8743171775890014968D /* CrushWorkViewController_iPhone.xib in Resources */,
 				351C8746171775890014968D /* CrushWorkViewController_iPad.xib in Resources */,
-				351C8749171775890014968D /* CrushSecondViewController_iPhone.xib in Resources */,
-				351C874C171775890014968D /* CrushSecondViewController_iPad.xib in Resources */,
+				351C8749171775890014968D /* CrushListViewController_iPhone.xib in Resources */,
+				351C874C171775890014968D /* CrushListViewController_iPad.xib in Resources */,
 				351C879017178B180014968D /* Button.png in Resources */,
 				351C879117178B180014968D /* Button@2x.png in Resources */,
 				351C879217178B180014968D /* ButtonHighlighted.png in Resources */,
@@ -474,7 +469,6 @@
 				351C8728171775890014968D /* main.m in Sources */,
 				351C872C171775890014968D /* CrushAppDelegate.m in Sources */,
 				351C8735171775890014968D /* CrushWorkViewController.m in Sources */,
-				351C873C171775890014968D /* CrushSecondViewController.m in Sources */,
 				35A4B5EB1719420A00D1C36F /* CrushListTableViewController.m in Sources */,
 				35C7D5F2171951320043C374 /* listItem.m in Sources */,
 				35C7D5F517195A530043C374 /* CrushListTableViewCell.m in Sources */,
@@ -526,20 +520,20 @@
 			name = CrushWorkViewController_iPad.xib;
 			sourceTree = "<group>";
 		};
-		351C8747171775890014968D /* CrushSecondViewController_iPhone.xib */ = {
+		351C8747171775890014968D /* CrushListViewController_iPhone.xib */ = {
 			isa = PBXVariantGroup;
 			children = (
 				351C8748171775890014968D /* en */,
 			);
-			name = CrushSecondViewController_iPhone.xib;
+			name = CrushListViewController_iPhone.xib;
 			sourceTree = "<group>";
 		};
-		351C874A171775890014968D /* CrushSecondViewController_iPad.xib */ = {
+		351C874A171775890014968D /* CrushListViewController_iPad.xib */ = {
 			isa = PBXVariantGroup;
 			children = (
 				351C874B171775890014968D /* en */,
 			);
-			name = CrushSecondViewController_iPad.xib;
+			name = CrushListViewController_iPad.xib;
 			sourceTree = "<group>";
 		};
 		351C875C171775890014968D /* InfoPlist.strings */ = {

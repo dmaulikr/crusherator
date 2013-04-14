@@ -21,10 +21,10 @@
     UIViewController *viewController1, *viewController2;
     if ([[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPhone) {
         viewController1 = [[CrushWorkViewController alloc] initWithNibName:@"CrushFirstViewController_iPhone" bundle:nil];
-        viewController2 = [[CrushListTableViewController alloc]initWithStyle:UITableViewStylePlain];
+        viewController2 = [[CrushListTableViewController alloc]initWithNibName:@"CrushListViewController_iPhone" bundle:nil];
     } else {
         viewController1 = [[CrushWorkViewController alloc] initWithNibName:@"CrushFirstViewController_iPad" bundle:nil];
-        viewController2 = [[CrushListTableViewController alloc]initWithStyle:UITableViewStylePlain];
+        viewController2 = [[CrushListTableViewController alloc]initWithNibName:@"CrushListViewController_iPad" bundle:nil];
     }
     self.tabBarController = [[UITabBarController alloc] init];
     self.tabBarController.viewControllers = @[viewController1, viewController2];
