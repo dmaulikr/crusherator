@@ -1,0 +1,703 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 46;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		351C871C171775890014968D /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 351C871B171775890014968D /* UIKit.framework */; };
+		351C871E171775890014968D /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 351C871D171775890014968D /* Foundation.framework */; };
+		351C8720171775890014968D /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 351C871F171775890014968D /* CoreGraphics.framework */; };
+		351C8726171775890014968D /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 351C8724171775890014968D /* InfoPlist.strings */; };
+		351C8728171775890014968D /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 351C8727171775890014968D /* main.m */; };
+		351C872C171775890014968D /* CrushAppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 351C872B171775890014968D /* CrushAppDelegate.m */; };
+		351C872E171775890014968D /* Default.png in Resources */ = {isa = PBXBuildFile; fileRef = 351C872D171775890014968D /* Default.png */; };
+		351C8730171775890014968D /* Default@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 351C872F171775890014968D /* Default@2x.png */; };
+		351C8732171775890014968D /* Default-568h@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 351C8731171775890014968D /* Default-568h@2x.png */; };
+		351C8735171775890014968D /* CrushWorkViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 351C8734171775890014968D /* CrushWorkViewController.m */; };
+		351C8737171775890014968D /* first.png in Resources */ = {isa = PBXBuildFile; fileRef = 351C8736171775890014968D /* first.png */; };
+		351C8739171775890014968D /* first@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 351C8738171775890014968D /* first@2x.png */; };
+		351C873C171775890014968D /* CrushSecondViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 351C873B171775890014968D /* CrushSecondViewController.m */; };
+		351C873E171775890014968D /* second.png in Resources */ = {isa = PBXBuildFile; fileRef = 351C873D171775890014968D /* second.png */; };
+		351C8740171775890014968D /* second@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 351C873F171775890014968D /* second@2x.png */; };
+		351C8743171775890014968D /* CrushWorkViewController_iPhone.xib in Resources */ = {isa = PBXBuildFile; fileRef = 351C8741171775890014968D /* CrushWorkViewController_iPhone.xib */; };
+		351C8746171775890014968D /* CrushWorkViewController_iPad.xib in Resources */ = {isa = PBXBuildFile; fileRef = 351C8744171775890014968D /* CrushWorkViewController_iPad.xib */; };
+		351C8749171775890014968D /* CrushSecondViewController_iPhone.xib in Resources */ = {isa = PBXBuildFile; fileRef = 351C8747171775890014968D /* CrushSecondViewController_iPhone.xib */; };
+		351C874C171775890014968D /* CrushSecondViewController_iPad.xib in Resources */ = {isa = PBXBuildFile; fileRef = 351C874A171775890014968D /* CrushSecondViewController_iPad.xib */; };
+		351C8754171775890014968D /* SenTestingKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 351C8753171775890014968D /* SenTestingKit.framework */; };
+		351C8755171775890014968D /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 351C871B171775890014968D /* UIKit.framework */; };
+		351C8756171775890014968D /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 351C871D171775890014968D /* Foundation.framework */; };
+		351C875E171775890014968D /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 351C875C171775890014968D /* InfoPlist.strings */; };
+		351C8761171775890014968D /* CrusheratorTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 351C8760171775890014968D /* CrusheratorTests.m */; };
+		351C877A1717837F0014968D /* Gotham-Book.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 351C876A1717837F0014968D /* Gotham-Book.ttf */; };
+		351C877B1717837F0014968D /* Gotham-Black.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 351C876B1717837F0014968D /* Gotham-Black.ttf */; };
+		351C877C1717837F0014968D /* Gotham-BlackItalic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 351C876C1717837F0014968D /* Gotham-BlackItalic.ttf */; };
+		351C877D1717837F0014968D /* Gotham-Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 351C876D1717837F0014968D /* Gotham-Bold.ttf */; };
+		351C877E1717837F0014968D /* Gotham-BoldItalic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 351C876E1717837F0014968D /* Gotham-BoldItalic.ttf */; };
+		351C877F1717837F0014968D /* Gotham-BookItalic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 351C876F1717837F0014968D /* Gotham-BookItalic.ttf */; };
+		351C87801717837F0014968D /* Gotham-Light.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 351C87701717837F0014968D /* Gotham-Light.ttf */; };
+		351C87811717837F0014968D /* Gotham-LightItalic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 351C87711717837F0014968D /* Gotham-LightItalic.ttf */; };
+		351C87821717837F0014968D /* Gotham-Medium.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 351C87721717837F0014968D /* Gotham-Medium.ttf */; };
+		351C87831717837F0014968D /* Gotham-MediumItalic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 351C87731717837F0014968D /* Gotham-MediumItalic.ttf */; };
+		351C87841717837F0014968D /* Gotham-Thin.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 351C87741717837F0014968D /* Gotham-Thin.ttf */; };
+		351C87851717837F0014968D /* Gotham-ThinItalic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 351C87751717837F0014968D /* Gotham-ThinItalic.ttf */; };
+		351C87861717837F0014968D /* Gotham-Ultra.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 351C87761717837F0014968D /* Gotham-Ultra.ttf */; };
+		351C87871717837F0014968D /* Gotham-UltraItalic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 351C87771717837F0014968D /* Gotham-UltraItalic.ttf */; };
+		351C87881717837F0014968D /* Gotham-XLight.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 351C87781717837F0014968D /* Gotham-XLight.ttf */; };
+		351C87891717837F0014968D /* Gotham-XLightItalic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 351C87791717837F0014968D /* Gotham-XLightItalic.ttf */; };
+		351C878B171784940014968D /* Gotham-Medium.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 351C87721717837F0014968D /* Gotham-Medium.ttf */; };
+		351C879017178B180014968D /* Button.png in Resources */ = {isa = PBXBuildFile; fileRef = 351C878C17178B180014968D /* Button.png */; };
+		351C879117178B180014968D /* Button@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 351C878D17178B180014968D /* Button@2x.png */; };
+		351C879217178B180014968D /* ButtonHighlighted.png in Resources */ = {isa = PBXBuildFile; fileRef = 351C878E17178B180014968D /* ButtonHighlighted.png */; };
+		351C879317178B180014968D /* ButtonHighlighted@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 351C878F17178B180014968D /* ButtonHighlighted@2x.png */; };
+		354FBB0D171AD994003D57DF /* CrushStrikeLabel.m in Sources */ = {isa = PBXBuildFile; fileRef = 354FBB0C171AD994003D57DF /* CrushStrikeLabel.m */; };
+		354FBB10171AFA1B003D57DF /* CrushTableView.m in Sources */ = {isa = PBXBuildFile; fileRef = 354FBB0F171AFA1A003D57DF /* CrushTableView.m */; };
+		35A4B5DE1718C81E00D1C36F /* Gotham-Thin.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 351C87741717837F0014968D /* Gotham-Thin.ttf */; };
+		35A4B5DF1718C82200D1C36F /* Gotham-Light.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 351C87701717837F0014968D /* Gotham-Light.ttf */; };
+		35A4B5E61719400B00D1C36F /* crusherator-iconx1.png in Resources */ = {isa = PBXBuildFile; fileRef = 35A4B5E51719400B00D1C36F /* crusherator-iconx1.png */; };
+		35A4B5E81719401000D1C36F /* crusherator-icon.png in Resources */ = {isa = PBXBuildFile; fileRef = 35A4B5E71719401000D1C36F /* crusherator-icon.png */; };
+		35A4B5EB1719420A00D1C36F /* CrushListTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 35A4B5EA1719420A00D1C36F /* CrushListTableViewController.m */; };
+		35AE975E171AB48D009A73B0 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 35AE975D171AB48D009A73B0 /* QuartzCore.framework */; };
+		35C7D5F2171951320043C374 /* listItem.m in Sources */ = {isa = PBXBuildFile; fileRef = 35C7D5F1171951320043C374 /* listItem.m */; };
+		35C7D5F517195A530043C374 /* CrushListTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 35C7D5F417195A530043C374 /* CrushListTableViewCell.m */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		351C8757171775890014968D /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 351C8710171775890014968D /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 351C8717171775890014968D;
+			remoteInfo = Crusherator;
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXFileReference section */
+		351C8718171775890014968D /* Crusherator.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Crusherator.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		351C871B171775890014968D /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
+		351C871D171775890014968D /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
+		351C871F171775890014968D /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
+		351C8723171775890014968D /* Crusherator-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "Crusherator-Info.plist"; sourceTree = "<group>"; };
+		351C8725171775890014968D /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		351C8727171775890014968D /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
+		351C8729171775890014968D /* Crusherator-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Crusherator-Prefix.pch"; sourceTree = "<group>"; };
+		351C872A171775890014968D /* CrushAppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CrushAppDelegate.h; sourceTree = "<group>"; };
+		351C872B171775890014968D /* CrushAppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = CrushAppDelegate.m; sourceTree = "<group>"; };
+		351C872D171775890014968D /* Default.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Default.png; sourceTree = "<group>"; };
+		351C872F171775890014968D /* Default@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default@2x.png"; sourceTree = "<group>"; };
+		351C8731171775890014968D /* Default-568h@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default-568h@2x.png"; sourceTree = "<group>"; };
+		351C8733171775890014968D /* CrushWorkViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CrushWorkViewController.h; sourceTree = "<group>"; };
+		351C8734171775890014968D /* CrushWorkViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = CrushWorkViewController.m; sourceTree = "<group>"; };
+		351C8736171775890014968D /* first.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = first.png; sourceTree = "<group>"; };
+		351C8738171775890014968D /* first@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "first@2x.png"; sourceTree = "<group>"; };
+		351C873A171775890014968D /* CrushSecondViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CrushSecondViewController.h; sourceTree = "<group>"; };
+		351C873B171775890014968D /* CrushSecondViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = CrushSecondViewController.m; sourceTree = "<group>"; };
+		351C873D171775890014968D /* second.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = second.png; sourceTree = "<group>"; };
+		351C873F171775890014968D /* second@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "second@2x.png"; sourceTree = "<group>"; };
+		351C8742171775890014968D /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = en.lproj/CrushWorkViewController_iPhone.xib; sourceTree = "<group>"; };
+		351C8745171775890014968D /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = en.lproj/CrushWorkViewController_iPad.xib; sourceTree = "<group>"; };
+		351C8748171775890014968D /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = en.lproj/CrushSecondViewController_iPhone.xib; sourceTree = "<group>"; };
+		351C874B171775890014968D /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = en.lproj/CrushSecondViewController_iPad.xib; sourceTree = "<group>"; };
+		351C8752171775890014968D /* CrusheratorTests.octest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = CrusheratorTests.octest; sourceTree = BUILT_PRODUCTS_DIR; };
+		351C8753171775890014968D /* SenTestingKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SenTestingKit.framework; path = Library/Frameworks/SenTestingKit.framework; sourceTree = DEVELOPER_DIR; };
+		351C875B171775890014968D /* CrusheratorTests-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "CrusheratorTests-Info.plist"; sourceTree = "<group>"; };
+		351C875D171775890014968D /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		351C875F171775890014968D /* CrusheratorTests.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CrusheratorTests.h; sourceTree = "<group>"; };
+		351C8760171775890014968D /* CrusheratorTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = CrusheratorTests.m; sourceTree = "<group>"; };
+		351C876A1717837F0014968D /* Gotham-Book.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Gotham-Book.ttf"; sourceTree = "<group>"; };
+		351C876B1717837F0014968D /* Gotham-Black.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Gotham-Black.ttf"; sourceTree = "<group>"; };
+		351C876C1717837F0014968D /* Gotham-BlackItalic.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Gotham-BlackItalic.ttf"; sourceTree = "<group>"; };
+		351C876D1717837F0014968D /* Gotham-Bold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Gotham-Bold.ttf"; sourceTree = "<group>"; };
+		351C876E1717837F0014968D /* Gotham-BoldItalic.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Gotham-BoldItalic.ttf"; sourceTree = "<group>"; };
+		351C876F1717837F0014968D /* Gotham-BookItalic.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Gotham-BookItalic.ttf"; sourceTree = "<group>"; };
+		351C87701717837F0014968D /* Gotham-Light.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Gotham-Light.ttf"; sourceTree = "<group>"; };
+		351C87711717837F0014968D /* Gotham-LightItalic.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Gotham-LightItalic.ttf"; sourceTree = "<group>"; };
+		351C87721717837F0014968D /* Gotham-Medium.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Gotham-Medium.ttf"; sourceTree = "<group>"; };
+		351C87731717837F0014968D /* Gotham-MediumItalic.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Gotham-MediumItalic.ttf"; sourceTree = "<group>"; };
+		351C87741717837F0014968D /* Gotham-Thin.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Gotham-Thin.ttf"; sourceTree = "<group>"; };
+		351C87751717837F0014968D /* Gotham-ThinItalic.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Gotham-ThinItalic.ttf"; sourceTree = "<group>"; };
+		351C87761717837F0014968D /* Gotham-Ultra.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Gotham-Ultra.ttf"; sourceTree = "<group>"; };
+		351C87771717837F0014968D /* Gotham-UltraItalic.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Gotham-UltraItalic.ttf"; sourceTree = "<group>"; };
+		351C87781717837F0014968D /* Gotham-XLight.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Gotham-XLight.ttf"; sourceTree = "<group>"; };
+		351C87791717837F0014968D /* Gotham-XLightItalic.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Gotham-XLightItalic.ttf"; sourceTree = "<group>"; };
+		351C878C17178B180014968D /* Button.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = Button.png; path = "../../mental-calculator/Mental Calculator/Button.png"; sourceTree = "<group>"; };
+		351C878D17178B180014968D /* Button@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Button@2x.png"; path = "../../mental-calculator/Mental Calculator/Button@2x.png"; sourceTree = "<group>"; };
+		351C878E17178B180014968D /* ButtonHighlighted.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = ButtonHighlighted.png; path = "../../mental-calculator/Mental Calculator/ButtonHighlighted.png"; sourceTree = "<group>"; };
+		351C878F17178B180014968D /* ButtonHighlighted@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "ButtonHighlighted@2x.png"; path = "../../mental-calculator/Mental Calculator/ButtonHighlighted@2x.png"; sourceTree = "<group>"; };
+		354FBB02171ACA3B003D57DF /* CrushTableViewCellDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CrushTableViewCellDelegate.h; sourceTree = "<group>"; };
+		354FBB0B171AD994003D57DF /* CrushStrikeLabel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CrushStrikeLabel.h; sourceTree = "<group>"; };
+		354FBB0C171AD994003D57DF /* CrushStrikeLabel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CrushStrikeLabel.m; sourceTree = "<group>"; };
+		354FBB0E171AFA1A003D57DF /* CrushTableView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CrushTableView.h; sourceTree = "<group>"; };
+		354FBB0F171AFA1A003D57DF /* CrushTableView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CrushTableView.m; sourceTree = "<group>"; };
+		354FBB11171AFDEB003D57DF /* CrushTableViewDataSource.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CrushTableViewDataSource.h; sourceTree = "<group>"; };
+		35A4B5E51719400B00D1C36F /* crusherator-iconx1.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "crusherator-iconx1.png"; sourceTree = "<group>"; };
+		35A4B5E71719401000D1C36F /* crusherator-icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "crusherator-icon.png"; sourceTree = "<group>"; };
+		35A4B5E91719420A00D1C36F /* CrushListTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CrushListTableViewController.h; sourceTree = "<group>"; };
+		35A4B5EA1719420A00D1C36F /* CrushListTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CrushListTableViewController.m; sourceTree = "<group>"; };
+		35AE975D171AB48D009A73B0 /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
+		35C7D5F0171951320043C374 /* listItem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = listItem.h; sourceTree = "<group>"; };
+		35C7D5F1171951320043C374 /* listItem.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = listItem.m; sourceTree = "<group>"; };
+		35C7D5F317195A530043C374 /* CrushListTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CrushListTableViewCell.h; sourceTree = "<group>"; };
+		35C7D5F417195A530043C374 /* CrushListTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CrushListTableViewCell.m; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		351C8715171775890014968D /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				35AE975E171AB48D009A73B0 /* QuartzCore.framework in Frameworks */,
+				351C871C171775890014968D /* UIKit.framework in Frameworks */,
+				351C871E171775890014968D /* Foundation.framework in Frameworks */,
+				351C8720171775890014968D /* CoreGraphics.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		351C874E171775890014968D /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				351C8754171775890014968D /* SenTestingKit.framework in Frameworks */,
+				351C8755171775890014968D /* UIKit.framework in Frameworks */,
+				351C8756171775890014968D /* Foundation.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		351C870F171775890014968D = {
+			isa = PBXGroup;
+			children = (
+				35AE975D171AB48D009A73B0 /* QuartzCore.framework */,
+				35A4B5E71719401000D1C36F /* crusherator-icon.png */,
+				35A4B5E51719400B00D1C36F /* crusherator-iconx1.png */,
+				351C8721171775890014968D /* Crusherator */,
+				351C8759171775890014968D /* CrusheratorTests */,
+				351C871A171775890014968D /* Frameworks */,
+				351C8719171775890014968D /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		351C8719171775890014968D /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				351C8718171775890014968D /* Crusherator.app */,
+				351C8752171775890014968D /* CrusheratorTests.octest */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		351C871A171775890014968D /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				351C871B171775890014968D /* UIKit.framework */,
+				351C871D171775890014968D /* Foundation.framework */,
+				351C871F171775890014968D /* CoreGraphics.framework */,
+				351C8753171775890014968D /* SenTestingKit.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		351C8721171775890014968D /* Crusherator */ = {
+			isa = PBXGroup;
+			children = (
+				351C872A171775890014968D /* CrushAppDelegate.h */,
+				351C872B171775890014968D /* CrushAppDelegate.m */,
+				35C7D5F717195C7A0043C374 /* Work */,
+				35C7D5F617195C670043C374 /* List */,
+				35C7D5F0171951320043C374 /* listItem.h */,
+				35C7D5F1171951320043C374 /* listItem.m */,
+				35C7D5F817195C990043C374 /* Resources */,
+				351C8722171775890014968D /* Supporting Files */,
+			);
+			path = Crusherator;
+			sourceTree = "<group>";
+		};
+		351C8722171775890014968D /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				351C879417178B1F0014968D /* Images */,
+				351C878A171783860014968D /* Fonts */,
+				351C8723171775890014968D /* Crusherator-Info.plist */,
+				351C8724171775890014968D /* InfoPlist.strings */,
+				351C8727171775890014968D /* main.m */,
+				351C8729171775890014968D /* Crusherator-Prefix.pch */,
+				351C872D171775890014968D /* Default.png */,
+				351C872F171775890014968D /* Default@2x.png */,
+				351C8731171775890014968D /* Default-568h@2x.png */,
+			);
+			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		351C8759171775890014968D /* CrusheratorTests */ = {
+			isa = PBXGroup;
+			children = (
+				351C875F171775890014968D /* CrusheratorTests.h */,
+				351C8760171775890014968D /* CrusheratorTests.m */,
+				351C875A171775890014968D /* Supporting Files */,
+			);
+			path = CrusheratorTests;
+			sourceTree = "<group>";
+		};
+		351C875A171775890014968D /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				351C875B171775890014968D /* CrusheratorTests-Info.plist */,
+				351C875C171775890014968D /* InfoPlist.strings */,
+			);
+			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		351C878A171783860014968D /* Fonts */ = {
+			isa = PBXGroup;
+			children = (
+				351C876A1717837F0014968D /* Gotham-Book.ttf */,
+				351C876B1717837F0014968D /* Gotham-Black.ttf */,
+				351C876C1717837F0014968D /* Gotham-BlackItalic.ttf */,
+				351C876D1717837F0014968D /* Gotham-Bold.ttf */,
+				351C876E1717837F0014968D /* Gotham-BoldItalic.ttf */,
+				351C876F1717837F0014968D /* Gotham-BookItalic.ttf */,
+				351C87701717837F0014968D /* Gotham-Light.ttf */,
+				351C87711717837F0014968D /* Gotham-LightItalic.ttf */,
+				351C87721717837F0014968D /* Gotham-Medium.ttf */,
+				351C87731717837F0014968D /* Gotham-MediumItalic.ttf */,
+				351C87741717837F0014968D /* Gotham-Thin.ttf */,
+				351C87751717837F0014968D /* Gotham-ThinItalic.ttf */,
+				351C87761717837F0014968D /* Gotham-Ultra.ttf */,
+				351C87771717837F0014968D /* Gotham-UltraItalic.ttf */,
+				351C87781717837F0014968D /* Gotham-XLight.ttf */,
+				351C87791717837F0014968D /* Gotham-XLightItalic.ttf */,
+			);
+			name = Fonts;
+			sourceTree = "<group>";
+		};
+		351C879417178B1F0014968D /* Images */ = {
+			isa = PBXGroup;
+			children = (
+				351C878C17178B180014968D /* Button.png */,
+				351C878D17178B180014968D /* Button@2x.png */,
+				351C878E17178B180014968D /* ButtonHighlighted.png */,
+				351C878F17178B180014968D /* ButtonHighlighted@2x.png */,
+			);
+			name = Images;
+			sourceTree = "<group>";
+		};
+		35C7D5F617195C670043C374 /* List */ = {
+			isa = PBXGroup;
+			children = (
+				35A4B5E91719420A00D1C36F /* CrushListTableViewController.h */,
+				35A4B5EA1719420A00D1C36F /* CrushListTableViewController.m */,
+				35C7D5F317195A530043C374 /* CrushListTableViewCell.h */,
+				35C7D5F417195A530043C374 /* CrushListTableViewCell.m */,
+				354FBB0E171AFA1A003D57DF /* CrushTableView.h */,
+				354FBB0F171AFA1A003D57DF /* CrushTableView.m */,
+				354FBB11171AFDEB003D57DF /* CrushTableViewDataSource.h */,
+				354FBB02171ACA3B003D57DF /* CrushTableViewCellDelegate.h */,
+				354FBB0B171AD994003D57DF /* CrushStrikeLabel.h */,
+				354FBB0C171AD994003D57DF /* CrushStrikeLabel.m */,
+			);
+			name = List;
+			sourceTree = "<group>";
+		};
+		35C7D5F717195C7A0043C374 /* Work */ = {
+			isa = PBXGroup;
+			children = (
+				351C8733171775890014968D /* CrushWorkViewController.h */,
+				351C8734171775890014968D /* CrushWorkViewController.m */,
+			);
+			name = Work;
+			sourceTree = "<group>";
+		};
+		35C7D5F817195C990043C374 /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				351C8736171775890014968D /* first.png */,
+				351C8738171775890014968D /* first@2x.png */,
+				351C873A171775890014968D /* CrushSecondViewController.h */,
+				351C873B171775890014968D /* CrushSecondViewController.m */,
+				351C873D171775890014968D /* second.png */,
+				351C873F171775890014968D /* second@2x.png */,
+				351C8741171775890014968D /* CrushWorkViewController_iPhone.xib */,
+				351C8744171775890014968D /* CrushWorkViewController_iPad.xib */,
+				351C8747171775890014968D /* CrushSecondViewController_iPhone.xib */,
+				351C874A171775890014968D /* CrushSecondViewController_iPad.xib */,
+			);
+			name = Resources;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		351C8717171775890014968D /* Crusherator */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 351C8764171775890014968D /* Build configuration list for PBXNativeTarget "Crusherator" */;
+			buildPhases = (
+				351C8714171775890014968D /* Sources */,
+				351C8715171775890014968D /* Frameworks */,
+				351C8716171775890014968D /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = Crusherator;
+			productName = Crusherator;
+			productReference = 351C8718171775890014968D /* Crusherator.app */;
+			productType = "com.apple.product-type.application";
+		};
+		351C8751171775890014968D /* CrusheratorTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 351C8767171775890014968D /* Build configuration list for PBXNativeTarget "CrusheratorTests" */;
+			buildPhases = (
+				351C874D171775890014968D /* Sources */,
+				351C874E171775890014968D /* Frameworks */,
+				351C874F171775890014968D /* Resources */,
+				351C8750171775890014968D /* ShellScript */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				351C8758171775890014968D /* PBXTargetDependency */,
+			);
+			name = CrusheratorTests;
+			productName = CrusheratorTests;
+			productReference = 351C8752171775890014968D /* CrusheratorTests.octest */;
+			productType = "com.apple.product-type.bundle";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		351C8710171775890014968D /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				CLASSPREFIX = Crush;
+				LastUpgradeCheck = 0460;
+				ORGANIZATIONNAME = Raj;
+			};
+			buildConfigurationList = 351C8713171775890014968D /* Build configuration list for PBXProject "Crusherator" */;
+			compatibilityVersion = "Xcode 3.2";
+			developmentRegion = English;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+			);
+			mainGroup = 351C870F171775890014968D;
+			productRefGroup = 351C8719171775890014968D /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				351C8717171775890014968D /* Crusherator */,
+				351C8751171775890014968D /* CrusheratorTests */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		351C8716171775890014968D /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				351C8726171775890014968D /* InfoPlist.strings in Resources */,
+				351C872E171775890014968D /* Default.png in Resources */,
+				351C8730171775890014968D /* Default@2x.png in Resources */,
+				351C8732171775890014968D /* Default-568h@2x.png in Resources */,
+				351C8737171775890014968D /* first.png in Resources */,
+				351C8739171775890014968D /* first@2x.png in Resources */,
+				351C873E171775890014968D /* second.png in Resources */,
+				351C8740171775890014968D /* second@2x.png in Resources */,
+				351C878B171784940014968D /* Gotham-Medium.ttf in Resources */,
+				35A4B5DE1718C81E00D1C36F /* Gotham-Thin.ttf in Resources */,
+				35A4B5DF1718C82200D1C36F /* Gotham-Light.ttf in Resources */,
+				351C8743171775890014968D /* CrushWorkViewController_iPhone.xib in Resources */,
+				351C8746171775890014968D /* CrushWorkViewController_iPad.xib in Resources */,
+				351C8749171775890014968D /* CrushSecondViewController_iPhone.xib in Resources */,
+				351C874C171775890014968D /* CrushSecondViewController_iPad.xib in Resources */,
+				351C879017178B180014968D /* Button.png in Resources */,
+				351C879117178B180014968D /* Button@2x.png in Resources */,
+				351C879217178B180014968D /* ButtonHighlighted.png in Resources */,
+				351C879317178B180014968D /* ButtonHighlighted@2x.png in Resources */,
+				35A4B5E61719400B00D1C36F /* crusherator-iconx1.png in Resources */,
+				35A4B5E81719401000D1C36F /* crusherator-icon.png in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		351C874F171775890014968D /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				351C875E171775890014968D /* InfoPlist.strings in Resources */,
+				351C877A1717837F0014968D /* Gotham-Book.ttf in Resources */,
+				351C877B1717837F0014968D /* Gotham-Black.ttf in Resources */,
+				351C877C1717837F0014968D /* Gotham-BlackItalic.ttf in Resources */,
+				351C877D1717837F0014968D /* Gotham-Bold.ttf in Resources */,
+				351C877E1717837F0014968D /* Gotham-BoldItalic.ttf in Resources */,
+				351C877F1717837F0014968D /* Gotham-BookItalic.ttf in Resources */,
+				351C87801717837F0014968D /* Gotham-Light.ttf in Resources */,
+				351C87811717837F0014968D /* Gotham-LightItalic.ttf in Resources */,
+				351C87821717837F0014968D /* Gotham-Medium.ttf in Resources */,
+				351C87831717837F0014968D /* Gotham-MediumItalic.ttf in Resources */,
+				351C87841717837F0014968D /* Gotham-Thin.ttf in Resources */,
+				351C87851717837F0014968D /* Gotham-ThinItalic.ttf in Resources */,
+				351C87861717837F0014968D /* Gotham-Ultra.ttf in Resources */,
+				351C87871717837F0014968D /* Gotham-UltraItalic.ttf in Resources */,
+				351C87881717837F0014968D /* Gotham-XLight.ttf in Resources */,
+				351C87891717837F0014968D /* Gotham-XLightItalic.ttf in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		351C8750171775890014968D /* ShellScript */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "# Run the unit tests in this test bundle.\n\"${SYSTEM_DEVELOPER_DIR}/Tools/RunUnitTests\"\n";
+		};
+/* End PBXShellScriptBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		351C8714171775890014968D /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				351C8728171775890014968D /* main.m in Sources */,
+				351C872C171775890014968D /* CrushAppDelegate.m in Sources */,
+				351C8735171775890014968D /* CrushWorkViewController.m in Sources */,
+				351C873C171775890014968D /* CrushSecondViewController.m in Sources */,
+				35A4B5EB1719420A00D1C36F /* CrushListTableViewController.m in Sources */,
+				35C7D5F2171951320043C374 /* listItem.m in Sources */,
+				35C7D5F517195A530043C374 /* CrushListTableViewCell.m in Sources */,
+				354FBB0D171AD994003D57DF /* CrushStrikeLabel.m in Sources */,
+				354FBB10171AFA1B003D57DF /* CrushTableView.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		351C874D171775890014968D /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				351C8761171775890014968D /* CrusheratorTests.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		351C8758171775890014968D /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 351C8717171775890014968D /* Crusherator */;
+			targetProxy = 351C8757171775890014968D /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin PBXVariantGroup section */
+		351C8724171775890014968D /* InfoPlist.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				351C8725171775890014968D /* en */,
+			);
+			name = InfoPlist.strings;
+			sourceTree = "<group>";
+		};
+		351C8741171775890014968D /* CrushWorkViewController_iPhone.xib */ = {
+			isa = PBXVariantGroup;
+			children = (
+				351C8742171775890014968D /* en */,
+			);
+			name = CrushWorkViewController_iPhone.xib;
+			sourceTree = "<group>";
+		};
+		351C8744171775890014968D /* CrushWorkViewController_iPad.xib */ = {
+			isa = PBXVariantGroup;
+			children = (
+				351C8745171775890014968D /* en */,
+			);
+			name = CrushWorkViewController_iPad.xib;
+			sourceTree = "<group>";
+		};
+		351C8747171775890014968D /* CrushSecondViewController_iPhone.xib */ = {
+			isa = PBXVariantGroup;
+			children = (
+				351C8748171775890014968D /* en */,
+			);
+			name = CrushSecondViewController_iPhone.xib;
+			sourceTree = "<group>";
+		};
+		351C874A171775890014968D /* CrushSecondViewController_iPad.xib */ = {
+			isa = PBXVariantGroup;
+			children = (
+				351C874B171775890014968D /* en */,
+			);
+			name = CrushSecondViewController_iPad.xib;
+			sourceTree = "<group>";
+		};
+		351C875C171775890014968D /* InfoPlist.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				351C875D171775890014968D /* en */,
+			);
+			name = InfoPlist.strings;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
+
+/* Begin XCBuildConfiguration section */
+		351C8762171775890014968D /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 6.1;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = iphoneos;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		351C8763171775890014968D /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 6.1;
+				OTHER_CFLAGS = "-DNS_BLOCK_ASSERTIONS=1";
+				SDKROOT = iphoneos;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		351C8765171775890014968D /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "Crusherator/Crusherator-Prefix.pch";
+				INFOPLIST_FILE = "Crusherator/Crusherator-Info.plist";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				WRAPPER_EXTENSION = app;
+			};
+			name = Debug;
+		};
+		351C8766171775890014968D /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "Crusherator/Crusherator-Prefix.pch";
+				INFOPLIST_FILE = "Crusherator/Crusherator-Info.plist";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				WRAPPER_EXTENSION = app;
+			};
+			name = Release;
+		};
+		351C8768171775890014968D /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(BUILT_PRODUCTS_DIR)/Crusherator.app/Crusherator";
+				FRAMEWORK_SEARCH_PATHS = (
+					"\"$(SDKROOT)/Developer/Library/Frameworks\"",
+					"\"$(DEVELOPER_LIBRARY_DIR)/Frameworks\"",
+				);
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "Crusherator/Crusherator-Prefix.pch";
+				INFOPLIST_FILE = "CrusheratorTests/CrusheratorTests-Info.plist";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TEST_HOST = "$(BUNDLE_LOADER)";
+				WRAPPER_EXTENSION = octest;
+			};
+			name = Debug;
+		};
+		351C8769171775890014968D /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(BUILT_PRODUCTS_DIR)/Crusherator.app/Crusherator";
+				FRAMEWORK_SEARCH_PATHS = (
+					"\"$(SDKROOT)/Developer/Library/Frameworks\"",
+					"\"$(DEVELOPER_LIBRARY_DIR)/Frameworks\"",
+				);
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "Crusherator/Crusherator-Prefix.pch";
+				INFOPLIST_FILE = "CrusheratorTests/CrusheratorTests-Info.plist";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TEST_HOST = "$(BUNDLE_LOADER)";
+				WRAPPER_EXTENSION = octest;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		351C8713171775890014968D /* Build configuration list for PBXProject "Crusherator" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				351C8762171775890014968D /* Debug */,
+				351C8763171775890014968D /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		351C8764171775890014968D /* Build configuration list for PBXNativeTarget "Crusherator" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				351C8765171775890014968D /* Debug */,
+				351C8766171775890014968D /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		351C8767171775890014968D /* Build configuration list for PBXNativeTarget "CrusheratorTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				351C8768171775890014968D /* Debug */,
+				351C8769171775890014968D /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = 351C8710171775890014968D /* Project object */;
+}
