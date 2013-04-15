@@ -60,6 +60,10 @@
 		35A4B5E81719401000D1C36F /* crusherator-icon.png in Resources */ = {isa = PBXBuildFile; fileRef = 35A4B5E71719401000D1C36F /* crusherator-icon.png */; };
 		35A4B5EB1719420A00D1C36F /* CrushListTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 35A4B5EA1719420A00D1C36F /* CrushListTableViewController.m */; };
 		35AE975E171AB48D009A73B0 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 35AE975D171AB48D009A73B0 /* QuartzCore.framework */; };
+		35B11A9A171B918400F143F5 /* CrushTaskInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = 35B11A99171B918400F143F5 /* CrushTaskInfo.m */; };
+		35B11A9D171BA31800F143F5 /* CrushTaskDatabase.m in Sources */ = {isa = PBXBuildFile; fileRef = 35B11A9C171BA31800F143F5 /* CrushTaskDatabase.m */; };
+		35B11A9F171BA96F00F143F5 /* libsqlite3.0.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 35B11A9E171BA96F00F143F5 /* libsqlite3.0.dylib */; };
+		35B11AA1171BA97800F143F5 /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 35B11AA0171BA97800F143F5 /* AudioToolbox.framework */; };
 		35C7D5F2171951320043C374 /* listItem.m in Sources */ = {isa = PBXBuildFile; fileRef = 35C7D5F1171951320043C374 /* listItem.m */; };
 		35C7D5F517195A530043C374 /* CrushListTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 35C7D5F417195A530043C374 /* CrushListTableViewCell.m */; };
 /* End PBXBuildFile section */
@@ -137,6 +141,12 @@
 		35A4B5E91719420A00D1C36F /* CrushListTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CrushListTableViewController.h; sourceTree = "<group>"; };
 		35A4B5EA1719420A00D1C36F /* CrushListTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CrushListTableViewController.m; sourceTree = "<group>"; };
 		35AE975D171AB48D009A73B0 /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
+		35B11A98171B918400F143F5 /* CrushTaskInfo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CrushTaskInfo.h; sourceTree = "<group>"; };
+		35B11A99171B918400F143F5 /* CrushTaskInfo.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CrushTaskInfo.m; sourceTree = "<group>"; };
+		35B11A9B171BA31800F143F5 /* CrushTaskDatabase.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CrushTaskDatabase.h; sourceTree = "<group>"; };
+		35B11A9C171BA31800F143F5 /* CrushTaskDatabase.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CrushTaskDatabase.m; sourceTree = "<group>"; };
+		35B11A9E171BA96F00F143F5 /* libsqlite3.0.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libsqlite3.0.dylib; path = usr/lib/libsqlite3.0.dylib; sourceTree = SDKROOT; };
+		35B11AA0171BA97800F143F5 /* AudioToolbox.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AudioToolbox.framework; path = System/Library/Frameworks/AudioToolbox.framework; sourceTree = SDKROOT; };
 		35C7D5F0171951320043C374 /* listItem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = listItem.h; sourceTree = "<group>"; };
 		35C7D5F1171951320043C374 /* listItem.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = listItem.m; sourceTree = "<group>"; };
 		35C7D5F317195A530043C374 /* CrushListTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CrushListTableViewCell.h; sourceTree = "<group>"; };
@@ -148,6 +158,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				35B11AA1171BA97800F143F5 /* AudioToolbox.framework in Frameworks */,
+				35B11A9F171BA96F00F143F5 /* libsqlite3.0.dylib in Frameworks */,
 				35AE975E171AB48D009A73B0 /* QuartzCore.framework in Frameworks */,
 				351C871C171775890014968D /* UIKit.framework in Frameworks */,
 				351C871E171775890014968D /* Foundation.framework in Frameworks */,
@@ -171,6 +183,8 @@
 		351C870F171775890014968D = {
 			isa = PBXGroup;
 			children = (
+				35B11AA0171BA97800F143F5 /* AudioToolbox.framework */,
+				35B11A9E171BA96F00F143F5 /* libsqlite3.0.dylib */,
 				35AE975D171AB48D009A73B0 /* QuartzCore.framework */,
 				35A4B5E71719401000D1C36F /* crusherator-icon.png */,
 				35A4B5E51719400B00D1C36F /* crusherator-iconx1.png */,
@@ -309,6 +323,10 @@
 			children = (
 				351C8733171775890014968D /* CrushWorkViewController.h */,
 				351C8734171775890014968D /* CrushWorkViewController.m */,
+				35B11A9B171BA31800F143F5 /* CrushTaskDatabase.h */,
+				35B11A9C171BA31800F143F5 /* CrushTaskDatabase.m */,
+				35B11A98171B918400F143F5 /* CrushTaskInfo.h */,
+				35B11A99171B918400F143F5 /* CrushTaskInfo.m */,
 			);
 			name = Work;
 			sourceTree = "<group>";
@@ -480,6 +498,8 @@
 				354FBB0D171AD994003D57DF /* CrushStrikeLabel.m in Sources */,
 				354FBB10171AFA1B003D57DF /* CrushTableView.m in Sources */,
 				354FBB14171B30C0003D57DF /* CrushTableViewDragAddNew.m in Sources */,
+				35B11A9A171B918400F143F5 /* CrushTaskInfo.m in Sources */,
+				35B11A9D171BA31800F143F5 /* CrushTaskDatabase.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

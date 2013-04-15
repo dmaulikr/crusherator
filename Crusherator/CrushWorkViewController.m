@@ -9,6 +9,7 @@
 #import "CrushWorkViewController.h"
 #import "listItem.h"
 #import "CrushStrikeLabel.h"
+#import <AudioToolbox/AudioToolbox.h>
 
 #define UIColorFromRGB(rgbValue) [UIColor colorWithRed:((float)((rgbValue & 0xFF0000) >> 16))/255.0 green:((float)((rgbValue & 0xFF00) >> 8))/255.0 blue:((float)(rgbValue & 0xFF))/255.0 alpha:1.0]
 
@@ -84,6 +85,9 @@
         [_toDoItems addObject:[listItem toDoItemWithText:@"Sell things on eBay"]];
         [_toDoItems addObject:[listItem toDoItemWithText:@"Learn to juggle"]];
         [_toDoItems addObject:[listItem toDoItemWithText:@"Give up"]];
+        
+        //  The one-liner:
+        AudioServicesPlaySystemSound (kSystemSoundID_Vibrate);
     }
     return self;
 }
@@ -237,6 +241,7 @@
 {
         if ([modeName isEqualToString:@"workReady"])
         {
+            [self vibrate];
             running = FALSE;
             currentMode = @"workReady";
             timerInterval = lengthOfWorkBlocks;
@@ -249,6 +254,7 @@
         }
         else if ([modeName isEqualToString:@"playReady"])
         {
+            [self vibrate];
             running = FALSE;
             currentMode = @"playReady";
             timerInterval = lengthOfRelaxBlocks;
@@ -443,6 +449,11 @@
     currentTaskLabel.text = item.text;
     currentTaskLabel.strikethrough = item.completed;
     [self nextTask];
+}
+
+//  The function:
+- (void)vibrate {
+    AudioServicesPlaySystemSound (kSystemSoundID_Vibrate);
 }
 
 - (void)didReceiveMemoryWarning
