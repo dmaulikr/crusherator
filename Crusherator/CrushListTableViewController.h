@@ -11,6 +11,7 @@
 #import "listItem.h"
 #import "CrushListTableViewCell.h"
 #import "CrushTableView.h"
+#import "CrushTableViewDragAddNew.h"
 
 @interface CrushListTableViewController : UIViewController
 <
@@ -19,7 +20,7 @@ UITableViewDelegate,
 CrushTableViewCellDelegate
 >
 
-@property (weak, nonatomic) IBOutlet CrushTableView *tableView;
+@property (weak, nonatomic) IBOutlet CrushTableViewDragAddNew *tableView;
 
 
 @end

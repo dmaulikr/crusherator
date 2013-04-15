@@ -16,4 +16,7 @@
 // Obtains the cell for the given row
 -(UIView *)cellForRow:(NSInteger)row;
 
+// Informs the datasource that a new item has been added at the top of the table
+-(void)itemAdded;
+
 @end

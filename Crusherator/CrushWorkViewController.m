@@ -364,7 +364,7 @@
             taskListMember.textColor = [UIColor colorWithRed:0.0 green:0.0 blue:0.0 alpha:
                                         (1.0-(.1*(taskLabels.count-i)))];
             taskListMember.strikeAlpha = (1.0-(.1*(taskLabels.count-i)));
-            taskListMember.strikethroughThickness = 5.0;
+            taskListMember.strikethroughThickness = 1.0;
         }
                         completion:^(BOOL finished){}
          ];
@@ -392,8 +392,9 @@
     taskLabel.alpha = 0.0;
     taskLabel.text = item.text;
     taskLabel.center = CGPointMake(taskLabel.center.x+100,taskLabel.center.y);
-    taskLabel.strikethroughThickness = 1.0;
-    taskLabel.offset = -1.0;
+    taskLabel.strikethroughThickness = 2.0;
+    taskLabel.offset = -3.0;
+    taskLabel.enabled = NO;
 
     UILabel *worksLabel = [[UILabel alloc] initWithFrame:(CGRectMake(xpad+widthPage-indent-50,6*ypad,50,17.0))];
     worksLabel.backgroundColor = [UIColor clearColor];
@@ -436,11 +437,12 @@
 
 - (void)completeTask
 {
-    listItem *item = _toDoItems[((taskLabels.count-1)%_toDoItems.count)];
+    listItem *item = _toDoItems[((taskLabels.count-1)%(_toDoItems.count-1))];
     CrushStrikeLabel *currentTaskLabel = taskLabels[taskLabels.count-1];
     item.completed = !item.completed;
     currentTaskLabel.text = item.text;
     currentTaskLabel.strikethrough = item.completed;
+    [self nextTask];
 }
 
 - (void)didReceiveMemoryWarning

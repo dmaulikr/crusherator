@@ -35,7 +35,7 @@
 				<reference key="NSNextResponder"/>
 				<int key="NSvFlags">274</int>
 				<array class="NSMutableArray" key="NSSubviews">
-					<object class="IBUIView" id="489405707">
+					<object class="IBUIView" id="735364214">
 						<reference key="NSNextResponder" ref="191373211"/>
 						<int key="NSvFlags">274</int>
 						<string key="NSFrameSize">{320, 499}</string>
@@ -56,7 +56,7 @@
 				<string key="NSFrame">{{0, 20}, {320, 499}}</string>
 				<reference key="NSSuperview"/>
 				<reference key="NSWindow"/>
-				<reference key="NSNextKeyView" ref="489405707"/>
+				<reference key="NSNextKeyView" ref="735364214"/>
 				<object class="NSColor" key="IBUIBackgroundColor">
 					<int key="NSColorSpace">3</int>
 					<bytes key="NSWhite">MQA</bytes>
@@ -97,7 +97,7 @@
 					<object class="IBCocoaTouchOutletConnection" key="connection">
 						<string key="label">tableView</string>
 						<reference key="source" ref="372490531"/>
-						<reference key="destination" ref="489405707"/>
+						<reference key="destination" ref="735364214"/>
 					</object>
 					<int key="connectionID">27</int>
 				</object>
@@ -114,9 +114,9 @@
 						<int key="objectID">1</int>
 						<reference key="object" ref="191373211"/>
 						<array class="NSMutableArray" key="children">
-							<reference ref="489405707"/>
-							<object class="IBNSLayoutConstraint" id="115013385">
-								<reference key="firstItem" ref="489405707"/>
+							<reference ref="735364214"/>
+							<object class="IBNSLayoutConstraint" id="296000919">
+								<reference key="firstItem" ref="735364214"/>
 								<int key="firstAttribute">6</int>
 								<int key="relation">0</int>
 								<reference key="secondItem" ref="191373211"/>
@@ -131,8 +131,8 @@
 								<float key="scoringTypeFloat">29</float>
 								<int key="contentType">3</int>
 							</object>
-							<object class="IBNSLayoutConstraint" id="409724860">
-								<reference key="firstItem" ref="489405707"/>
+							<object class="IBNSLayoutConstraint" id="126263814">
+								<reference key="firstItem" ref="735364214"/>
 								<int key="firstAttribute">5</int>
 								<int key="relation">0</int>
 								<reference key="secondItem" ref="191373211"/>
@@ -147,8 +147,8 @@
 								<float key="scoringTypeFloat">29</float>
 								<int key="contentType">3</int>
 							</object>
-							<object class="IBNSLayoutConstraint" id="1031276322">
-								<reference key="firstItem" ref="489405707"/>
+							<object class="IBNSLayoutConstraint" id="706210112">
+								<reference key="firstItem" ref="735364214"/>
 								<int key="firstAttribute">3</int>
 								<int key="relation">0</int>
 								<reference key="secondItem" ref="191373211"/>
@@ -163,8 +163,8 @@
 								<float key="scoringTypeFloat">29</float>
 								<int key="contentType">3</int>
 							</object>
-							<object class="IBNSLayoutConstraint" id="952088142">
-								<reference key="firstItem" ref="489405707"/>
+							<object class="IBNSLayoutConstraint" id="139780770">
+								<reference key="firstItem" ref="735364214"/>
 								<int key="firstAttribute">4</int>
 								<int key="relation">0</int>
 								<reference key="secondItem" ref="191373211"/>
@@ -195,27 +195,27 @@
 					</object>
 					<object class="IBObjectRecord">
 						<int key="objectID">18</int>
-						<reference key="object" ref="489405707"/>
+						<reference key="object" ref="735364214"/>
 						<reference key="parent" ref="191373211"/>
 					</object>
 					<object class="IBObjectRecord">
 						<int key="objectID">22</int>
-						<reference key="object" ref="115013385"/>
+						<reference key="object" ref="296000919"/>
 						<reference key="parent" ref="191373211"/>
 					</object>
 					<object class="IBObjectRecord">
 						<int key="objectID">21</int>
-						<reference key="object" ref="409724860"/>
+						<reference key="object" ref="126263814"/>
 						<reference key="parent" ref="191373211"/>
 					</object>
 					<object class="IBObjectRecord">
 						<int key="objectID">20</int>
-						<reference key="object" ref="1031276322"/>
+						<reference key="object" ref="706210112"/>
 						<reference key="parent" ref="191373211"/>
 					</object>
 					<object class="IBObjectRecord">
 						<int key="objectID">19</int>
-						<reference key="object" ref="952088142"/>
+						<reference key="object" ref="139780770"/>
 						<reference key="parent" ref="191373211"/>
 					</object>
 				</array>
@@ -227,12 +227,12 @@
 				<string key="-2.IBPluginDependency">com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
 				<string key="1.IBPluginDependency">com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
 				<array key="1.IBViewMetadataConstraints">
-					<reference ref="952088142"/>
-					<reference ref="1031276322"/>
-					<reference ref="409724860"/>
-					<reference ref="115013385"/>
+					<reference ref="139780770"/>
+					<reference ref="706210112"/>
+					<reference ref="126263814"/>
+					<reference ref="296000919"/>
 				</array>
-				<string key="18.CustomClassName">CrushTableView</string>
+				<string key="18.CustomClassName">CrushTableViewDragAddNew</string>
 				<string key="18.IBPluginDependency">com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
 				<boolean value="NO" key="18.IBViewMetadataTranslatesAutoresizingMaskIntoConstraints"/>
 				<string key="19.IBPluginDependency">com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
@@ -253,13 +253,13 @@
 					<string key="superclassName">UIViewController</string>
 					<object class="NSMutableDictionary" key="outlets">
 						<string key="NS.key.0">tableView</string>
-						<string key="NS.object.0">CrushTableView</string>
+						<string key="NS.object.0">CrushTableViewDragAddNew</string>
 					</object>
 					<object class="NSMutableDictionary" key="toOneOutletInfosByName">
 						<string key="NS.key.0">tableView</string>
 						<object class="IBToOneOutletInfo" key="NS.object.0">
 							<string key="name">tableView</string>
-							<string key="candidateClassName">CrushTableView</string>
+							<string key="candidateClassName">CrushTableViewDragAddNew</string>
 						</object>
 					</object>
 					<object class="IBClassDescriptionSource" key="sourceIdentifier">
@@ -273,6 +273,14 @@
 					<object class="IBClassDescriptionSource" key="sourceIdentifier">
 						<string key="majorKey">IBProjectSource</string>
 						<string key="minorKey">./Classes/CrushTableView.h</string>
+					</object>
+				</object>
+				<object class="IBPartialClassDescription">
+					<string key="className">CrushTableViewDragAddNew</string>
+					<string key="superclassName">CrushTableView</string>
+					<object class="IBClassDescriptionSource" key="sourceIdentifier">
+						<string key="majorKey">IBProjectSource</string>
+						<string key="minorKey">./Classes/CrushTableViewDragAddNew.h</string>
 					</object>
 				</object>
 				<object class="IBPartialClassDescription">

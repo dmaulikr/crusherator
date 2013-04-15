@@ -53,6 +53,7 @@
 		351C879317178B180014968D /* ButtonHighlighted@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 351C878F17178B180014968D /* ButtonHighlighted@2x.png */; };
 		354FBB0D171AD994003D57DF /* CrushStrikeLabel.m in Sources */ = {isa = PBXBuildFile; fileRef = 354FBB0C171AD994003D57DF /* CrushStrikeLabel.m */; };
 		354FBB10171AFA1B003D57DF /* CrushTableView.m in Sources */ = {isa = PBXBuildFile; fileRef = 354FBB0F171AFA1A003D57DF /* CrushTableView.m */; };
+		354FBB14171B30C0003D57DF /* CrushTableViewDragAddNew.m in Sources */ = {isa = PBXBuildFile; fileRef = 354FBB13171B30C0003D57DF /* CrushTableViewDragAddNew.m */; };
 		35A4B5DE1718C81E00D1C36F /* Gotham-Thin.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 351C87741717837F0014968D /* Gotham-Thin.ttf */; };
 		35A4B5DF1718C82200D1C36F /* Gotham-Light.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 351C87701717837F0014968D /* Gotham-Light.ttf */; };
 		35A4B5E61719400B00D1C36F /* crusherator-iconx1.png in Resources */ = {isa = PBXBuildFile; fileRef = 35A4B5E51719400B00D1C36F /* crusherator-iconx1.png */; };
@@ -129,6 +130,8 @@
 		354FBB0E171AFA1A003D57DF /* CrushTableView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CrushTableView.h; sourceTree = "<group>"; };
 		354FBB0F171AFA1A003D57DF /* CrushTableView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CrushTableView.m; sourceTree = "<group>"; };
 		354FBB11171AFDEB003D57DF /* CrushTableViewDataSource.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CrushTableViewDataSource.h; sourceTree = "<group>"; };
+		354FBB12171B30C0003D57DF /* CrushTableViewDragAddNew.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CrushTableViewDragAddNew.h; sourceTree = "<group>"; };
+		354FBB13171B30C0003D57DF /* CrushTableViewDragAddNew.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CrushTableViewDragAddNew.m; sourceTree = "<group>"; };
 		35A4B5E51719400B00D1C36F /* crusherator-iconx1.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "crusherator-iconx1.png"; sourceTree = "<group>"; };
 		35A4B5E71719401000D1C36F /* crusherator-icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "crusherator-icon.png"; sourceTree = "<group>"; };
 		35A4B5E91719420A00D1C36F /* CrushListTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CrushListTableViewController.h; sourceTree = "<group>"; };
@@ -289,6 +292,8 @@
 				35A4B5EA1719420A00D1C36F /* CrushListTableViewController.m */,
 				35C7D5F317195A530043C374 /* CrushListTableViewCell.h */,
 				35C7D5F417195A530043C374 /* CrushListTableViewCell.m */,
+				354FBB12171B30C0003D57DF /* CrushTableViewDragAddNew.h */,
+				354FBB13171B30C0003D57DF /* CrushTableViewDragAddNew.m */,
 				354FBB0E171AFA1A003D57DF /* CrushTableView.h */,
 				354FBB0F171AFA1A003D57DF /* CrushTableView.m */,
 				354FBB11171AFDEB003D57DF /* CrushTableViewDataSource.h */,
@@ -474,6 +479,7 @@
 				35C7D5F517195A530043C374 /* CrushListTableViewCell.m in Sources */,
 				354FBB0D171AD994003D57DF /* CrushStrikeLabel.m in Sources */,
 				354FBB10171AFA1B003D57DF /* CrushTableView.m in Sources */,
+				354FBB14171B30C0003D57DF /* CrushTableViewDragAddNew.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -16,7 +16,6 @@
     CGPoint _originalCenter;
 	BOOL _deleteOnDragRelease;
 	BOOL _completeOnDragRelease;
-    CrushStrikeLabel *_label;
 	CALayer *_itemCompleteLayer;
     UILabel *_tickLabel;
 	UILabel *_crossLabel;
@@ -66,8 +65,12 @@ const float UI_CUES_WIDTH = 50.0f;
         _label.backgroundColor = [UIColor clearColor];
         [self addSubview:_label];
         
+        _label.delegate = self;
+        _label.contentVerticalAlignment = UIControlContentVerticalAlignmentCenter;
+        
         // remove the default blue highlight for selected cells
         self.selectionStyle = UITableViewCellSelectionStyleNone;
+        
     }
     return self;
 }
@@ -176,6 +179,22 @@ const float LABEL_LEFT_MARGIN = 15.0f;
             _label.strikethrough = !_label.strikethrough;
         }
     }
+}
+
+#pragma mark - UITextFieldDelegate
+-(BOOL)textFieldShouldReturn:(UITextField *)textField {
+    // close the keyboard on enter
+    [textField resignFirstResponder];
+    return NO;
+}
+
+-(void)textFieldDidEndEditing:(UITextField *)textField {
+    [self.delegate cellDidEndEditing:self];
+    self.toDoItem.text = textField.text;
+}
+
+-(void)textFieldDidBeginEditing:(UITextField *)textField {
+    [self.delegate cellDidBeginEditing:self];
 }
 
 @end

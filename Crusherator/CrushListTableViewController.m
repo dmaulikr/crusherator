@@ -13,6 +13,9 @@
 {
     // an array of to-do items
     NSMutableArray* _toDoItems;
+    
+    // the offset applied to cells when entering “edit mode”
+    float _editingOffset;
 }
 
 @end
@@ -66,6 +69,13 @@
 //    
 //    self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
     self.tableView.backgroundColor = [UIColor blackColor];
+    [self.tableView registerClassForCells:[CrushListTableViewCell class]];
+    
+    UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc]
+                                   initWithTarget:self
+                                   action:@selector(dismissKeyboard)];
+    
+    [self.view addGestureRecognizer:tap];
 }
 
 - (void)didReceiveMemoryWarning
@@ -95,8 +105,7 @@
 }
 
 -(UITableViewCell *)cellForRow:(NSInteger)row {
-    NSString *ident = @"cell";
-    CrushListTableViewCell *cell = [[CrushListTableViewCell alloc] initWithStyle:UITableViewCellStyleValue1 reuseIdentifier:ident];
+    CrushListTableViewCell* cell = (CrushListTableViewCell*)[self.tableView dequeueReusableCell];
     listItem *item = _toDoItems[row];
     cell.toDoItem = item;
     cell.delegate = self;
@@ -104,15 +113,85 @@
     return cell;
 }
 
-//-(void)toDoItemDeleted:(id)todoItem {
-//    // use the UITableView to animate the removal of this row
-//    NSUInteger index = [_toDoItems indexOfObject:todoItem];
-//    [self.tableView beginUpdates];
-//    [_toDoItems removeObject:todoItem];
-//    [self.tableView deleteRowsAtIndexPaths:@[[NSIndexPath indexPathForRow:index inSection:0]]
-//                          withRowAnimation:UITableViewRowAnimationFade];
-//    [self.tableView endUpdates];
-//}
+-(void)toDoItemDeleted:(id)todoItem {
+    float delay = 0.0;
+    
+    // remove the model object
+    [_toDoItems removeObject:todoItem];
+    
+    // find the visible cells
+    NSArray* visibleCells = [self.tableView visibleCells];
+    
+    UIView* lastView = [visibleCells lastObject];
+    bool startAnimating = false;
+    
+    // iterate over all of the cells
+    for(CrushListTableViewCell* cell in visibleCells) {
+        if (startAnimating) {
+            [UIView animateWithDuration:0.3 delay:delay options:UIViewAnimationOptionCurveEaseInOut animations:^{
+                cell.frame = CGRectOffset(cell.frame, 0.0f, -cell.frame.size.height);
+            } completion:^(BOOL finished){
+                if (cell == lastView) {
+                    [self.tableView reloadData];
+                }
+            }];
+            delay+=0.03;
+        }
+        // if we have reached the item that was deleted, start animating
+        if (cell.toDoItem == todoItem) {
+            startAnimating = true;
+            cell.hidden = YES;
+        }
+    }
+}
+
+-(void)cellDidBeginEditing:(CrushListTableViewCell *)editingCell {
+    _editingOffset = _tableView.scrollView.contentOffset.y - editingCell.frame.origin.y;
+    for(CrushListTableViewCell* cell in [_tableView visibleCells]) {
+        [UIView animateWithDuration:0.3
+                         animations:^{
+                             cell.frame = CGRectOffset(cell.frame, 0, _editingOffset);
+                             if (cell != editingCell) {
+                                 cell.alpha = 0.3;
+                             }
+                         }];
+    }
+}
+
+-(void)cellDidEndEditing:(CrushListTableViewCell *)editingCell {
+    for(CrushListTableViewCell* cell in [_tableView visibleCells]) {
+        [UIView animateWithDuration:0.3
+                         animations:^{
+                             cell.frame = CGRectOffset(cell.frame, 0, -_editingOffset);
+                             if (cell != editingCell)
+                             {
+                                 cell.alpha = 1.0;
+                             }
+                         }];
+    }
+}
+
+-(void)itemAdded {
+    // create the new item
+    listItem* toDoItem = [[listItem alloc] init];
+    [_toDoItems insertObject:toDoItem atIndex:0];
+    // refresh the table
+    [_tableView reloadData];
+    // enter edit mode
+    CrushListTableViewCell* editCell;
+    for (CrushListTableViewCell* cell in _tableView.visibleCells) {
+        if (cell.toDoItem == toDoItem) {
+            editCell = cell;
+            break;
+        }
+    }
+    [editCell.label becomeFirstResponder];
+}
+
+-(void)dismissKeyboard {
+    CrushListTableViewCell* editedCell;
+//    [ resignFirstResponder];
+}
 
 /*
 // Override to support conditional editing of the table view.

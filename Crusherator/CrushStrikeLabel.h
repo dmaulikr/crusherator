@@ -9,7 +9,7 @@
 #import <UIKit/UIKit.h>
 
 // A UILabel subclass that can optionally have a strikethrough.
-@interface CrushStrikeLabel : UILabel
+@interface CrushStrikeLabel : UITextField
 
 // A Boolean value that determines whether the label should have a strikethrough.
 @property (nonatomic) bool strikethrough;
