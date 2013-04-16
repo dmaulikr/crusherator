@@ -11,7 +11,7 @@
 @implementation CrushTaskInfo
 
 static sqlite3_stmt *init_statement = nil;
-static sqlite3_stmt *dehydrate_statment = nil;
+static sqlite3_stmt *dehydrate_statement = nil;
 static sqlite3_stmt *delete_statement = nil;
 static sqlite3_stmt *insert_statement = nil;
 @synthesize uniqueId = _uniqueId;
@@ -25,12 +25,20 @@ static sqlite3_stmt *insert_statement = nil;
 @synthesize category = _category;
 @synthesize project = _project;
 
-- (void)insertIntoDatabase:(sqlite3 *)database {
++ (NSInteger)insertIntoDatabase:(sqlite3 *)database {
     // When delegate is applied this will return an NSInteger
     if (insert_statement == nil) {
-        NSLog(_text);
-        static char *sql = "INSERT INTO tasks VALUES('_uniqueId','','0','0','0','','','','','')";
-        if (sqlite3_prepare_v2(__database, sql, -1, &insert_statement, NULL) != SQLITE_OK) {
+        CrushTaskDatabase *taskDatabase = [[CrushTaskDatabase alloc] init];
+        database = taskDatabase.databaseAccess;
+        
+        static char *sql = "INSERT INTO tasks (text,completed) VALUES('','0')";
+        char *sqlChar = (char *) sql;
+        NSString *sqlString = [NSString stringWithFormat:(@"%s"),sqlChar];
+        
+//        NSLog(sqlString);
+//        NSLog(@"%@",database);
+        
+        if (sqlite3_prepare_v2(database, sql, -1, &insert_statement, NULL) != SQLITE_OK) {
             NSAssert1(0, @"Error: failed to prepare statement with message '%s'.", sqlite3_errmsg(database));
         }
     }
@@ -38,48 +46,90 @@ static sqlite3_stmt *insert_statement = nil;
     
     sqlite3_reset(insert_statement);
     if (success != SQLITE_ERROR) {
-        return;
+        return -1;
     }
     NSAssert1(0, @"Error: failed to insert into the database with message '%s'.", sqlite3_errmsg(database));
+    return -1;
 }
 
 - (id)initWithUniqueId:(int)uniqueId
                   text:(NSString *)text
 {
     if ((self = [super init])) {
-        self.uniqueId = uniqueId;
-        self.text = text;
-        self.works = FALSE;
-        self.completed = FALSE;
-        self.deleted = FALSE;
-        self.dateCreated = [NSDate date];
-        self.dateCompleted = NULL;
-        self.dateDeleted = NULL;
-        self.category = NULL;
-        self.project = NULL;
         
+        _uniqueId = uniqueId;
+    
         CrushTaskDatabase *taskDatabase = [[CrushTaskDatabase alloc] init];
-        __database = taskDatabase.databaseAccess;
+        _database = taskDatabase.databaseAccess;
+        
+        if (init_statement == nil) {
+            const char *sql = "SELECT text,completed FROM tasks WHERE uniqueId = ?";
+            if (sqlite3_prepare_v2(_database, sql, -1, &init_statement, NULL) != SQLITE_OK) {
+                NSAssert(0, @"Error: failed to prepare statement with message '%s'.", sqlite3_errmsg(_database));
+            }
+        }
+        
+        sqlite3_bind_int(init_statement, 1, _uniqueId);
+        if (sqlite3_step(init_statement) == SQLITE_ROW) {
+            self.text = [NSString stringWithUTF8String:(char *)sqlite3_column_text(init_statement, 0)];
+			self.completed = sqlite3_column_int(init_statement,1);
+        } else {
+            self.text = @"Nothing";
+        }
+        // Reset the statement for future reuse.
+        sqlite3_reset(init_statement);
+//        
+//        self.uniqueId = uniqueId;
+//        self.text = text;
+//        self.works = FALSE;
+//        self.completed = FALSE;
+//        self.deleted = FALSE;
+//        self.dateCreated = [NSDate date];
+//        self.dateCompleted = NULL;
+//        self.dateDeleted = NULL;
+//        self.category = NULL;
+//        self.project = NULL;
     }
     return self;
 }
 
 - (void) reset {
     self.text = nil;
-    self.works = 0;
+//    self.works = 0;
     self.deleted = nil;
-    self.dateCreated = nil;
-    self.dateCompleted = nil;
-    self.dateDeleted = nil;
-    self.category = nil;
-    self.project = nil;
+//    self.dateCreated = nil;
+//    self.dateCompleted = nil;
+//    self.dateDeleted = nil;
+//    self.category = nil;
+//    self.project = nil;
+}
+
+- (void) dehydrate {
+	if (dehydrate_statement == nil) {
+        const char *sql = "UPDATE tasks SET text = ? , completed = ? WHERE uniqueId=?";
+        if (sqlite3_prepare_v2(_database, sql, -1, &dehydrate_statement, NULL) != SQLITE_OK) {
+            NSAssert1(0, @"Error: failed to prepare statement with message '%s'.", sqlite3_errmsg(_database));
+        }
+        NSLog(_text);
+    }
+    
+    sqlite3_bind_int(dehydrate_statement, 3, self.uniqueId);
+    sqlite3_bind_int(dehydrate_statement, 2, self.completed);
+    sqlite3_bind_text(dehydrate_statement, 1, [self.text UTF8String], -1, SQLITE_TRANSIENT);
+    int success = sqlite3_step(dehydrate_statement);
+    
+    if (success != SQLITE_DONE) {
+        NSAssert1(0, @"Error: failed to save changes with message '%s'.", sqlite3_errmsg(_database));
+    }
+    
+    sqlite3_reset(dehydrate_statement);
 }
 
 -(void) deleteFromDatabase {
 	if (delete_statement == nil) {
 		const char *sql = "DELETE FROM tasks WHERE uniqueId=?";
-		if (sqlite3_prepare_v2(__database, sql, -1, &delete_statement, NULL) != SQLITE_OK) {
-			NSAssert1(0, @"Error: failed to prepare statement with message '%s'.", sqlite3_errmsg(__database));
+		if (sqlite3_prepare_v2(_database, sql, -1, &delete_statement, NULL) != SQLITE_OK) {
+			NSAssert1(0, @"Error: failed to prepare statement with message '%s'.", sqlite3_errmsg(_database));
 		}
 	}
 	
@@ -87,7 +137,7 @@ static sqlite3_stmt *insert_statement = nil;
 	int success = sqlite3_step(delete_statement);
 	
 	if (success != SQLITE_DONE) {
-		NSAssert1(0, @"Error: failed to save priority with message '%s'.", sqlite3_errmsg(__database));
+		NSAssert1(0, @"Error: failed to save priority with message '%s'.", sqlite3_errmsg(_database));
 	}
 	
 	sqlite3_reset(delete_statement);

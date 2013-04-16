@@ -68,6 +68,8 @@
 		35C7D5F517195A530043C374 /* CrushListTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 35C7D5F417195A530043C374 /* CrushListTableViewCell.m */; };
 		35F318EA171CE6C400C66DCF /* tasks.sqlite3 in Resources */ = {isa = PBXBuildFile; fileRef = 35F318E9171CE6C400C66DCF /* tasks.sqlite3 */; };
 		35F318EB171CE6C400C66DCF /* tasks.sqlite3 in Resources */ = {isa = PBXBuildFile; fileRef = 35F318E9171CE6C400C66DCF /* tasks.sqlite3 */; };
+		35F318ED171DEA3100C66DCF /* taskList.sqlite3 in Resources */ = {isa = PBXBuildFile; fileRef = 35F318EC171DEA3100C66DCF /* taskList.sqlite3 */; };
+		35F318EE171DEA3100C66DCF /* taskList.sqlite3 in Resources */ = {isa = PBXBuildFile; fileRef = 35F318EC171DEA3100C66DCF /* taskList.sqlite3 */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -154,6 +156,7 @@
 		35C7D5F317195A530043C374 /* CrushListTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CrushListTableViewCell.h; sourceTree = "<group>"; };
 		35C7D5F417195A530043C374 /* CrushListTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CrushListTableViewCell.m; sourceTree = "<group>"; };
 		35F318E9171CE6C400C66DCF /* tasks.sqlite3 */ = {isa = PBXFileReference; lastKnownFileType = file; path = tasks.sqlite3; sourceTree = "<group>"; };
+		35F318EC171DEA3100C66DCF /* taskList.sqlite3 */ = {isa = PBXFileReference; lastKnownFileType = file; path = taskList.sqlite3; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -337,6 +340,7 @@
 		35C7D5F817195C990043C374 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				35F318EC171DEA3100C66DCF /* taskList.sqlite3 */,
 				35F318E9171CE6C400C66DCF /* tasks.sqlite3 */,
 				351C8736171775890014968D /* first.png */,
 				351C8738171775890014968D /* first@2x.png */,
@@ -444,6 +448,7 @@
 				35A4B5E61719400B00D1C36F /* crusherator-iconx1.png in Resources */,
 				35A4B5E81719401000D1C36F /* crusherator-icon.png in Resources */,
 				35F318EA171CE6C400C66DCF /* tasks.sqlite3 in Resources */,
+				35F318ED171DEA3100C66DCF /* taskList.sqlite3 in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -469,6 +474,7 @@
 				351C87881717837F0014968D /* Gotham-XLight.ttf in Resources */,
 				351C87891717837F0014968D /* Gotham-XLightItalic.ttf in Resources */,
 				35F318EB171CE6C400C66DCF /* tasks.sqlite3 in Resources */,
+				35F318EE171DEA3100C66DCF /* taskList.sqlite3 in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

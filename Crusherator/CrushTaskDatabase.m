@@ -21,11 +21,11 @@ NSMutableArray *retval;
         NSError *error;
         NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
         NSString *documentsDirectory = [paths objectAtIndex:0];
-        NSString *writableDBPath = [documentsDirectory stringByAppendingPathComponent:@"tasks.sqlite3"];
+        NSString *writableDBPath = [documentsDirectory stringByAppendingPathComponent:@"taskList.sqlite3"];
         success = [fileManager fileExistsAtPath:writableDBPath];
         if (success) return self;
         // The writable database does not exist, so copy the default to the appropriate location.
-        NSString *defaultDBPath = [[[NSBundle mainBundle] resourcePath] stringByAppendingPathComponent:@"tasks.sqlite3"];
+        NSString *defaultDBPath = [[[NSBundle mainBundle] resourcePath] stringByAppendingPathComponent:@"taskList.sqlite3"];
         success = [fileManager copyItemAtPath:defaultDBPath toPath:writableDBPath error:&error];
         if (!success) {
             NSAssert1(0, @"Failed to create writable database file with message '%@'.", defaultDBPath);
@@ -38,7 +38,7 @@ NSMutableArray *retval;
     // The database is stored in the application bundle.
     NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
     NSString *documentsDirectory = [paths objectAtIndex:0];
-    return [documentsDirectory stringByAppendingPathComponent:@"tasks.sqlite3"];
+    return [documentsDirectory stringByAppendingPathComponent:@"taskList.sqlite3"];
 }
 
 - (sqlite3 *)databaseAccess {
@@ -72,48 +72,48 @@ NSMutableArray *retval;
                     char *textChars = (char *) sqlite3_column_text(statement, 1);
                     NSString *text = [NSString stringWithFormat:(@"%s"),textChars];
                     
-                    double works = sqlite3_column_int (statement, 2);
+//                    double works = sqlite3_column_int (statement, 2);
                     
-                    int completedZeroOne = sqlite3_column_int (statement, 3);
+                    int completedZeroOne = sqlite3_column_int (statement, 2);
                     bool completed = (completedZeroOne == 1)? true : false;
-                    
-                    int deletedZeroOne = sqlite3_column_int (statement, 4);
-                    bool deleted = (deletedZeroOne == 1)? true : false;
-                    
-                    NSDateFormatter *dateFormat = [[NSDateFormatter alloc] init];
-                    [dateFormat setDateFormat:@"yyyy-MM-dd HH:mm:ss"];
-                    
-                    char *dateCreatedChars = (char *) sqlite3_column_text(statement, 7);
-                    NSString *createdText = [NSString stringWithFormat:(@"%s"),dateCreatedChars];
-                    NSDate *dateCreated =[dateFormat dateFromString:createdText];
-                    
-                    char *dateCompletedChars = (char *) sqlite3_column_text(statement, 7);
-                    NSString *completedText = [NSString stringWithFormat:(@"%s"),dateCompletedChars];
-                    NSDate *dateCompleted =[dateFormat dateFromString:completedText];
-                    
-                    char *dateDeletedChars = (char *) sqlite3_column_text(statement, 7);
-                    NSString *deletedText = [NSString stringWithFormat:(@"%s"),dateDeletedChars];
-                    NSDate *dateDeleted =[dateFormat dateFromString:deletedText];
-                    
-                    char *categoryChars = (char *) sqlite3_column_text(statement, 7);
-                    NSString *category = [NSString stringWithFormat:(@"%s"),categoryChars];
-                    
-                    char *projectChars = (char *) sqlite3_column_text(statement, 8);
-                    NSString *project = [NSString stringWithFormat:(@"%s"),projectChars];
-                    
+//                    
+//                    int deletedZeroOne = sqlite3_column_int (statement, 4);
+//                    bool deleted = (deletedZeroOne == 1)? true : false;
+//                    
+//                    NSDateFormatter *dateFormat = [[NSDateFormatter alloc] init];
+//                    [dateFormat setDateFormat:@"yyyy-MM-dd HH:mm:ss"];
+//                    
+//                    char *dateCreatedChars = (char *) sqlite3_column_text(statement, 7);
+//                    NSString *createdText = [NSString stringWithFormat:(@"%s"),dateCreatedChars];
+//                    NSDate *dateCreated =[dateFormat dateFromString:createdText];
+//                    
+//                    char *dateCompletedChars = (char *) sqlite3_column_text(statement, 7);
+//                    NSString *completedText = [NSString stringWithFormat:(@"%s"),dateCompletedChars];
+//                    NSDate *dateCompleted =[dateFormat dateFromString:completedText];
+//                    
+//                    char *dateDeletedChars = (char *) sqlite3_column_text(statement, 7);
+//                    NSString *deletedText = [NSString stringWithFormat:(@"%s"),dateDeletedChars];
+//                    NSDate *dateDeleted =[dateFormat dateFromString:deletedText];
+//                    
+//                    char *categoryChars = (char *) sqlite3_column_text(statement, 7);
+//                    NSString *category = [NSString stringWithFormat:(@"%s"),categoryChars];
+//                    
+//                    char *projectChars = (char *) sqlite3_column_text(statement, 8);
+//                    NSString *project = [NSString stringWithFormat:(@"%s"),projectChars];
+//                    
                     CrushTaskInfo *info = [[CrushTaskInfo alloc]
                                            initWithUniqueId:uniqueId
                                            text:text];
                     
                     [retval addObject:info];
-                    info.works = works;
-                    info.completed = completed;
-                    info.deleted = deleted;
-                    info.dateCreated = dateCreated;
-                    info.dateCompleted = dateCompleted;
-                    info.dateDeleted = dateDeleted;
-                    info.category = category;
-                    info.project = project;
+//                    info.works = works;
+//                    info.completed = completed;
+//                    info.deleted = deleted;
+//                    info.dateCreated = dateCreated;
+//                    info.dateCompleted = dateCompleted;
+//                    info.dateDeleted = dateDeleted;
+//                    info.category = category;
+//                    info.project = project;
                 }
             }
             // "Finalize" the statement - releases the resources associated with the statement.
@@ -140,9 +140,8 @@ NSMutableArray *retval;
 
 -(CrushTaskInfo *) addTask:(NSString *)text {
 //    Need to make delegate to create uniqueId automatically
-	int uniqueId = (retval.count+1);
+	int uniqueId = [CrushTaskInfo insertIntoDatabase:_database];
     CrushTaskInfo *newTask = [[CrushTaskInfo alloc]initWithUniqueId:uniqueId text:text];
-    [newTask insertIntoDatabase:_database];
     
 	[retval insertObject:newTask atIndex:0];
     return newTask;

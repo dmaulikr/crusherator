@@ -12,16 +12,17 @@
 
 @interface CrushTaskInfo : NSObject
 {
+    sqlite3 *_database;
     int _uniqueId;
     NSString *_text;
-    double _works;
+//    double _works;
     bool _completed;
-    bool _deleted;
-    NSDate *_dateCreated;
-    NSDate *_dateCompleted;
-    NSDate *_dateDeleted;
-    NSString *_category;
-    NSString *_project;
+//    bool _deleted;
+//    NSDate *_dateCreated;
+//    NSDate *_dateCompleted;
+//    NSDate *_dateDeleted;
+//    NSString *_category;
+//    NSString *_project;
 }
 
 @property (nonatomic, assign) int uniqueId;
@@ -34,12 +35,12 @@
 @property (nonatomic, copy) NSDate *dateDeleted;
 @property (nonatomic, copy) NSString *category;
 @property (nonatomic, copy) NSString *project;
-@property sqlite3 *_database;
 
 - (id)initWithUniqueId:(int)uniqueId
                   text:(NSString *)text;
 
 - (void) deleteFromDatabase;
-- (void) insertIntoDatabase:(sqlite3 *)database;
++ (NSInteger) insertIntoDatabase:(sqlite3 *)database;
+- (void) dehydrate;
 
 @end

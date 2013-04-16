@@ -130,7 +130,7 @@
         }
     }
     
-    todoItem.deleteFromDatabase;
+    [todoItem deleteFromDatabase];
 }
 
 -(void)cellDidBeginEditing:(CrushListTableViewCell *)editingCell {
