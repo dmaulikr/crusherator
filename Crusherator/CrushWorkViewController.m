@@ -86,7 +86,7 @@
         [_toDoItems addObject:[listItem toDoItemWithText:@"Learn to juggle"]];
         [_toDoItems addObject:[listItem toDoItemWithText:@"Give up"]];
         
-        //  The one-liner:
+        //  Vibrate when sessions are done:
         AudioServicesPlaySystemSound (kSystemSoundID_Vibrate);
     }
     return self;

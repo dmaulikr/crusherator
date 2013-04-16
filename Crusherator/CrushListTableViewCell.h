@@ -8,6 +8,7 @@
 
 #import <UIKit/UIKit.h>
 #import "CrushTableViewCellDelegate.h"
+#import "CrushTaskInfo.h"
 #import "CrushStrikeLabel.h"
 #define SHC_ROW_HEIGHT 50.0f
 
@@ -15,7 +16,7 @@
 @interface CrushListTableViewCell : UITableViewCell <UITextFieldDelegate>
 
 // The item that this cell renders.
-@property (nonatomic) listItem *toDoItem;
+@property (nonatomic) CrushTaskInfo *toDoItem;
 
 // The object that acts as delegate for this cell. 
 @property (nonatomic, assign) id<CrushTableViewCellDelegate> delegate;

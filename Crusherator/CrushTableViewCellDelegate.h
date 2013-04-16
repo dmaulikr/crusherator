@@ -7,14 +7,14 @@
 //
 
 #import <Foundation/Foundation.h>
-#import "listItem.h"
+#import "CrushTaskInfo.h"
 @class CrushListTableViewCell;
 
 // A protocol that the CrushCell uses to inform of state change
 @protocol CrushTableViewCellDelegate <NSObject>
 
 // indicates that the given item has been deleted
--(void) toDoItemDeleted:(listItem*)todoItem;
+-(void) toDoItemDeleted:(CrushTaskInfo*)todoItem;
 
 // Indicates that the edit process has begun for the given cell
 -(void)cellDidBeginEditing:(CrushListTableViewCell*)cell;

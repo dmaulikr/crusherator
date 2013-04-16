@@ -16,6 +16,7 @@
     
     // the offset applied to cells when entering “edit mode”
     float _editingOffset;
+    CrushListTableViewCell *cellBeingEdited;
 }
 
 @end
@@ -27,25 +28,13 @@
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
     if (self)
     {
-        // create a dummy to-do list
-        _toDoItems = [[NSMutableArray alloc] init];
-        [_toDoItems addObject:[listItem toDoItemWithText:@"Feed the cat"]];
-        [_toDoItems addObject:[listItem toDoItemWithText:@"Buy eggs"]];
-        [_toDoItems addObject:[listItem toDoItemWithText:@"Pack bags for WWDC"]];
-        [_toDoItems addObject:[listItem toDoItemWithText:@"Rule the web"]];
-        [_toDoItems addObject:[listItem toDoItemWithText:@"Buy a new iPhone"]];
-        [_toDoItems addObject:[listItem toDoItemWithText:@"Find missing socks"]];
-        [_toDoItems addObject:[listItem toDoItemWithText:@"Write a new tutorial"]];
-        [_toDoItems addObject:[listItem toDoItemWithText:@"Master Objective-C"]];
-        [_toDoItems addObject:[listItem toDoItemWithText:@"Remember your wedding anniversary!"]];
-        [_toDoItems addObject:[listItem toDoItemWithText:@"Drink less beer"]];
-        [_toDoItems addObject:[listItem toDoItemWithText:@"Learn to draw"]];
-        [_toDoItems addObject:[listItem toDoItemWithText:@"Take the car to the garage"]];
-        [_toDoItems addObject:[listItem toDoItemWithText:@"Sell things on eBay"]];
-        [_toDoItems addObject:[listItem toDoItemWithText:@"Learn to juggle"]];
-        [_toDoItems addObject:[listItem toDoItemWithText:@"Give up"]];
+        // access database
+        CrushTaskDatabase *database = [[CrushTaskDatabase alloc] init];
+        self.tasks = database.taskInfos;        
+
         self.title = NSLocalizedString(@"List", @"List");
         self.tabBarItem.image = [UIImage imageNamed:@"second"];
+        
     }
     return self;
 }
@@ -85,7 +74,7 @@
 }
 
 -(UIColor*)colorForIndex:(NSInteger) index {
-    NSUInteger itemCount = _toDoItems.count - 1;
+    NSUInteger itemCount = _tasks.count - 1;
     float val = ((float)index / (float)itemCount) * 0.6;
     return [UIColor colorWithRed: 1.0 green:val blue: 0.0 alpha:1.0];
 }
@@ -101,23 +90,20 @@
 
 #pragma mark - CrushTableViewDataSource methods
 -(NSInteger)numberOfRows {
-    return _toDoItems.count;
+    return _tasks.count;
 }
 
 -(UITableViewCell *)cellForRow:(NSInteger)row {
     CrushListTableViewCell* cell = (CrushListTableViewCell*)[self.tableView dequeueReusableCell];
-    listItem *item = _toDoItems[row];
+    CrushTaskInfo *item = _tasks[row];
     cell.toDoItem = item;
     cell.delegate = self;
     cell.backgroundColor = [self colorForIndex:row];
     return cell;
 }
 
--(void)toDoItemDeleted:(id)todoItem {
+-(void)toDoItemDeleted:(CrushTaskInfo *)todoItem {
     float delay = 0.0;
-    
-    // remove the model object
-    [_toDoItems removeObject:todoItem];
     
     // find the visible cells
     NSArray* visibleCells = [self.tableView visibleCells];
@@ -143,9 +129,24 @@
             cell.hidden = YES;
         }
     }
+    
+    todoItem.deleteFromDatabase;
 }
 
 -(void)cellDidBeginEditing:(CrushListTableViewCell *)editingCell {
+//    NSLog(@"1 %@",cellBeingEdited.toDoItem.text);
+//    if (cellBeingEdited!=NULL && cellBeingEdited!=editingCell){
+//        [self dismissKeyboard];
+//        NSLog(@"if statement");
+//        [editingCell textFieldShouldReturn:editingCell.label];
+//        cellBeingEdited = NULL;
+//        return;
+//    }
+//    else {
+        cellBeingEdited = editingCell;
+//    }
+//    NSLog(@"2 %@",cellBeingEdited.toDoItem.text);
+//    NSLog(@"3 %@",cellBeingEdited.toDoItem.text);
     _editingOffset = _tableView.scrollView.contentOffset.y - editingCell.frame.origin.y;
     for(CrushListTableViewCell* cell in [_tableView visibleCells]) {
         [UIView animateWithDuration:0.3
@@ -159,6 +160,8 @@
 }
 
 -(void)cellDidEndEditing:(CrushListTableViewCell *)editingCell {
+//    NSLog(@"done editing %@",cellBeingEdited);
+//    cellBeingEdited = NULL;
     for(CrushListTableViewCell* cell in [_tableView visibleCells]) {
         [UIView animateWithDuration:0.3
                          animations:^{
@@ -173,8 +176,10 @@
 
 -(void)itemAdded {
     // create the new item
-    listItem* toDoItem = [[listItem alloc] init];
-    [_toDoItems insertObject:toDoItem atIndex:0];
+    CrushTaskDatabase *database = [[CrushTaskDatabase alloc] init];
+    CrushTaskInfo* toDoItem = [database addTask:@"task name"];
+    
+    [_tasks insertObject:toDoItem atIndex:0];
     // refresh the table
     [_tableView reloadData];
     // enter edit mode
@@ -189,8 +194,7 @@
 }
 
 -(void)dismissKeyboard {
-    CrushListTableViewCell* editedCell;
-//    [ resignFirstResponder];
+    [cellBeingEdited textFieldShouldReturn:cellBeingEdited.label];
 }
 
 /*

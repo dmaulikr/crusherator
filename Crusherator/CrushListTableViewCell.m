@@ -8,6 +8,7 @@
 
 #import "CrushListTableViewCell.h"
 #import "CrushStrikeLabel.h"
+#import "CrushTaskInfo.h"
 #import <QuartzCore/QuartzCore.h>
 
 @implementation CrushListTableViewCell
@@ -100,7 +101,7 @@ const float LABEL_LEFT_MARGIN = 15.0f;
                                    UI_CUES_WIDTH, self.bounds.size.height);
 }
 
--(void)setToDoItem:(listItem *)todoItem {
+-(void)setToDoItem:(CrushTaskInfo *)todoItem {
     _toDoItem = todoItem;
     // we must update all the visual state associated with the model item
     _label.text = todoItem.text;

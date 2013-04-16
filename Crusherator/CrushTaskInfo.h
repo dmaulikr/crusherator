@@ -7,6 +7,8 @@
 //
 
 #import <Foundation/Foundation.h>
+#import <sqlite3.h>
+#import "CrushTaskDatabase.h"
 
 @interface CrushTaskInfo : NSObject
 {
@@ -32,16 +34,12 @@
 @property (nonatomic, copy) NSDate *dateDeleted;
 @property (nonatomic, copy) NSString *category;
 @property (nonatomic, copy) NSString *project;
+@property sqlite3 *_database;
 
 - (id)initWithUniqueId:(int)uniqueId
-                  text:(NSString *)text
-                 works:(double)works
-             completed:(bool) completed
-               deleted:(bool) deleted
-           datecreated:(NSDate *) dateCreated
-         dateCompleted:(NSDate *)dateCompleted
-           dateDeleted:(NSDate *)dateDeleted
-              category:(NSString *)category
-               project:(NSString *)project;
+                  text:(NSString *)text;
+
+- (void) deleteFromDatabase;
+- (void) insertIntoDatabase:(sqlite3 *)database;
 
 @end
