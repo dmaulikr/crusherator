@@ -14,7 +14,7 @@
 #import "CrushTableViewDragAddNew.h"
 #import "CrushTaskDatabase.h"
 
-@interface CrushListTableViewController : UIViewController
+@interface CrushListViewController : UIViewController
 <
 UITableViewDataSource,
 UITableViewDelegate,

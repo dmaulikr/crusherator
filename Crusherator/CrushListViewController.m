@@ -6,9 +6,9 @@
 //  Copyright (c) 2013 Raj. All rights reserved.
 //
 
-#import "CrushListTableViewController.h"
+#import "CrushListViewController.h"
 
-@interface CrushListTableViewController ()
+@interface CrushListViewController ()
 
 {
     // an array of to-do items
@@ -21,16 +21,17 @@
 
 @end
 
-@implementation CrushListTableViewController
+@implementation CrushListViewController
 
 
--(id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil {
+-(id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
+{
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
     if (self)
     {
         // access database
         CrushTaskDatabase *database = [[CrushTaskDatabase alloc] init];
-        self.tasks = database.taskInfos;        
+        self.tasks = database.taskInfos;
 
         self.title = NSLocalizedString(@"List", @"List");
         self.tabBarItem.image = [UIImage imageNamed:@"second"];
@@ -73,27 +74,32 @@
     // Dispose of any resources that can be recreated.
 }
 
--(UIColor*)colorForIndex:(NSInteger) index {
+-(UIColor*)colorForIndex:(NSInteger) index
+{
     NSUInteger itemCount = _tasks.count - 1;
     float val = ((float)index / (float)itemCount) * 0.6;
     return [UIColor colorWithRed: 1.0 green:val blue: 0.0 alpha:1.0];
 }
 
 #pragma mark - UITableViewDataDelegate protocol methods
--(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
+-(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
+{
     return 50.0f;
 }
 
--(void)tableView:(UITableView *)tableView willDisplayCell:(CrushListTableViewCell *)cell forRowAtIndexPath:(NSIndexPath *)indexPath {
+-(void)tableView:(UITableView *)tableView willDisplayCell:(CrushListTableViewCell *)cell forRowAtIndexPath:(NSIndexPath *)indexPath
+{
     cell.backgroundColor = [self colorForIndex:indexPath.row];
 }
 
 #pragma mark - CrushTableViewDataSource methods
--(NSInteger)numberOfRows {
+-(NSInteger)numberOfRows
+{
     return _tasks.count;
 }
 
--(UITableViewCell *)cellForRow:(NSInteger)row {
+-(UITableViewCell *)cellForRow:(NSInteger)row
+{
     CrushListTableViewCell* cell = (CrushListTableViewCell*)[self.tableView dequeueReusableCell];
     CrushTaskInfo *item = _tasks[row];
     cell.toDoItem = item;
@@ -102,8 +108,14 @@
     return cell;
 }
 
--(void)toDoItemDeleted:(CrushTaskInfo *)todoItem {
-    float delay = 0.0;
+-(void)toDoItemDeleted:(CrushTaskInfo *)todoItem
+{
+    float delay = 0.5;
+    
+    CrushTaskDatabase *database = [[CrushTaskDatabase alloc] init];
+    
+    [database removeTask:todoItem];
+    [_tasks removeObject:todoItem];
     
     // find the visible cells
     NSArray* visibleCells = [self.tableView visibleCells];
@@ -121,7 +133,7 @@
                     [self.tableView reloadData];
                 }
             }];
-            delay+=0.03;
+            delay+=0.01;
         }
         // if we have reached the item that was deleted, start animating
         if (cell.toDoItem == todoItem) {
@@ -129,11 +141,10 @@
             cell.hidden = YES;
         }
     }
-    
-    [todoItem deleteFromDatabase];
 }
 
--(void)cellDidBeginEditing:(CrushListTableViewCell *)editingCell {
+-(void)cellDidBeginEditing:(CrushListTableViewCell *)editingCell
+{
 //    NSLog(@"1 %@",cellBeingEdited.toDoItem.text);
 //    if (cellBeingEdited!=NULL && cellBeingEdited!=editingCell){
 //        [self dismissKeyboard];
@@ -159,7 +170,8 @@
     }
 }
 
--(void)cellDidEndEditing:(CrushListTableViewCell *)editingCell {
+-(void)cellDidEndEditing:(CrushListTableViewCell *)editingCell
+{
 //    NSLog(@"done editing %@",cellBeingEdited);
 //    cellBeingEdited = NULL;
     for(CrushListTableViewCell* cell in [_tableView visibleCells]) {
@@ -174,18 +186,19 @@
     }
 }
 
--(void)itemAdded {
+-(void)itemAdded
+{
     // create the new item
     CrushTaskDatabase *database = [[CrushTaskDatabase alloc] init];
-    CrushTaskInfo* toDoItem = [database addTask:@"task name"];
+    CrushTaskInfo* todoItem = [database addTask:@"task name"];
     
-    [_tasks insertObject:toDoItem atIndex:0];
+    [_tasks insertObject:todoItem atIndex:0];
     // refresh the table
     [_tableView reloadData];
     // enter edit mode
     CrushListTableViewCell* editCell;
     for (CrushListTableViewCell* cell in _tableView.visibleCells) {
-        if (cell.toDoItem == toDoItem) {
+        if (cell.toDoItem == todoItem) {
             editCell = cell;
             break;
         }
@@ -193,60 +206,9 @@
     [editCell.label becomeFirstResponder];
 }
 
--(void)dismissKeyboard {
+-(void)dismissKeyboard
+{
     [cellBeingEdited textFieldShouldReturn:cellBeingEdited.label];
-}
-
-/*
-// Override to support conditional editing of the table view.
-- (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath
-{
-    // Return NO if you do not want the specified item to be editable.
-    return YES;
-}
-*/
-
-/*
-// Override to support editing the table view.
-- (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath
-{
-    if (editingStyle == UITableViewCellEditingStyleDelete) {
-        // Delete the row from the data source
-        [tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationFade];
-    }   
-    else if (editingStyle == UITableViewCellEditingStyleInsert) {
-        // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
-    }   
-}
-*/
-
-/*
-// Override to support rearranging the table view.
-- (void)tableView:(UITableView *)tableView moveRowAtIndexPath:(NSIndexPath *)fromIndexPath toIndexPath:(NSIndexPath *)toIndexPath
-{
-}
-*/
-
-/*
-// Override to support conditional rearranging of the table view.
-- (BOOL)tableView:(UITableView *)tableView canMoveRowAtIndexPath:(NSIndexPath *)indexPath
-{
-    // Return NO if you do not want the item to be re-orderable.
-    return YES;
-}
-*/
-
-#pragma mark - Table view delegate
-
-- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
-{
-    // Navigation logic may go here. Create and push another view controller.
-    /*
-     <#DetailViewController#> *detailViewController = [[<#DetailViewController#> alloc] initWithNibName:@"<#Nib name#>" bundle:nil];
-     // ...
-     // Pass the selected object to the new view controller.
-     [self.navigationController pushViewController:detailViewController animated:YES];
-     */
 }
 
 @end

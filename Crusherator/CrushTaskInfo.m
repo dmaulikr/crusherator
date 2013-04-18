@@ -26,30 +26,23 @@ static sqlite3_stmt *insert_statement = nil;
 @synthesize project = _project;
 
 + (NSInteger)insertIntoDatabase:(sqlite3 *)database {
+    CrushTaskDatabase *taskDatabase = [[CrushTaskDatabase alloc] init];
+    database = taskDatabase.databaseAccess;
+    
     // When delegate is applied this will return an NSInteger
-    if (insert_statement == nil) {
-        CrushTaskDatabase *taskDatabase = [[CrushTaskDatabase alloc] init];
-        database = taskDatabase.databaseAccess;
-        
         static char *sql = "INSERT INTO tasks (text,completed) VALUES('','0')";
-        char *sqlChar = (char *) sql;
-        NSString *sqlString = [NSString stringWithFormat:(@"%s"),sqlChar];
-        
-//        NSLog(sqlString);
-//        NSLog(@"%@",database);
-        
         if (sqlite3_prepare_v2(database, sql, -1, &insert_statement, NULL) != SQLITE_OK) {
             NSAssert1(0, @"Error: failed to prepare statement with message '%s'.", sqlite3_errmsg(database));
         }
-    }
     int success = sqlite3_step(insert_statement);
     
     sqlite3_reset(insert_statement);
     if (success != SQLITE_ERROR) {
-        return -1;
+        return sqlite3_last_insert_rowid(database);
     }
     NSAssert1(0, @"Error: failed to insert into the database with message '%s'.", sqlite3_errmsg(database));
     return -1;
+    
 }
 
 - (id)initWithUniqueId:(int)uniqueId
@@ -57,8 +50,6 @@ static sqlite3_stmt *insert_statement = nil;
 {
     if ((self = [super init])) {
         
-        _uniqueId = uniqueId;
-    
         CrushTaskDatabase *taskDatabase = [[CrushTaskDatabase alloc] init];
         _database = taskDatabase.databaseAccess;
         
@@ -69,10 +60,11 @@ static sqlite3_stmt *insert_statement = nil;
             }
         }
         
-        sqlite3_bind_int(init_statement, 1, _uniqueId);
+        sqlite3_bind_int(init_statement, 1, uniqueId);
         if (sqlite3_step(init_statement) == SQLITE_ROW) {
             self.text = [NSString stringWithUTF8String:(char *)sqlite3_column_text(init_statement, 0)];
 			self.completed = sqlite3_column_int(init_statement,1);
+            NSLog(@"task initiated with complete = %i",_completed);
         } else {
             self.text = @"Nothing";
         }
@@ -90,6 +82,9 @@ static sqlite3_stmt *insert_statement = nil;
 //        self.category = NULL;
 //        self.project = NULL;
     }
+    
+    _uniqueId = uniqueId;
+    
     return self;
 }
 
@@ -105,23 +100,22 @@ static sqlite3_stmt *insert_statement = nil;
 }
 
 - (void) dehydrate {
-	if (dehydrate_statement == nil) {
+    if (dehydrate_statement == nil) {
         const char *sql = "UPDATE tasks SET text = ? , completed = ? WHERE uniqueId=?";
         if (sqlite3_prepare_v2(_database, sql, -1, &dehydrate_statement, NULL) != SQLITE_OK) {
             NSAssert1(0, @"Error: failed to prepare statement with message '%s'.", sqlite3_errmsg(_database));
         }
-        NSLog(_text);
     }
     
     sqlite3_bind_int(dehydrate_statement, 3, self.uniqueId);
     sqlite3_bind_int(dehydrate_statement, 2, self.completed);
+    NSLog(@"database updated with complete = %i",_completed);
     sqlite3_bind_text(dehydrate_statement, 1, [self.text UTF8String], -1, SQLITE_TRANSIENT);
     int success = sqlite3_step(dehydrate_statement);
     
     if (success != SQLITE_DONE) {
         NSAssert1(0, @"Error: failed to save changes with message '%s'.", sqlite3_errmsg(_database));
     }
-    
     sqlite3_reset(dehydrate_statement);
 }
 
@@ -139,7 +133,6 @@ static sqlite3_stmt *insert_statement = nil;
 	if (success != SQLITE_DONE) {
 		NSAssert1(0, @"Error: failed to save priority with message '%s'.", sqlite3_errmsg(_database));
 	}
-	
 	sqlite3_reset(delete_statement);
 }
 

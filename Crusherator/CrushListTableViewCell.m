@@ -87,7 +87,8 @@ const float UI_CUES_WIDTH = 50.0f;
 
 const float LABEL_LEFT_MARGIN = 15.0f;
 
--(void)layoutSubviews {
+-(void)layoutSubviews
+{
     [super layoutSubviews];
     // ensure the gradient layers occupies the full bounds
     _gradientLayer.frame = self.bounds;
@@ -101,7 +102,8 @@ const float LABEL_LEFT_MARGIN = 15.0f;
                                    UI_CUES_WIDTH, self.bounds.size.height);
 }
 
--(void)setToDoItem:(CrushTaskInfo *)todoItem {
+-(void)setToDoItem:(CrushTaskInfo *)todoItem
+{
     _toDoItem = todoItem;
     // we must update all the visual state associated with the model item
     _label.text = todoItem.text;
@@ -118,7 +120,8 @@ const float LABEL_LEFT_MARGIN = 15.0f;
 }
 
 #pragma mark - horizontal pan gesture methods
--(BOOL)gestureRecognizerShouldBegin:(UIPanGestureRecognizer *)gestureRecognizer {
+-(BOOL)gestureRecognizerShouldBegin:(UIPanGestureRecognizer *)gestureRecognizer
+{
     CGPoint translation = [gestureRecognizer translationInView:[self superview]];
     // Check for horizontal gesture
     if (fabsf(translation.x) > fabsf(translation.y)) {
@@ -127,7 +130,8 @@ const float LABEL_LEFT_MARGIN = 15.0f;
     return NO;
 }
 
--(void)handlePan:(UIPanGestureRecognizer *)recognizer {
+-(void)handlePan:(UIPanGestureRecognizer *)recognizer
+{
     // 1
     if (recognizer.state == UIGestureRecognizerStateBegan) {
         // if the gesture has just started, record the current centre location
@@ -176,6 +180,7 @@ const float LABEL_LEFT_MARGIN = 15.0f;
         if (_completeOnDragRelease) {
             // mark the item as complete and update the UI state
             self.toDoItem.completed = !(self.toDoItem.completed);
+            [self.toDoItem dehydrate];
             _itemCompleteLayer.hidden = !_itemCompleteLayer.hidden;
             _label.strikethrough = !_label.strikethrough;
         }
@@ -183,19 +188,24 @@ const float LABEL_LEFT_MARGIN = 15.0f;
 }
 
 #pragma mark - UITextFieldDelegate
--(BOOL)textFieldShouldReturn:(UITextField *)textField {
+-(BOOL)textFieldShouldReturn:(UITextField *)textField
+{
     // close the keyboard on enter
     [textField resignFirstResponder];
     return NO;
 }
 
--(void)textFieldDidEndEditing:(UITextField *)textField {
+-(void)textFieldDidEndEditing:(UITextField *)textField
+{
     [self.delegate cellDidEndEditing:self];
     self.toDoItem.text = textField.text;
+    [self.toDoItem dehydrate];
 }
 
--(void)textFieldDidBeginEditing:(UITextField *)textField {
+-(void)textFieldDidBeginEditing:(UITextField *)textField
+{
     [self.delegate cellDidBeginEditing:self];
+    [self.toDoItem dehydrate];
 }
 
 @end

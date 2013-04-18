@@ -9,29 +9,45 @@
 #import "CrushWorkViewController.h"
 #import "listItem.h"
 #import "CrushStrikeLabel.h"
+#import "CrushTaskDatabase.h"
 #import <AudioToolbox/AudioToolbox.h>
+#import <QuartzCore/QuartzCore.h>
 
 #define UIColorFromRGB(rgbValue) [UIColor colorWithRed:((float)((rgbValue & 0xFF0000) >> 16))/255.0 green:((float)((rgbValue & 0xFF00) >> 8))/255.0 blue:((float)(rgbValue & 0xFF))/255.0 alpha:1.0]
 
 @interface CrushWorkViewController ()
+
 {
+    // Variables that make the timer work
     bool running;
     NSTimeInterval startTime;
-    NSTimeInterval timerInterval;
     NSTimeInterval elapsedTime;
     NSTimeInterval timeLeft;
-    NSMutableArray *taskList;
-    NSMutableArray * _toDoItems;
-    
-    int workUnitsCompleted;
-    int relaxUnitsCompleted;
-    
-    int lengthOfWorkBlocks;
-    int lengthOfRelaxBlocks;
-    
+    NSTimeInterval timerInterval;
     int defaultTasksOnScreen;
     int tasksOnScreen;
+
+    // Variables that make the task list work
+    NSMutableArray *taskList;
     
+    // Options that will be changeable by the user in the future
+    int lengthOfWorkBlocks;
+    int lengthOfRelaxBlocks;
+//    BOOL continuousMode;
+//    BOOL ringEndWork;
+//    BOOL ringEndPlay;
+    BOOL buzzEndWork;
+    BOOL buzzEndPlay;
+//    BOOL soundDuringWork;
+//    BOOL soundDuringPlay;
+    
+    // Statistics on work completed so far
+    int workUnitsCompleted;
+    int relaxUnitsCompleted;
+//    NSTimeInterval workTimeCompleted;
+//    NSTimeInterval playTimeCompleted;
+    
+    // Dimensions and spacing
     int heightButton;
     double xpad;
     double ypad;
@@ -40,6 +56,10 @@
     double heightOutput;
     double widthButton;
     double indent;
+    
+    // Fonts and colors
+    CAGradientLayer *gradientHot;
+    CAGradientLayer *gradientCold;
     UIFont *fontCountdown;
     UIFont *fontButton;
     UIFont *fontDialog;
@@ -50,44 +70,38 @@
 
 @implementation CrushWorkViewController
 
+// Timer interface
 @synthesize countdown;
-@synthesize workCount;
-@synthesize relaxedCount;
-@synthesize taskCount;
-@synthesize currentMode;
 @synthesize buttonGoStop;
 @synthesize buttonNextTask;
 @synthesize buttonCompleteTask;
+
+// List elements
 @synthesize taskLabels;
 @synthesize workLabels;
+
+// Statistics
+@synthesize workCount;
+@synthesize relaxedCount;
+@synthesize taskCount;
+
+// For shifting between work and play
+@synthesize currentMode;
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
     if (self) {
+        // Initialize data source
+//        CrushDummyTaskDatabase *database = [[CrushDummyTaskDatabase alloc] init];
+//        taskList = database.taskList;
+        
+        CrushTaskDatabase *database = [[CrushTaskDatabase alloc] init];
+        taskList = database.taskInfos;
+        
         self.title = NSLocalizedString(@"Crush", @"Crush");
         self.tabBarItem.image = [UIImage imageNamed:@"first"];
         
-        // create a dummy to-do list
-        _toDoItems = [[NSMutableArray alloc] init];
-        [_toDoItems addObject:[listItem toDoItemWithText:@"Feed the cat"]];
-        [_toDoItems addObject:[listItem toDoItemWithText:@"Buy eggs"]];
-        [_toDoItems addObject:[listItem toDoItemWithText:@"Pack bags for WWDC"]];
-        [_toDoItems addObject:[listItem toDoItemWithText:@"Rule the web"]];
-        [_toDoItems addObject:[listItem toDoItemWithText:@"Buy a new iPhone"]];
-        [_toDoItems addObject:[listItem toDoItemWithText:@"Find missing socks"]];
-        [_toDoItems addObject:[listItem toDoItemWithText:@"Write a new tutorial"]];
-        [_toDoItems addObject:[listItem toDoItemWithText:@"Master Objective-C"]];
-        [_toDoItems addObject:[listItem toDoItemWithText:@"Remember your wedding anniversary!"]];
-        [_toDoItems addObject:[listItem toDoItemWithText:@"Drink less beer"]];
-        [_toDoItems addObject:[listItem toDoItemWithText:@"Learn to draw"]];
-        [_toDoItems addObject:[listItem toDoItemWithText:@"Take the car to the garage"]];
-        [_toDoItems addObject:[listItem toDoItemWithText:@"Sell things on eBay"]];
-        [_toDoItems addObject:[listItem toDoItemWithText:@"Learn to juggle"]];
-        [_toDoItems addObject:[listItem toDoItemWithText:@"Give up"]];
-        
-        //  Vibrate when sessions are done:
-        AudioServicesPlaySystemSound (kSystemSoundID_Vibrate);
     }
     return self;
 }
@@ -95,12 +109,13 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-	// Do any additional setup after loading the view, typically from a nib.
     
 // modes and defaults
     lengthOfWorkBlocks = 5;
     lengthOfRelaxBlocks = 5;
     defaultTasksOnScreen = 8;
+    buzzEndWork = FALSE;
+    buzzEndPlay = FALSE;
     
 // fonts and colors
     fontCountdown = [UIFont fontWithName:@"Gotham Medium" size:80.0];
@@ -110,7 +125,7 @@
     [self.view setBackgroundColor:[UIColor blackColor]];
     
 // set page properties
-    heightButton = 70;
+    heightButton = 35;
     xpad = 5;
     widthPage = self.view.frame.size.width-2*xpad;
     ypad = 5;
@@ -121,11 +136,34 @@
     
 // text field for results
     countdown = [[UILabel alloc] initWithFrame:(CGRectMake(xpad,ypad,widthPage,heightOutput))];
-    countdown.backgroundColor = [UIColor lightGrayColor];
+    countdown.backgroundColor = [UIColor clearColor];
     countdown.font = fontCountdown;
     countdown.text = @"0:25";
     countdown.textAlignment = NSTextAlignmentCenter;
+    countdown.layer.shadowColor = [UIColor blackColor].CGColor;
+    countdown.layer.shadowOffset = CGSizeMake(0.0, 0.0);
+    countdown.layer.shadowRadius = 5.0;
+    countdown.layer.shadowOpacity = 0.4;
+    countdown.layer.masksToBounds = NO;
     [self.view addSubview:countdown];
+    
+// add a layer that overlays the cell adding a subtle gradient effect
+    gradientHot = [CAGradientLayer layer];
+    gradientHot.frame = CGRectMake(xpad,ypad,widthPage,heightOutput);
+    gradientHot.colors = @[(id)[[UIColor colorWithRed:(254.0 / 256.0) green:(0.0 / 256.0) blue:(4.0 / 256.0) alpha:1.0f] CGColor],
+                           (id)[[UIColor colorWithRed:(253.0 / 256.0) green:(116.0 / 256.0) blue:(16.0 / 256.0) alpha:1.0f] CGColor]];
+    gradientHot.locations = @[@0.00f,@1.00f];
+    gradientHot.hidden = NO;
+    [self.view.layer insertSublayer:gradientHot atIndex:0];
+
+// add a layer that overlays the cell adding a subtle gradient effect
+    gradientCold = [CAGradientLayer layer];
+    gradientCold.frame = CGRectMake(xpad,ypad,widthPage,heightOutput);
+    gradientCold.colors = @[(id)[[UIColor colorWithRed:(29.0 / 256.0) green:(247.0 / 256.0) blue:(255.0 / 256.0) alpha:1.0f] CGColor],
+                            (id)[[UIColor colorWithRed:(0.0 / 256.0) green:(168.0 / 256.0) blue:(253.0 / 256.0) alpha:1.0f] CGColor]];
+    gradientCold.locations = @[@0.00f, @1.00f];
+    gradientCold.hidden = YES;
+    [self.view.layer insertSublayer:gradientCold atIndex:0];
     
 // work counts for this session
     workCount = [[UILabel alloc] initWithFrame:(CGRectMake(xpad+indent,4*ypad+heightOutput+heightButton,widthLabel,15.0+7.0))];
@@ -163,6 +201,8 @@
     [buttonGoStop setTitleColor:buttonColorDefault forState:UIControlStateNormal];
     [buttonGoStop setTitleColor:buttonColorHighlight forState:UIControlStateHighlighted];
     [buttonGoStop addTarget:self action:@selector(buttonPress:) forControlEvents:(UIControlEventTouchUpInside)];
+    [buttonGoStop setBackgroundColor:UIColorFromRGB(0xcfcfcf)];
+    [buttonGoStop setTitleColor:UIColorFromRGB(0x000000) forState:UIControlStateNormal];
     
     [self.view addSubview:buttonGoStop];
     
@@ -171,7 +211,7 @@
     
     [buttonNextTask.titleLabel setFont:fontButton];
     [buttonNextTask setTitle:@"»" forState:UIControlStateNormal];
-    [buttonNextTask setBackgroundColor:UIColorFromRGB(0xbf5757)];
+    [buttonNextTask setBackgroundColor:UIColorFromRGB(0xcfcfcf)];
     [buttonNextTask setTitleColor:UIColorFromRGB(0x7f2d2d) forState:UIControlStateNormal];
     [buttonNextTask addTarget:self action:@selector(nextTask) forControlEvents:(UIControlEventTouchUpInside)];
     buttonNextTask.contentEdgeInsets = UIEdgeInsetsMake(5.0, 0.0, 0.0, 0.0);
@@ -183,7 +223,7 @@
     
     [buttonCompleteTask.titleLabel setFont:fontButton];
     [buttonCompleteTask setTitle:@"✓" forState:UIControlStateNormal];
-    [buttonCompleteTask setBackgroundColor:UIColorFromRGB(0xb3ddab)];
+    [buttonCompleteTask setBackgroundColor:UIColorFromRGB(0xcfcfcf)];
     [buttonCompleteTask setTitleColor:UIColorFromRGB(0x378328) forState:UIControlStateNormal];
     [buttonCompleteTask addTarget:self action:@selector(completeTask) forControlEvents:(UIControlEventTouchUpInside)];
     buttonCompleteTask.contentEdgeInsets = UIEdgeInsetsMake(5.0, 0.0, 0.0, 0.0);
@@ -241,31 +281,29 @@
 {
         if ([modeName isEqualToString:@"workReady"])
         {
-            [self vibrate];
+            if(buzzEndPlay) [self vibrate];
             running = FALSE;
             currentMode = @"workReady";
             timerInterval = lengthOfWorkBlocks;
             elapsedTime = 0;
             [self updateLabels];
             [buttonGoStop setTitle:@"CRUSH!" forState:(UIControlStateNormal)];
-            countdown.backgroundColor = UIColorFromRGB(0x5797bf);
-            [buttonGoStop setBackgroundColor:UIColorFromRGB(0xa6c9e0)];
-            [buttonGoStop setTitleColor:UIColorFromRGB(0x215c81) forState:UIControlStateNormal];
+            gradientCold.hidden = YES;
+            gradientHot.hidden = NO;
         }
         else if ([modeName isEqualToString:@"playReady"])
         {
-            [self vibrate];
+            if(buzzEndWork) [self vibrate];
             running = FALSE;
             currentMode = @"playReady";
             timerInterval = lengthOfRelaxBlocks;
             elapsedTime = 0;
             [buttonGoStop setTitle:@"RELAX!" forState:(UIControlStateNormal)];
-            countdown.backgroundColor = UIColorFromRGB(0x60c04d);
-            [buttonGoStop setBackgroundColor:UIColorFromRGB(0xb3ddab)];
-            [buttonGoStop setTitleColor:UIColorFromRGB(0x378328) forState:UIControlStateNormal];
+            gradientCold.hidden = NO;
+            gradientHot.hidden = YES;
             workUnitsCompleted++;
             [workCount setText:[NSString stringWithFormat:@"Crushed: %d",workUnitsCompleted]];
-            listItem *item = _toDoItems[((taskLabels.count)%_toDoItems.count)];
+            listItem *item = taskList[((taskLabels.count)%taskList.count)];
             item.works++;
             [self updateLabels];
         }
@@ -274,32 +312,24 @@
             running = FALSE;
             currentMode = @"workPaused";
             [buttonGoStop setTitle:@"?!" forState:(UIControlStateNormal)];
-            [buttonGoStop setBackgroundColor:UIColorFromRGB(0xcfcfcf)];
-            [buttonGoStop setTitleColor:UIColorFromRGB(0x000000) forState:UIControlStateNormal];
         }
         else if ([modeName isEqualToString:@"playPaused"])
         {
             running = FALSE;
             currentMode = @"playPaused";
             [buttonGoStop setTitle:@"?!" forState:(UIControlStateNormal)];
-            [buttonGoStop setBackgroundColor:UIColorFromRGB(0xcfcfcf)];
-            [buttonGoStop setTitleColor:UIColorFromRGB(0x000000) forState:UIControlStateNormal];
         }
         else if ([modeName isEqualToString:@"workRunning"])
         {
             running = TRUE;
             currentMode = @"workRunning";
             [buttonGoStop setTitle:@"ll" forState:(UIControlStateNormal)];
-            [buttonGoStop setBackgroundColor:UIColorFromRGB(0xcfcfcf)];
-            [buttonGoStop setTitleColor:UIColorFromRGB(0x000000) forState:UIControlStateNormal];
         }
         else if ([modeName isEqualToString:@"playRunning"])
         {
             running = TRUE;
             currentMode = @"playRunning";
             [buttonGoStop setTitle:@"ll" forState:(UIControlStateNormal)];
-            [buttonGoStop setBackgroundColor:UIColorFromRGB(0xcfcfcf)];
-            [buttonGoStop setTitleColor:UIColorFromRGB(0x000000) forState:UIControlStateNormal];
         }
 }
 
@@ -333,14 +363,14 @@
 //    NSInteger hours = (ti / 3600);
     countdown.text = [NSString stringWithFormat:@"%02i:%02i", minutes, seconds];
     
-    listItem *item = _toDoItems[((taskLabels.count)%_toDoItems.count)];
+    listItem *item = taskList[((taskLabels.count)%taskList.count)];
     
-    for(int i=0;i<=(item.works+1);i++)
-    {
-        item.textWorks = [@"" stringByPaddingToLength:item.works withString:@"|" startingAtIndex:0];
-    }
+//    for(int i=0;i<=(item.works+1);i++)
+//    {
+//        item.textWorks = [@"" stringByPaddingToLength:item.works withString:@"|" startingAtIndex:0];
+//    }
     UILabel *currentWorkLabel = workLabels[taskLabels.count-1];
-    currentWorkLabel.text = item.textWorks;
+//    currentWorkLabel.text = item.textWorks;
     
     CrushStrikeLabel *currentTaskLabel = taskLabels[taskLabels.count-1];
     currentTaskLabel.strikethrough = item.completed;
@@ -389,7 +419,7 @@
     }
     
     CrushStrikeLabel *taskLabel = [[CrushStrikeLabel alloc] initWithFrame:(CGRectMake(xpad+indent,6*ypad,widthLabel,17.0))];
-    listItem *item = _toDoItems[((taskLabels.count)%_toDoItems.count)];
+    listItem *item = taskList[((taskLabels.count)%taskList.count)];
     taskLabel.backgroundColor = [UIColor clearColor];
     taskLabel.strikethrough = item.completed;
     taskLabel.color = [UIColor blackColor];
@@ -443,7 +473,7 @@
 
 - (void)completeTask
 {
-    listItem *item = _toDoItems[((taskLabels.count-1)%(_toDoItems.count-1))];
+    listItem *item = taskList[((taskLabels.count-1)%(taskList.count-1))];
     CrushStrikeLabel *currentTaskLabel = taskLabels[taskLabels.count-1];
     item.completed = !item.completed;
     currentTaskLabel.text = item.text;

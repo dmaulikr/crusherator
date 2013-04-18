@@ -107,7 +107,7 @@ NSMutableArray *retval;
                     
                     [retval addObject:info];
 //                    info.works = works;
-//                    info.completed = completed;
+                    info.completed = completed;
 //                    info.deleted = deleted;
 //                    info.dateCreated = dateCreated;
 //                    info.dateCompleted = dateCompleted;
@@ -136,12 +136,14 @@ NSMutableArray *retval;
     
     [task deleteFromDatabase];
     [retval removeObject:task];
+    NSLog(@"removeTask called");
 }
 
 -(CrushTaskInfo *) addTask:(NSString *)text {
 //    Need to make delegate to create uniqueId automatically
-	int uniqueId = [CrushTaskInfo insertIntoDatabase:_database];
+	NSInteger uniqueId = [CrushTaskInfo insertIntoDatabase:_database];
     CrushTaskInfo *newTask = [[CrushTaskInfo alloc]initWithUniqueId:uniqueId text:text];
+//    NSLog(@"Database add %i,%@",uniqueId,text);
     
 	[retval insertObject:newTask atIndex:0];
     return newTask;

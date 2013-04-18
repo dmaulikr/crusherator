@@ -11,16 +11,26 @@
 
 @interface CrushWorkViewController : UIViewController
 
+// ** do all of these need to be synthesized?  Probably not.  Should be instance variables.
+
+// Interface and output
 @property (nonatomic, retain) UILabel *countdown;
+
+// Statistics
 @property (nonatomic, retain) UILabel *workCount;
 @property (nonatomic, retain) UILabel *relaxedCount;
 @property (nonatomic, retain) UILabel *taskCount;
+
+// Variables that make the timer work
 @property (nonatomic, retain) NSString *currentMode;
+
+// Buttons
 @property (nonatomic, retain) UIButton *buttonGoStop;
 @property (nonatomic, retain) UIButton *buttonNextTask;
 @property (nonatomic, retain) UIButton *buttonCompleteTask;
+
+// Arrays that hold the list labels
 @property (nonatomic, retain) NSMutableArray *taskLabels;
 @property (nonatomic, retain) NSMutableArray *workLabels;
-@property (nonatomic, retain) NSMutableArray *completedStrikes;
 
 @end
