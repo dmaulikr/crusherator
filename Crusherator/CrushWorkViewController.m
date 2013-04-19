@@ -369,7 +369,6 @@
 //    {
 //        item.textWorks = [@"" stringByPaddingToLength:item.works withString:@"|" startingAtIndex:0];
 //    }
-    UILabel *currentWorkLabel = workLabels[taskLabels.count-1];
 //    currentWorkLabel.text = item.textWorks;
     
     CrushStrikeLabel *currentTaskLabel = taskLabels[taskLabels.count-1];
