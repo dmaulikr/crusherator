@@ -31,7 +31,7 @@
     {
         // access database
         database = [[CrushTaskDatabase alloc] init];
-        NSLog(@"Work accessed globalTaskList with %i tasks",database.globalTaskList.count);
+        NSLog(@"Work accessed taskInfos with %i tasks",database.taskInfos.count);
     }
     return self;
 }
@@ -73,7 +73,7 @@
 
 -(UIColor*)colorForIndex:(NSInteger) index
 {
-    NSUInteger itemCount = database.globalTaskList.count - 1;
+    NSUInteger itemCount = database.taskInfos.count - 1;
     float val = ((float)index / (float)itemCount) * 0.6;
     return [UIColor colorWithRed: 1.0 green:val blue: 0.0 alpha:1.0];
 }
@@ -92,13 +92,13 @@
 #pragma mark - CrushTableViewDataSource methods
 -(NSInteger)numberOfRows
 {
-    return database.globalTaskList.count;
+    return database.taskInfos.count;
 }
 
 -(UITableViewCell *)cellForRow:(NSInteger)row
 {
     CrushListTableViewCell* cell = (CrushListTableViewCell*)[self.tableView dequeueReusableCell];
-    CrushTaskInfo *item = database.globalTaskList[row];
+    CrushTaskInfo *item = database.taskInfos[row];
     cell.toDoItem = item;
     cell.delegate = self;
     cell.backgroundColor = [self colorForIndex:row];

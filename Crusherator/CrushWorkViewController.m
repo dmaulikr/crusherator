@@ -255,7 +255,7 @@
 {
     [self.list reload];
     
-    NSLog(@"reloaded with %i tasks!",database.globalTaskList.count);
+    NSLog(@"reloaded with %i tasks!",database.taskInfos.count);
 }
 
 // pressing button changes modes
@@ -314,7 +314,7 @@
             gradientHot.hidden = YES;
             workUnitsCompleted++;
             [workCount setText:[NSString stringWithFormat:@"Crushed: %d",workUnitsCompleted]];
-//            listItem *item = database.globalTaskList[(database.globalTaskList.count)-1];
+//            listItem *item = database.taskInfos[(database.taskInfos.count)-1];
 //            item.works++;
             [self updateLabels];
         }
@@ -374,7 +374,7 @@
 //    NSInteger hours = (ti / 3600);
     countdown.text = [NSString stringWithFormat:@"%02i:%02i", minutes, seconds];
     
-//    listItem *item = database.globalTaskList[(database.globalTaskList.count)-1];
+//    listItem *item = database.taskInfos[(database.taskInfos.count)-1];
     
 //    for(int i=0;i<=(item.works+1);i++)
 //    {
@@ -430,7 +430,7 @@
     }
     
     CrushStrikeLabel *taskLabel = [[CrushStrikeLabel alloc] initWithFrame:(CGRectMake(xpad+indent,6*ypad,widthLabel,17.0))];
-//    listItem *item = database.globalTaskList[(database.globalTaskList.count)-1];
+//    listItem *item = database.taskInfos[(database.taskInfos.count)-1];
     taskLabel.backgroundColor = [UIColor clearColor];
 //    taskLabel.strikethrough = item.completed;
     taskLabel.color = [UIColor blackColor];

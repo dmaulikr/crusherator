@@ -11,10 +11,10 @@
 
 @implementation CrushTaskDatabase
 
-//@synthesize array;
+NSMutableArray *retval;
 
 - (id)init {
-    if (self = [super init]) {
+    if ((self = [super init])) {
         // First, test for existence.
         BOOL success;
         NSFileManager *fileManager = [NSFileManager defaultManager];
@@ -30,8 +30,8 @@
         if (!success) {
             NSAssert1(0, @"Failed to create writable database file with message '%@'.", defaultDBPath);
         }
-    return self;
     }
+    return self;
 }
 
 - (NSString *)databasePath {
@@ -43,29 +43,28 @@
 
 - (sqlite3 *)databaseAccess {
     NSString *path = self.databasePath;
-    if (sqlite3_open([path UTF8String], &_databaseFile) == SQLITE_OK) {
+    if (sqlite3_open([path UTF8String], &_database) == SQLITE_OK) {
         // Open the database. The database was prepared outside the application.
-        if (sqlite3_open([path UTF8String], &_databaseFile) == SQLITE_OK)
+        if (sqlite3_open([path UTF8String], &_database) == SQLITE_OK)
         {
-            return _databaseFile;
+            return _database;
         }
     }
     else NSLog (@"Couldn't access database");
 }
 
-- (NSMutableArray*)globalTaskList {
-    NSMutableArray *array = [[NSMutableArray alloc] init];
+- (NSMutableArray *)taskInfos {
     NSString *path = self.databasePath;
-    if (sqlite3_open([path UTF8String], &_databaseFile) == SQLITE_OK) {
+    NSMutableArray *retval = [[NSMutableArray alloc] init];
+    if (sqlite3_open([path UTF8String], &_database) == SQLITE_OK) {
         // Open the database. The database was prepared outside the application.
-        if (sqlite3_open([path UTF8String], &_databaseFile) == SQLITE_OK)
-        {
+        if (sqlite3_open([path UTF8String], &_database) == SQLITE_OK) {
             // Get the primary key for all books.
             const char *sql = "SELECT * FROM tasks";
             sqlite3_stmt *statement;
             // Preparing a statement compiles the SQL query into a byte-code program in the SQLite library.
             // The third parameter is either the length of the SQL string or -1 to read up to the first null terminator.
-            if (sqlite3_prepare_v2(_databaseFile, sql, -1, &statement, NULL) == SQLITE_OK) {
+            if (sqlite3_prepare_v2(_database, sql, -1, &statement, NULL) == SQLITE_OK) {
                 // We "step" through the results - once for each row.
                 while (sqlite3_step(statement) == SQLITE_ROW) {
                     int uniqueId = sqlite3_column_int (statement, 0);
@@ -106,7 +105,7 @@
                                            initWithUniqueId:uniqueId
                                            text:text];
                     
-                    [array addObject:info];
+                    [retval addObject:info];
 //                    info.works = works;
                     info.completed = completed;
 //                    info.deleted = deleted;
@@ -119,33 +118,34 @@
             }
             // "Finalize" the statement - releases the resources associated with the statement.
             sqlite3_finalize(statement);
-        }
-        else
-        {
+        } else {
             // Even though the open failed, call close to properly clean up resources.
-            sqlite3_close(_databaseFile);
-            NSAssert1(0, @"Failed to open database with message '%s'.", sqlite3_errmsg(_databaseFile));
+            sqlite3_close(_database);
+            NSAssert1(0, @"Failed to open database with message '%s'.", sqlite3_errmsg(_database));
             // Additional error handling, as appropriate...
         }
     }
-    NSLog(@"globalTaskList count is %i",array.count);
-    return array;
+    NSArray* reversedArray = [[retval reverseObjectEnumerator] allObjects];
+    return (NSMutableArray *)reversedArray;
 }
 
 -(void)removeTask:(CrushTaskInfo *)task {
-	NSUInteger index = [self.globalTaskList indexOfObject:task];
+	NSUInteger index = [retval indexOfObject:task];
+    
     if (index == NSNotFound) return;
     
     [task deleteFromDatabase];
-    [self.globalTaskList removeObject:task];
+    [retval removeObject:task];
+    NSLog(@"removeTask called");
 }
 
 -(CrushTaskInfo *) addTask:(NSString *)text {
-	int uniqueId = [CrushTaskInfo insertIntoDatabase:_databaseFile];
+//    Need to make delegate to create uniqueId automatically
+	NSInteger uniqueId = [CrushTaskInfo insertIntoDatabase:_database];
     CrushTaskInfo *newTask = [[CrushTaskInfo alloc]initWithUniqueId:uniqueId text:text];
-    NSLog(@"Database add %i,%@",uniqueId,text);
+//    NSLog(@"Database add %i,%@",uniqueId,text);
     
-	[self.globalTaskList insertObject:newTask atIndex:0];
+	[retval insertObject:newTask atIndex:0];
     return newTask;
 }
 
