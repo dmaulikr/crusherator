@@ -13,12 +13,15 @@
 @interface CrushTaskDatabase : NSObject <UIApplicationDelegate>
 
 {
-    sqlite3 *_database;
+    sqlite3 *_databaseFile;
+//    NSMutableArray *array;
 }
 
-- (NSMutableArray *)taskInfos;
 - (CrushTaskInfo *)addTask:text;
 - (void)removeTask:task;
 - (sqlite3 *)databaseAccess;
+- (NSMutableArray *)globalTaskList;
+
+//@property (nonatomic, retain) NSMutableArray *array;
 
 @end

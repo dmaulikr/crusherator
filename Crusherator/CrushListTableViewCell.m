@@ -180,7 +180,7 @@ const float LABEL_LEFT_MARGIN = 15.0f;
         if (_completeOnDragRelease) {
             // mark the item as complete and update the UI state
             self.toDoItem.completed = !(self.toDoItem.completed);
-            [self.toDoItem dehydrate];
+            [self.toDoItem editInDatabase];
             _itemCompleteLayer.hidden = !_itemCompleteLayer.hidden;
             _label.strikethrough = !_label.strikethrough;
         }
@@ -199,13 +199,13 @@ const float LABEL_LEFT_MARGIN = 15.0f;
 {
     [self.delegate cellDidEndEditing:self];
     self.toDoItem.text = textField.text;
-    [self.toDoItem dehydrate];
+    [self.toDoItem editInDatabase];
 }
 
 -(void)textFieldDidBeginEditing:(UITextField *)textField
 {
     [self.delegate cellDidBeginEditing:self];
-    [self.toDoItem dehydrate];
+    [self.toDoItem editInDatabase];
 }
 
 @end

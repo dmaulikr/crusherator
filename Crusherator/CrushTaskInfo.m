@@ -64,7 +64,6 @@ static sqlite3_stmt *insert_statement = nil;
         if (sqlite3_step(init_statement) == SQLITE_ROW) {
             self.text = [NSString stringWithUTF8String:(char *)sqlite3_column_text(init_statement, 0)];
 			self.completed = sqlite3_column_int(init_statement,1);
-            NSLog(@"task initiated with complete = %i",_completed);
         } else {
             self.text = @"Nothing";
         }
@@ -88,18 +87,7 @@ static sqlite3_stmt *insert_statement = nil;
     return self;
 }
 
-- (void) reset {
-    self.text = nil;
-//    self.works = 0;
-    self.deleted = nil;
-//    self.dateCreated = nil;
-//    self.dateCompleted = nil;
-//    self.dateDeleted = nil;
-//    self.category = nil;
-//    self.project = nil;
-}
-
-- (void) dehydrate {
+- (void) editInDatabase {
     if (dehydrate_statement == nil) {
         const char *sql = "UPDATE tasks SET text = ? , completed = ? WHERE uniqueId=?";
         if (sqlite3_prepare_v2(_database, sql, -1, &dehydrate_statement, NULL) != SQLITE_OK) {

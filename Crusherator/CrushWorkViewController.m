@@ -18,6 +18,9 @@
 @interface CrushWorkViewController ()
 
 {
+    // an array of to-do items
+    CrushTaskDatabase *database;
+    
     // Variables that make the timer work
     bool running;
     NSTimeInterval startTime;
@@ -26,9 +29,6 @@
     NSTimeInterval timerInterval;
     int defaultTasksOnScreen;
     int tasksOnScreen;
-
-    // Variables that make the task list work
-    NSMutableArray *taskList;
     
     // Options that will be changeable by the user in the future
     int lengthOfWorkBlocks;
@@ -72,6 +72,7 @@
 
 // Timer interface
 @synthesize countdown;
+@synthesize list;
 @synthesize buttonGoStop;
 @synthesize buttonNextTask;
 @synthesize buttonCompleteTask;
@@ -96,8 +97,7 @@
 //        CrushDummyTaskDatabase *database = [[CrushDummyTaskDatabase alloc] init];
 //        taskList = database.taskList;
         
-        CrushTaskDatabase *database = [[CrushTaskDatabase alloc] init];
-        taskList = database.taskInfos;
+        database = [[CrushTaskDatabase alloc] init];
         
         self.title = NSLocalizedString(@"Crush", @"Crush");
         self.tabBarItem.image = [UIImage imageNamed:@"first"];
@@ -238,13 +238,24 @@
         [self nextTask];
     }
     
-    
-    
 // initiate the timer
     [self changeModes:@"workReady"];
     running = FALSE;    
     [NSTimer scheduledTimerWithTimeInterval:1.0 target:self selector:@selector(incrementTimer) userInfo:nil repeats:YES];
 
+//  add subview list
+    list = [[CrushOutputView alloc] initWithNibName:@"CrushListViewController_iPhone" bundle:nil];
+    [list.view setFrame:CGRectMake(xpad,ypad,widthPage,heightOutput)];
+    [self addChildViewController:list];
+    [self.view addSubview:list.view];
+    
+}
+
+- (void)viewWillAppear:(BOOL)animated
+{
+    [self.list reload];
+    
+    NSLog(@"reloaded with %i tasks!",database.globalTaskList.count);
 }
 
 // pressing button changes modes
@@ -303,8 +314,8 @@
             gradientHot.hidden = YES;
             workUnitsCompleted++;
             [workCount setText:[NSString stringWithFormat:@"Crushed: %d",workUnitsCompleted]];
-            listItem *item = taskList[((taskLabels.count)%taskList.count)];
-            item.works++;
+//            listItem *item = database.globalTaskList[(database.globalTaskList.count)-1];
+//            item.works++;
             [self updateLabels];
         }
         else if ([modeName isEqualToString:@"workPaused"])
@@ -363,17 +374,17 @@
 //    NSInteger hours = (ti / 3600);
     countdown.text = [NSString stringWithFormat:@"%02i:%02i", minutes, seconds];
     
-    listItem *item = taskList[((taskLabels.count)%taskList.count)];
+//    listItem *item = database.globalTaskList[(database.globalTaskList.count)-1];
     
 //    for(int i=0;i<=(item.works+1);i++)
 //    {
 //        item.textWorks = [@"" stringByPaddingToLength:item.works withString:@"|" startingAtIndex:0];
 //    }
-    UILabel *currentWorkLabel = workLabels[taskLabels.count-1];
+//    UILabel *currentWorkLabel = workLabels[taskLabels.count-1];
 //    currentWorkLabel.text = item.textWorks;
     
     CrushStrikeLabel *currentTaskLabel = taskLabels[taskLabels.count-1];
-    currentTaskLabel.strikethrough = item.completed;
+//    currentTaskLabel.strikethrough = item.completed;
 }
 
 // adds a new task and moves other tasks down
@@ -419,14 +430,14 @@
     }
     
     CrushStrikeLabel *taskLabel = [[CrushStrikeLabel alloc] initWithFrame:(CGRectMake(xpad+indent,6*ypad,widthLabel,17.0))];
-    listItem *item = taskList[((taskLabels.count)%taskList.count)];
+//    listItem *item = database.globalTaskList[(database.globalTaskList.count)-1];
     taskLabel.backgroundColor = [UIColor clearColor];
-    taskLabel.strikethrough = item.completed;
+//    taskLabel.strikethrough = item.completed;
     taskLabel.color = [UIColor blackColor];
     taskLabel.font = fontDialogStrong;
     taskLabel.textColor = [UIColor colorWithRed:0.0 green:0.0 blue:0.0 alpha:(1.0)];
     taskLabel.alpha = 0.0;
-    taskLabel.text = item.text;
+//    taskLabel.text = item.text;
     taskLabel.center = CGPointMake(taskLabel.center.x+100,taskLabel.center.y);
     taskLabel.strikethroughThickness = 2.0;
     taskLabel.offset = -3.0;
@@ -473,12 +484,12 @@
 
 - (void)completeTask
 {
-    listItem *item = taskList[((taskLabels.count-1)%(taskList.count-1))];
-    CrushStrikeLabel *currentTaskLabel = taskLabels[taskLabels.count-1];
-    item.completed = !item.completed;
-    currentTaskLabel.text = item.text;
-    currentTaskLabel.strikethrough = item.completed;
-    [self nextTask];
+//    listItem *item = taskList[((taskLabels.count-1)%(taskList.count-1))];
+//    CrushStrikeLabel *currentTaskLabel = taskLabels[taskLabels.count-1];
+//    item.completed = !item.completed;
+//    currentTaskLabel.text = item.text;
+//    currentTaskLabel.strikethrough = item.completed;
+//    [self nextTask];
 }
 
 //  The function:

@@ -8,6 +8,7 @@
 
 #import <UIKit/UIKit.h>
 #import "listItem.h"
+#import "CrushOutputView.h"
 
 @interface CrushWorkViewController : UIViewController
 
@@ -15,6 +16,7 @@
 
 // Interface and output
 @property (nonatomic, retain) UILabel *countdown;
+@property (nonatomic, retain) CrushOutputView *list;
 
 // Statistics
 @property (nonatomic, retain) UILabel *workCount;
