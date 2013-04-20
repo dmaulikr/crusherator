@@ -93,10 +93,8 @@
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
     if (self) {
         // Initialize data source
-//        CrushDummyTaskDatabase *database = [[CrushDummyTaskDatabase alloc] init];
-//        taskList = database.taskList;
-        
-        CrushTaskDatabase *database = [[CrushTaskDatabase alloc] init];
+
+        CrushTaskDatabase *database = [CrushTaskDatabase sharedInstance];
         taskList = database.taskInfos;
         
         self.title = NSLocalizedString(@"Crush", @"Crush");
@@ -105,7 +103,12 @@
     }
     return self;
 }
-							
+
+- (void)viewDidAppear:(BOOL)animated
+{
+    [self.view setNeedsDisplay];
+}
+
 - (void)viewDidLoad
 {
     [super viewDidLoad];

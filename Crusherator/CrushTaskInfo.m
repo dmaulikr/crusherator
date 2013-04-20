@@ -26,7 +26,7 @@ static sqlite3_stmt *insert_statement = nil;
 @synthesize project = _project;
 
 + (NSInteger)insertIntoDatabase:(sqlite3 *)database {
-    CrushTaskDatabase *taskDatabase = [[CrushTaskDatabase alloc] init];
+    CrushTaskDatabase *taskDatabase = [CrushTaskDatabase sharedInstance];
     database = taskDatabase.databaseAccess;
     
     // When delegate is applied this will return an NSInteger
@@ -50,7 +50,7 @@ static sqlite3_stmt *insert_statement = nil;
 {
     if ((self = [super init])) {
         
-        CrushTaskDatabase *taskDatabase = [[CrushTaskDatabase alloc] init];
+        CrushTaskDatabase *taskDatabase = [CrushTaskDatabase sharedInstance];
         _database = taskDatabase.databaseAccess;
         
         if (init_statement == nil) {
@@ -64,7 +64,7 @@ static sqlite3_stmt *insert_statement = nil;
         if (sqlite3_step(init_statement) == SQLITE_ROW) {
             self.text = [NSString stringWithUTF8String:(char *)sqlite3_column_text(init_statement, 0)];
 			self.completed = sqlite3_column_int(init_statement,1);
-            NSLog(@"task initiated with complete = %i",_completed);
+            NSLog(@"task initiated with text = %@ and complete = %i",_text, _completed);
         } else {
             self.text = @"Nothing";
         }

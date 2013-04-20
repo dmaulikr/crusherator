@@ -16,9 +16,12 @@
     sqlite3 *_database;
 }
 
++ (CrushTaskDatabase *)sharedInstance;
 - (NSMutableArray *)taskInfos;
 - (CrushTaskInfo *)addTask:text;
 - (void)removeTask:task;
 - (sqlite3 *)databaseAccess;
+
+@property (nonatomic, retain) NSMutableArray *retval;
 
 @end

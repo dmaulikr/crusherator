@@ -46,7 +46,6 @@
 // based on the current scroll location, recycles off-screen cells and
 // creates new ones to fill the empty space.
 -(void) refreshView {
-    CrushTaskDatabase *database = [[CrushTaskDatabase alloc] init];
     
     if (CGRectIsNull(_scrollView.frame)) {
         return;

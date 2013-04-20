@@ -11,7 +11,20 @@
 
 @implementation CrushTaskDatabase
 
-NSMutableArray *retval;
+static NSMutableArray *retval = NULL;
+
+static CrushTaskDatabase *instance = NULL;
+
++ (CrushTaskDatabase *)sharedInstance
+{
+    @synchronized(self)
+    {
+        if (instance == NULL)
+            instance = [[self alloc] init];
+    }
+    
+    return(instance);
+}
 
 - (id)init {
     if ((self = [super init])) {
@@ -31,6 +44,7 @@ NSMutableArray *retval;
             NSAssert1(0, @"Failed to create writable database file with message '%@'.", defaultDBPath);
         }
     }
+    NSLog(@"Singleton initialized");
     return self;
 }
 
@@ -54,79 +68,80 @@ NSMutableArray *retval;
 }
 
 - (NSMutableArray *)taskInfos {
-    NSString *path = self.databasePath;
-    NSMutableArray *retval = [[NSMutableArray alloc] init];
-    if (sqlite3_open([path UTF8String], &_database) == SQLITE_OK) {
-        // Open the database. The database was prepared outside the application.
+    if(retval.count == 0)
+    {
+        retval = [[NSMutableArray alloc] init];
+        NSString *path = self.databasePath;
         if (sqlite3_open([path UTF8String], &_database) == SQLITE_OK) {
-            // Get the primary key for all books.
-            const char *sql = "SELECT * FROM tasks";
-            sqlite3_stmt *statement;
-            // Preparing a statement compiles the SQL query into a byte-code program in the SQLite library.
-            // The third parameter is either the length of the SQL string or -1 to read up to the first null terminator.
-            if (sqlite3_prepare_v2(_database, sql, -1, &statement, NULL) == SQLITE_OK) {
-                // We "step" through the results - once for each row.
-                while (sqlite3_step(statement) == SQLITE_ROW) {
-                    int uniqueId = sqlite3_column_int (statement, 0);
-                    
-                    char *textChars = (char *) sqlite3_column_text(statement, 1);
-                    NSString *text = [NSString stringWithFormat:(@"%s"),textChars];
-                    
-//                    double works = sqlite3_column_int (statement, 2);
-                    
-                    int completedZeroOne = sqlite3_column_int (statement, 2);
-                    bool completed = (completedZeroOne == 1)? true : false;
-//                    
-//                    int deletedZeroOne = sqlite3_column_int (statement, 4);
-//                    bool deleted = (deletedZeroOne == 1)? true : false;
-//                    
-//                    NSDateFormatter *dateFormat = [[NSDateFormatter alloc] init];
-//                    [dateFormat setDateFormat:@"yyyy-MM-dd HH:mm:ss"];
-//                    
-//                    char *dateCreatedChars = (char *) sqlite3_column_text(statement, 7);
-//                    NSString *createdText = [NSString stringWithFormat:(@"%s"),dateCreatedChars];
-//                    NSDate *dateCreated =[dateFormat dateFromString:createdText];
-//                    
-//                    char *dateCompletedChars = (char *) sqlite3_column_text(statement, 7);
-//                    NSString *completedText = [NSString stringWithFormat:(@"%s"),dateCompletedChars];
-//                    NSDate *dateCompleted =[dateFormat dateFromString:completedText];
-//                    
-//                    char *dateDeletedChars = (char *) sqlite3_column_text(statement, 7);
-//                    NSString *deletedText = [NSString stringWithFormat:(@"%s"),dateDeletedChars];
-//                    NSDate *dateDeleted =[dateFormat dateFromString:deletedText];
-//                    
-//                    char *categoryChars = (char *) sqlite3_column_text(statement, 7);
-//                    NSString *category = [NSString stringWithFormat:(@"%s"),categoryChars];
-//                    
-//                    char *projectChars = (char *) sqlite3_column_text(statement, 8);
-//                    NSString *project = [NSString stringWithFormat:(@"%s"),projectChars];
-//                    
-                    CrushTaskInfo *info = [[CrushTaskInfo alloc]
-                                           initWithUniqueId:uniqueId
-                                           text:text];
-                    
-                    [retval addObject:info];
-//                    info.works = works;
-                    info.completed = completed;
-//                    info.deleted = deleted;
-//                    info.dateCreated = dateCreated;
-//                    info.dateCompleted = dateCompleted;
-//                    info.dateDeleted = dateDeleted;
-//                    info.category = category;
-//                    info.project = project;
+            // Open the database. The database was prepared outside the application.
+            if (sqlite3_open([path UTF8String], &_database) == SQLITE_OK) {
+                // Get the primary key for all books.
+                const char *sql = "SELECT * FROM tasks ORDER BY uniqueId DESC";
+                sqlite3_stmt *statement;
+                // Preparing a statement compiles the SQL query into a byte-code program in the SQLite library.
+                // The third parameter is either the length of the SQL string or -1 to read up to the first null terminator.
+                if (sqlite3_prepare_v2(_database, sql, -1, &statement, NULL) == SQLITE_OK) {
+                    // We "step" through the results - once for each row.
+                    while (sqlite3_step(statement) == SQLITE_ROW) {
+                        int uniqueId = sqlite3_column_int (statement, 0);
+                        
+                        char *textChars = (char *) sqlite3_column_text(statement, 1);
+                        NSString *text = [NSString stringWithFormat:(@"%s"),textChars];
+                        
+                        int completedZeroOne = sqlite3_column_int (statement, 2);
+                        bool completed = (completedZeroOne == 1)? true : false;
+    //                    
+    //                    int deletedZeroOne = sqlite3_column_int (statement, 4);
+    //                    bool deleted = (deletedZeroOne == 1)? true : false;
+    //                    
+    //                    NSDateFormatter *dateFormat = [[NSDateFormatter alloc] init];
+    //                    [dateFormat setDateFormat:@"yyyy-MM-dd HH:mm:ss"];
+    //                    
+    //                    char *dateCreatedChars = (char *) sqlite3_column_text(statement, 7);
+    //                    NSString *createdText = [NSString stringWithFormat:(@"%s"),dateCreatedChars];
+    //                    NSDate *dateCreated =[dateFormat dateFromString:createdText];
+    //                    
+    //                    char *dateCompletedChars = (char *) sqlite3_column_text(statement, 7);
+    //                    NSString *completedText = [NSString stringWithFormat:(@"%s"),dateCompletedChars];
+    //                    NSDate *dateCompleted =[dateFormat dateFromString:completedText];
+    //                    
+    //                    char *dateDeletedChars = (char *) sqlite3_column_text(statement, 7);
+    //                    NSString *deletedText = [NSString stringWithFormat:(@"%s"),dateDeletedChars];
+    //                    NSDate *dateDeleted =[dateFormat dateFromString:deletedText];
+    //                    
+    //                    char *categoryChars = (char *) sqlite3_column_text(statement, 7);
+    //                    NSString *category = [NSString stringWithFormat:(@"%s"),categoryChars];
+    //                    
+    //                    char *projectChars = (char *) sqlite3_column_text(statement, 8);
+    //                    NSString *project = [NSString stringWithFormat:(@"%s"),projectChars];
+    //                    
+                        CrushTaskInfo *info = [[CrushTaskInfo alloc]
+                                               initWithUniqueId:uniqueId
+                                               text:text];
+                        
+                        [retval addObject:info];
+    //                    info.works = works;
+                        info.completed = completed;
+    //                    info.deleted = deleted;
+    //                    info.dateCreated = dateCreated;
+    //                    info.dateCompleted = dateCompleted;
+    //                    info.dateDeleted = dateDeleted;
+    //                    info.category = category;
+    //                    info.project = project;
+                    }
                 }
+                // "Finalize" the statement - releases the resources associated with the statement.
+                sqlite3_finalize(statement);
+            } else {
+                // Even though the open failed, call close to properly clean up resources.
+                sqlite3_close(_database);
+                NSAssert1(0, @"Failed to open database with message '%s'.", sqlite3_errmsg(_database));
+                // Additional error handling, as appropriate...
             }
-            // "Finalize" the statement - releases the resources associated with the statement.
-            sqlite3_finalize(statement);
-        } else {
-            // Even though the open failed, call close to properly clean up resources.
-            sqlite3_close(_database);
-            NSAssert1(0, @"Failed to open database with message '%s'.", sqlite3_errmsg(_database));
-            // Additional error handling, as appropriate...
         }
-    }
-    NSArray* reversedArray = [[retval reverseObjectEnumerator] allObjects];
-    return (NSMutableArray *)reversedArray;
+        return retval;
+        }
+    else return retval;
 }
 
 -(void)removeTask:(CrushTaskInfo *)task {
@@ -146,6 +161,7 @@ NSMutableArray *retval;
 //    NSLog(@"Database add %i,%@",uniqueId,text);
     
 	[retval insertObject:newTask atIndex:0];
+    NSLog(@"addTask called");
     return newTask;
 }
 

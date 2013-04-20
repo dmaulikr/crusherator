@@ -30,7 +30,7 @@
     if (self)
     {
         // access database
-        CrushTaskDatabase *database = [[CrushTaskDatabase alloc] init];
+        CrushTaskDatabase *database = [CrushTaskDatabase sharedInstance];
         self.tasks = database.taskInfos;
 
         self.title = NSLocalizedString(@"List", @"List");
@@ -66,6 +66,13 @@
                                    action:@selector(dismissKeyboard)];
     
     [self.view addGestureRecognizer:tap];
+}
+
+- (void)viewWillAppear:(BOOL)animated
+{
+    [_tableView reloadData];
+    NSLog(@"data reloaded");
+    animated = NO;
 }
 
 - (void)didReceiveMemoryWarning
@@ -112,10 +119,10 @@
 {
     float delay = 0.5;
     
-    CrushTaskDatabase *database = [[CrushTaskDatabase alloc] init];
+    CrushTaskDatabase *database = [CrushTaskDatabase sharedInstance];
     
     [database removeTask:todoItem];
-    [_tasks removeObject:todoItem];
+//    [_tasks removeObject:todoItem];
     
     // find the visible cells
     NSArray* visibleCells = [self.tableView visibleCells];
@@ -189,10 +196,10 @@
 -(void)itemAdded
 {
     // create the new item
-    CrushTaskDatabase *database = [[CrushTaskDatabase alloc] init];
+    CrushTaskDatabase *database = [CrushTaskDatabase sharedInstance];
     CrushTaskInfo* todoItem = [database addTask:@"task name"];
     
-    [_tasks insertObject:todoItem atIndex:0];
+//    [_tasks insertObject:todoItem atIndex:0];
     // refresh the table
     [_tableView reloadData];
     // enter edit mode
