@@ -44,8 +44,9 @@
         works.backgroundColor = [UIColor clearColor];
         works.font = fontDialogStrong;
         works.textColor = [UIColor colorWithRed:0.0 green:0.0 blue:0.0 alpha:(1.0)];
-        works.alpha = 0.0;
+        works.alpha = 1.0;
         works.textAlignment = NSTextAlignmentRight;
+        works.enabled = NO;
         [self addSubview:works];
 
     }

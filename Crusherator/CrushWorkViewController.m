@@ -29,6 +29,7 @@
 
     // Variables that make the task list work
     NSMutableArray *taskList;
+    CrushTask *currentTask;
     
     // Options that will be changeable by the user in the future
     int lengthOfWorkBlocks;
@@ -44,16 +45,19 @@
     // Statistics on work completed so far
     int workUnitsCompleted;
     int relaxUnitsCompleted;
+    int tasksCompleted;
 //    NSTimeInterval workTimeCompleted;
 //    NSTimeInterval playTimeCompleted;
     
     // Dimensions and spacing
+    int screenWidth;
+    int screenHeight;
     int heightButton;
-    double xpad;
     double ypad;
-    double widthPage;
     double widthLabel;
     double heightOutput;
+    double heightOutputText;
+    double heightDialogText;
     double widthButton;
     double indent;
     
@@ -117,32 +121,35 @@
 // modes and defaults
     lengthOfWorkBlocks = 5;
     lengthOfRelaxBlocks = 5;
-    defaultTasksOnScreen = 19;
+    defaultTasksOnScreen = 1;
     buzzEndWork = FALSE;
     buzzEndPlay = FALSE;
     
+// set page properties
+    screenWidth = self.view.frame.size.width;
+    screenHeight = self.view.frame.size.height;
+    heightButton = screenHeight*.1;
+    ypad = screenHeight*.05;
+    heightOutput = screenHeight-heightButton;
+    heightOutputText = 80.0;
+    heightDialogText = 15.0;
+    indent = screenWidth*.15;
+    widthLabel = screenWidth-(2*indent);
+    widthButton = screenWidth/3.0;
+    
 // fonts and colors
-    fontCountdown = [UIFont fontWithName:@"Gotham Medium" size:80.0];
+    fontCountdown = [UIFont fontWithName:@"Gotham Medium" size:heightOutputText];
     fontButton = [UIFont fontWithName:@"Gotham Medium" size:20.0];
-    fontDialog = [UIFont fontWithName:@"Gotham Light" size:15.0];
+    fontDialog = [UIFont fontWithName:@"Gotham Light" size:heightDialogText];
     fontDialogStrong = [UIFont fontWithName:@"Gotham Medium" size:15.0];
     [self.view setBackgroundColor:[UIColor blackColor]];
     
-// set page properties
-    heightButton = 35;
-    xpad = 5;
-    widthPage = self.view.frame.size.width-2*xpad;
-    ypad = 5;
-    heightOutput = 300;
-    indent = 35;
-    widthLabel = self.view.frame.size.width-(6*xpad+2*indent);
-    widthButton = widthPage/3.0-(xpad/2.0);
     
 // text field for results
-    countdown = [[UILabel alloc] initWithFrame:(CGRectMake(xpad,ypad,widthPage,heightOutput))];
+    countdown = [[UILabel alloc] initWithFrame:(CGRectMake(0,ypad,screenWidth,heightOutputText))];
+    countdown.center = CGPointMake(screenWidth/2,heightOutput/2);
     countdown.backgroundColor = [UIColor clearColor];
     countdown.font = fontCountdown;
-    countdown.text = @"0:25";
     countdown.textAlignment = NSTextAlignmentCenter;
     countdown.layer.shadowColor = [UIColor blackColor].CGColor;
     countdown.layer.shadowOffset = CGSizeMake(0.0, 0.0);
@@ -153,7 +160,7 @@
     
 // add a layer that overlays the cell adding a subtle gradient effect
     gradientHot = [CAGradientLayer layer];
-    gradientHot.frame = CGRectMake(xpad,ypad,widthPage,heightOutput);
+    gradientHot.frame = CGRectMake(0,0,screenWidth,heightOutput);
     gradientHot.colors = @[(id)[[UIColor colorWithRed:(254.0 / 256.0) green:(0.0 / 256.0) blue:(4.0 / 256.0) alpha:1.0f] CGColor],
                            (id)[[UIColor colorWithRed:(253.0 / 256.0) green:(116.0 / 256.0) blue:(16.0 / 256.0) alpha:1.0f] CGColor]];
     gradientHot.locations = @[@0.00f,@1.00f];
@@ -162,7 +169,7 @@
 
 // add a layer that overlays the cell adding a subtle gradient effect
     gradientCold = [CAGradientLayer layer];
-    gradientCold.frame = CGRectMake(xpad,ypad,widthPage,heightOutput);
+    gradientCold.frame = CGRectMake(0,0,screenWidth,heightOutput);
     gradientCold.colors = @[(id)[[UIColor colorWithRed:(29.0 / 256.0) green:(247.0 / 256.0) blue:(255.0 / 256.0) alpha:1.0f] CGColor],
                             (id)[[UIColor colorWithRed:(0.0 / 256.0) green:(168.0 / 256.0) blue:(253.0 / 256.0) alpha:1.0f] CGColor]];
     gradientCold.locations = @[@0.00f, @1.00f];
@@ -170,27 +177,24 @@
     [self.view.layer insertSublayer:gradientCold atIndex:0];
     
 // work counts for this session
-    workCount = [[UILabel alloc] initWithFrame:(CGRectMake(xpad+indent,4*ypad+heightOutput+heightButton,widthLabel,15.0+7.0))];
+    workCount = [[UILabel alloc] initWithFrame:(CGRectMake(indent,heightOutput-ypad-heightDialogText*3-8.0,widthLabel,heightDialogText+7.0))];
     workCount.backgroundColor = [UIColor clearColor];
-    workCount.font = fontDialog;
-    workCount.textColor = [UIColor whiteColor];
+    workCount.font = fontDialogStrong;
     workCount.text = [NSString stringWithFormat:@"Crushed: %d",workUnitsCompleted];
     [self.view addSubview:workCount];
 
 // play counts for this session
-    relaxedCount = [[UILabel alloc] initWithFrame:(CGRectMake(xpad+indent,4*ypad+heightOutput+heightButton+15.0+7.0,widthLabel,15.0+7.0))];
+    relaxedCount = [[UILabel alloc] initWithFrame:(CGRectMake(indent,heightOutput-ypad-heightDialogText*2-4.0,widthLabel,heightDialogText+7.0))];
     relaxedCount.backgroundColor = [UIColor clearColor];
-    relaxedCount.font = fontDialog;
-    relaxedCount.textColor = [UIColor whiteColor];
+    relaxedCount.font = fontDialogStrong;
     relaxedCount.text = [NSString stringWithFormat:@"Relaxed: %d",relaxUnitsCompleted];
     [self.view addSubview:relaxedCount];
 
 // task counts for this session
-    taskCount = [[UILabel alloc] initWithFrame:(CGRectMake(xpad+indent,4*ypad+heightOutput+heightButton+2*(15.0+7.0),widthLabel,15.0+7.0))];
+    taskCount = [[UILabel alloc] initWithFrame:(CGRectMake(indent,heightOutput-ypad-heightDialogText,widthLabel,heightDialogText+7.0))];
     taskCount.backgroundColor = [UIColor clearColor];
-    taskCount.font = fontDialog;
-    taskCount.textColor = [UIColor whiteColor];
-    taskCount.text = [NSString stringWithFormat:@"Tasks: %d",tasksOnScreen];
+    taskCount.font = fontDialogStrong;
+    taskCount.text = [NSString stringWithFormat:@"Tasks: %d",tasksCompleted];
     [self.view addSubview:taskCount];
     
 // creating custom button properties
@@ -199,23 +203,23 @@
 
 // building the buttons
     buttonGoStop = [UIButton buttonWithType:UIButtonTypeCustom];
-    [buttonGoStop setFrame:CGRectMake((xpad*2+widthButton),2*ypad+heightOutput,widthButton,heightButton)];
+    [buttonGoStop setFrame:CGRectMake(widthButton,heightOutput,widthButton,heightButton)];
     
     [buttonGoStop.titleLabel setFont:fontButton];
     [buttonGoStop setTitleColor:buttonColorDefault forState:UIControlStateNormal];
     [buttonGoStop setTitleColor:buttonColorHighlight forState:UIControlStateHighlighted];
     [buttonGoStop addTarget:self action:@selector(buttonPress:) forControlEvents:(UIControlEventTouchUpInside)];
-    [buttonGoStop setBackgroundColor:UIColorFromRGB(0xcfcfcf)];
-    [buttonGoStop setTitleColor:UIColorFromRGB(0x000000) forState:UIControlStateNormal];
+    [buttonGoStop setBackgroundColor:UIColorFromRGB(0x000000)];
+    [buttonGoStop setTitleColor:UIColorFromRGB(0xFFFFFF) forState:UIControlStateNormal];
     
     [self.view addSubview:buttonGoStop];
     
     buttonNextTask = [UIButton buttonWithType:UIButtonTypeCustom];
-    [buttonNextTask setFrame:CGRectMake(xpad,2*ypad+heightOutput,widthButton,heightButton)];
+    [buttonNextTask setFrame:CGRectMake(0,heightOutput,widthButton,heightButton)];
     
     [buttonNextTask.titleLabel setFont:fontButton];
     [buttonNextTask setTitle:@"»" forState:UIControlStateNormal];
-    [buttonNextTask setBackgroundColor:UIColorFromRGB(0xcfcfcf)];
+    [buttonNextTask setBackgroundColor:UIColorFromRGB(0x000000)];
     [buttonNextTask setTitleColor:UIColorFromRGB(0x7f2d2d) forState:UIControlStateNormal];
     [buttonNextTask addTarget:self action:@selector(nextTask) forControlEvents:(UIControlEventTouchUpInside)];
     buttonNextTask.contentEdgeInsets = UIEdgeInsetsMake(5.0, 0.0, 0.0, 0.0);
@@ -223,11 +227,11 @@
     [self.view addSubview:buttonNextTask];
     
     buttonCompleteTask = [UIButton buttonWithType:UIButtonTypeCustom];
-    [buttonCompleteTask setFrame:CGRectMake((xpad*3+widthButton*2),2*ypad+heightOutput,widthButton-2,heightButton)];
+    [buttonCompleteTask setFrame:CGRectMake(widthButton*2,heightOutput,widthButton,heightButton)];
     
     [buttonCompleteTask.titleLabel setFont:fontButton];
     [buttonCompleteTask setTitle:@"✓" forState:UIControlStateNormal];
-    [buttonCompleteTask setBackgroundColor:UIColorFromRGB(0xcfcfcf)];
+    [buttonCompleteTask setBackgroundColor:UIColorFromRGB(0x000000)];
     [buttonCompleteTask setTitleColor:UIColorFromRGB(0x378328) forState:UIControlStateNormal];
     [buttonCompleteTask addTarget:self action:@selector(completeTask) forControlEvents:(UIControlEventTouchUpInside)];
     buttonCompleteTask.contentEdgeInsets = UIEdgeInsetsMake(5.0, 0.0, 0.0, 0.0);
@@ -304,11 +308,8 @@
             [buttonGoStop setTitle:@"RELAX!" forState:(UIControlStateNormal)];
             gradientCold.hidden = NO;
             gradientHot.hidden = YES;
-            workUnitsCompleted++;
+            [self addWork];
             [workCount setText:[NSString stringWithFormat:@"Crushed: %d",workUnitsCompleted]];
-            listItem *item = taskList[((taskLabels.count)%taskList.count)];
-            item.works++;
-            [self updateLabels];
         }
         else if ([modeName isEqualToString:@"workPaused"])
         {
@@ -403,8 +404,11 @@
     {
         int jump = 0;
         CrushTask *taskListMember = taskLabels[i];
+        int labelBottom = (taskListMember.frame.origin.y+taskListMember.frame.size.height);
+        int countdownTop = (countdown.frame.origin.y - taskListMember.frame.size.height);
+        int countdownBottom = (countdown.frame.origin.y+countdown.frame.size.height);
         
-        if (i==(taskLabels.count-4))
+        if ((labelBottom >= countdownTop) && (labelBottom <= countdownBottom))
         {
             jump = 1;
         }
@@ -413,8 +417,8 @@
                            options:UIViewAnimationOptionCurveEaseOut
                         animations:^(void)
         {
-            taskListMember.center = CGPointMake(taskListMember.center.x,taskListMember.center.y+(jump*65)+15+7);
-            taskListMember.alpha = (1.0-(.1*(taskLabels.count-i)));
+            taskListMember.center = CGPointMake(taskListMember.center.x,taskListMember.center.y+(jump*countdown.frame.size.height)+15+7);
+            taskListMember.alpha = (1.0-(.08*(taskLabels.count-i)));
             [taskListMember bold:NO];
         }
                         completion:^(BOOL finished){}
@@ -422,7 +426,7 @@
     }
     
     CrushTaskInfo *item = database.taskInfos[tasksOnScreen];
-    CrushTask *taskLabel = [[CrushTask alloc] initWithFrame:(CGRectMake(xpad+indent,6*ypad,widthLabel,17.0)) withTask:item];
+    CrushTask *taskLabel = [[CrushTask alloc] initWithFrame:(CGRectMake(indent,ypad,widthLabel,17.0)) withTask:item];
     taskLabel.alpha = 0.0;
     taskLabel.center = CGPointMake(taskLabel.center.x+100,taskLabel.center.y);
     
@@ -440,7 +444,7 @@
     
     [taskLabels addObject:taskLabel];
     tasksOnScreen++;
-    taskCount.text = [NSString stringWithFormat:@"Tasks: %d",tasksOnScreen-1];
+    taskCount.text = [NSString stringWithFormat:@"Tasks: %d",tasksCompleted];
     [self updateLabels];
     if(item.completed)
     {
@@ -456,7 +460,17 @@
     item.completed = !item.completed;
     currentTaskLabel.text.text = item.text;
     [currentTaskLabel strike:(item.completed)];
+    tasksCompleted++;
     [self nextTask];
+}
+
+- (void)addWork
+{
+    CrushTask *currentTaskLabel = taskLabels[tasksOnScreen-1];
+    CrushTaskInfo *item = currentTaskLabel.task;
+    item.works++;
+    [self updateLabels];
+    workUnitsCompleted++;
 }
 
 //  The function:
