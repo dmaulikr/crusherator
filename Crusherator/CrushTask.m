@@ -9,15 +9,69 @@
 #import "CrushTask.h"
 
 @implementation CrushTask
+{
+    UIFont *fontDialog;
+    UIFont *fontDialogStrong;
+}
 
-- (id)initWithFrame:(CGRect)frame
+@synthesize text;
+@synthesize works;
+@synthesize task;
+
+- (id)initWithFrame:(CGRect)frame withTask:(CrushTaskInfo *)item
 {
     self = [super initWithFrame:frame];
     if (self) {
-        // Initialization code
+//        [self setBackgroundColor:[UIColor blackColor]];
+        fontDialog = [UIFont fontWithName:@"Gotham Light" size:15.0];
+        fontDialogStrong = [UIFont fontWithName:@"Gotham Medium" size:15.0];
+        
+        text = [[CrushStrikeLabel alloc] initWithFrame:(CGRectMake(0,0,self.frame.size.width,self.frame.size.height))];
+        task = item;
+        text.backgroundColor = [UIColor clearColor];
+        text.strikethrough = item.completed;
+        text.color = [UIColor blackColor];
+        text.font = fontDialogStrong;
+        text.textColor = [UIColor colorWithRed:0.0 green:0.0 blue:0.0 alpha:(1.0)];
+        text.alpha = 1.0;
+        text.text = item.text;
+        text.strikethroughThickness = 2.0;
+        text.offset = -3.0;
+        text.enabled = NO;
+        [self addSubview:text];
+        
+        works = [[CrushStrikeLabel alloc] initWithFrame:(CGRectMake(0,0,self.frame.size.width,self.frame.size.height))];
+        works.backgroundColor = [UIColor clearColor];
+        works.font = fontDialogStrong;
+        works.textColor = [UIColor colorWithRed:0.0 green:0.0 blue:0.0 alpha:(1.0)];
+        works.alpha = 0.0;
+        works.textAlignment = NSTextAlignmentRight;
+        [self addSubview:works];
+
     }
     return self;
 }
+
+- (void)strike:(BOOL)strike
+{
+    text.strikethrough = strike;
+}
+
+- (void)bold:(BOOL)bold
+{
+    UIFont *currentFont;
+    if (bold)
+    {
+        currentFont = fontDialogStrong;
+        text.strikethroughThickness = 2.0;
+    }
+    if (!bold) currentFont = fontDialog;
+    {
+        text.font = currentFont;
+        text.strikethroughThickness = 1.0;
+    }
+}
+
 
 /*
 // Only override drawRect: if you perform custom drawing.

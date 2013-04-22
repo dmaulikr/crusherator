@@ -9,6 +9,7 @@
 #import <UIKit/UIKit.h>
 #import "listItem.h"
 #import "CrushListViewController.h"
+#import "CrushTask.h"
 
 @interface CrushWorkViewController : UIViewController
 

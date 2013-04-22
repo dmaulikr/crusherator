@@ -13,12 +13,13 @@
 #import "CrushTableView.h"
 #import "CrushTableViewDragAddNew.h"
 #import "CrushTaskDatabase.h"
+#import "CrushTableViewDataSource.h"
 
 @interface CrushListViewController : UIViewController
 <
-UITableViewDataSource,
 UITableViewDelegate,
-CrushTableViewCellDelegate
+CrushTableViewCellDelegate,
+CrushTableViewDataSource
 >
 
 @property (weak, nonatomic) IBOutlet CrushTableViewDragAddNew *tableView;

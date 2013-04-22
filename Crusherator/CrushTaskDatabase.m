@@ -65,6 +65,7 @@ static CrushTaskDatabase *instance = NULL;
         }
     }
     else NSLog (@"Couldn't access database");
+    return NULL;
 }
 
 - (NSMutableArray *)taskInfos {

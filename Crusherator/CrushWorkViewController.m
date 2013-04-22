@@ -16,7 +16,6 @@
 #define UIColorFromRGB(rgbValue) [UIColor colorWithRed:((float)((rgbValue & 0xFF0000) >> 16))/255.0 green:((float)((rgbValue & 0xFF00) >> 8))/255.0 blue:((float)(rgbValue & 0xFF))/255.0 alpha:1.0]
 
 @interface CrushWorkViewController ()
-
 {
     // Variables that make the timer work
     bool running;
@@ -26,6 +25,7 @@
     NSTimeInterval timerInterval;
     int defaultTasksOnScreen;
     int tasksOnScreen;
+    CrushTaskDatabase *database;
 
     // Variables that make the task list work
     NSMutableArray *taskList;
@@ -94,7 +94,7 @@
     if (self) {
         // Initialize data source
 
-        CrushTaskDatabase *database = [CrushTaskDatabase sharedInstance];
+        database = [CrushTaskDatabase sharedInstance];
         taskList = database.taskInfos;
         
         self.title = NSLocalizedString(@"Crush", @"Crush");
@@ -107,6 +107,7 @@
 - (void)viewDidAppear:(BOOL)animated
 {
     [self.view setNeedsDisplay];
+    [self updateLabels];
 }
 
 - (void)viewDidLoad
@@ -116,7 +117,7 @@
 // modes and defaults
     lengthOfWorkBlocks = 5;
     lengthOfRelaxBlocks = 5;
-    defaultTasksOnScreen = 8;
+    defaultTasksOnScreen = 19;
     buzzEndWork = FALSE;
     buzzEndPlay = FALSE;
     
@@ -235,7 +236,6 @@
     
 // task list
     taskLabels = [[NSMutableArray alloc]init];
-    workLabels = [[NSMutableArray alloc]init];
     for (int i = 0; i<defaultTasksOnScreen; i++)
     {
         [self nextTask];
@@ -366,27 +366,43 @@
 //    NSInteger hours = (ti / 3600);
     countdown.text = [NSString stringWithFormat:@"%02i:%02i", minutes, seconds];
     
-    listItem *item = taskList[((taskLabels.count)%taskList.count)];
-    
-//    for(int i=0;i<=(item.works+1);i++)
-//    {
-//        item.textWorks = [@"" stringByPaddingToLength:item.works withString:@"|" startingAtIndex:0];
-//    }
-//    currentWorkLabel.text = item.textWorks;
-    
-    CrushStrikeLabel *currentTaskLabel = taskLabels[taskLabels.count-1];
-    currentTaskLabel.strikethrough = item.completed;
+    for (int i = 0; i<=taskLabels.count-1; i++)
+    {
+        CrushTask *task = taskLabels[i];
+        CrushTaskInfo *item = task.task;
+        for(int i=0;i<=(item.works);i++)
+        {
+            task.works.text = [@"" stringByPaddingToLength:item.works withString:@"|" startingAtIndex:0];
+        }
+        task.text.text = item.text;
+        [task strike:(item.completed)];
+    }
+}
+
+- (void)clearTasks
+{
+    for(UIView *subview in [self.view subviews]) {
+        if([subview isKindOfClass:[CrushTask class]])
+        {
+            [subview removeFromSuperview];
+        }
+    }
+    tasksOnScreen = 0;
+    taskLabels = [[NSMutableArray alloc] init];
 }
 
 // adds a new task and moves other tasks down
 - (void)nextTask
 {
+    if(tasksOnScreen == database.taskInfos.count)
+    {
+        [self clearTasks];
+    }
     
     for (int i=0;i<taskLabels.count;i++)
     {
         int jump = 0;
-        CrushStrikeLabel *taskListMember = taskLabels[i];
-        UILabel *worksListMember = workLabels[i];
+        CrushTask *taskListMember = taskLabels[i];
         
         if (i==(taskLabels.count-4))
         {
@@ -397,50 +413,18 @@
                            options:UIViewAnimationOptionCurveEaseOut
                         animations:^(void)
         {
-            taskListMember.font = fontDialog;
             taskListMember.center = CGPointMake(taskListMember.center.x,taskListMember.center.y+(jump*65)+15+7);
-            taskListMember.textColor = [UIColor colorWithRed:0.0 green:0.0 blue:0.0 alpha:
-                                        (1.0-(.1*(taskLabels.count-i)))];
-            taskListMember.strikeAlpha = (1.0-(.1*(taskLabels.count-i)));
-            taskListMember.strikethroughThickness = 1.0;
+            taskListMember.alpha = (1.0-(.1*(taskLabels.count-i)));
+            [taskListMember bold:NO];
         }
-                        completion:^(BOOL finished){}
-         ];
-        
-        [UIView transitionWithView:worksListMember
-                          duration:0.5
-                           options:UIViewAnimationOptionCurveEaseOut
-                        animations:^(void)
-         {
-             worksListMember.font = fontDialog;
-             worksListMember.center = CGPointMake(worksListMember.center.x,worksListMember.center.y+(jump*65)+15+7);
-             worksListMember.textColor = [UIColor colorWithRed:0.0 green:0.0 blue:0.0 alpha:(1.0-(.1*(taskLabels.count-i)))];
-         }
                         completion:^(BOOL finished){}
          ];
     }
     
-    CrushStrikeLabel *taskLabel = [[CrushStrikeLabel alloc] initWithFrame:(CGRectMake(xpad+indent,6*ypad,widthLabel,17.0))];
-    listItem *item = taskList[((taskLabels.count)%taskList.count)];
-    taskLabel.backgroundColor = [UIColor clearColor];
-    taskLabel.strikethrough = item.completed;
-    taskLabel.color = [UIColor blackColor];
-    taskLabel.font = fontDialogStrong;
-    taskLabel.textColor = [UIColor colorWithRed:0.0 green:0.0 blue:0.0 alpha:(1.0)];
+    CrushTaskInfo *item = database.taskInfos[tasksOnScreen];
+    CrushTask *taskLabel = [[CrushTask alloc] initWithFrame:(CGRectMake(xpad+indent,6*ypad,widthLabel,17.0)) withTask:item];
     taskLabel.alpha = 0.0;
-    taskLabel.text = item.text;
     taskLabel.center = CGPointMake(taskLabel.center.x+100,taskLabel.center.y);
-    taskLabel.strikethroughThickness = 2.0;
-    taskLabel.offset = -3.0;
-    taskLabel.enabled = NO;
-
-    UILabel *worksLabel = [[UILabel alloc] initWithFrame:(CGRectMake(xpad+widthPage-indent-50,6*ypad,50,17.0))];
-    worksLabel.backgroundColor = [UIColor clearColor];
-    worksLabel.font = fontDialogStrong;
-    worksLabel.textColor = [UIColor colorWithRed:0.0 green:0.0 blue:0.0 alpha:(1.0)];
-    worksLabel.alpha = 0.0;
-    worksLabel.textAlignment = NSTextAlignmentRight;
-    worksLabel.center = CGPointMake(worksLabel.center.x+100,worksLabel.center.y);
     
     [UIView transitionWithView:taskLabel
                       duration:1.0
@@ -454,32 +438,24 @@
                     completion:^(BOOL finished){}
      ];
     
-    [UIView transitionWithView:worksLabel
-                      duration:1.0
-                       options:UIViewAnimationOptionCurveEaseInOut
-                    animations:^(void)
-     {
-         worksLabel.center = CGPointMake(worksLabel.center.x-100,worksLabel.center.y);
-         [self.view addSubview:worksLabel];
-         worksLabel.alpha = 1.0;
-     }
-                    completion:^(BOOL finished){}
-     ];
-    
     [taskLabels addObject:taskLabel];
-    [workLabels addObject:worksLabel];
     tasksOnScreen++;
     taskCount.text = [NSString stringWithFormat:@"Tasks: %d",tasksOnScreen-1];
     [self updateLabels];
+    if(item.completed)
+    {
+        [self nextTask];
+    }
 }
 
+// marks a task complete and calls for next task
 - (void)completeTask
 {
-    listItem *item = taskList[((taskLabels.count-1)%(taskList.count-1))];
-    CrushStrikeLabel *currentTaskLabel = taskLabels[taskLabels.count-1];
+    CrushTask *currentTaskLabel = taskLabels[tasksOnScreen-1];
+    CrushTaskInfo *item = currentTaskLabel.task;
     item.completed = !item.completed;
-    currentTaskLabel.text = item.text;
-    currentTaskLabel.strikethrough = item.completed;
+    currentTaskLabel.text.text = item.text;
+    [currentTaskLabel strike:(item.completed)];
     [self nextTask];
 }
 
