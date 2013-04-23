@@ -20,6 +20,23 @@
     Class _cellClass;
 }
 
+@synthesize rows;
+@synthesize tableViewRecognizer;
+@synthesize grabbedObject;
+
+#define DUMMY_CELL @"Dummy"
+
+-(void)viewDidLoad
+{
+//    self.rows = [NSMutableArray arrayWithObjects:
+//                 @"Swipe to the right to complete",
+//                 @"Swipe to left to delete",
+//                 @"Drag down to create a new cell",
+//                 @"Pinch two rows apart to create cell",
+//                 @"Long hold to start reorder cell",
+//                 nil];
+}
+
 -(id)initWithCoder:(NSCoder *)aDecoder {
     self = [super initWithCoder:aDecoder];
     if (self) {
@@ -162,5 +179,28 @@
 -(void)scrollViewDidScroll:(UIScrollView *)scrollView {
     [self refreshView];
 }
+
+//#pragma mark JTTableViewGestureMoveRowDelegate
+//
+//- (BOOL)gestureRecognizer:(JTTableViewGestureRecognizer *)gestureRecognizer canMoveRowAtIndexPath:(NSIndexPath *)indexPath {
+//    return YES;
+//}
+//
+//- (void)gestureRecognizer:(JTTableViewGestureRecognizer *)gestureRecognizer needsCreatePlaceholderForRowAtIndexPath:(NSIndexPath *)indexPath {
+//    self.grabbedObject = [self.rows objectAtIndex:indexPath.row];
+//    [self.rows replaceObjectAtIndex:indexPath.row withObject:DUMMY_CELL];
+//}
+//
+//- (void)gestureRecognizer:(JTTableViewGestureRecognizer *)gestureRecognizer needsMoveRowAtIndexPath:(NSIndexPath *)sourceIndexPath toIndexPath:(NSIndexPath *)destinationIndexPath {
+//    id object = [self.rows objectAtIndex:sourceIndexPath.row];
+//    [self.rows removeObjectAtIndex:sourceIndexPath.row];
+//    [self.rows insertObject:object atIndex:destinationIndexPath.row];
+//}
+//
+//- (void)gestureRecognizer:(JTTableViewGestureRecognizer *)gestureRecognizer needsReplacePlaceholderForRowAtIndexPath:(NSIndexPath *)indexPath {
+//    [self.rows replaceObjectAtIndex:indexPath.row withObject:self.grabbedObject];
+//    self.grabbedObject = nil;
+//}
+
 
 @end

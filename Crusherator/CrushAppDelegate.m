@@ -12,6 +12,8 @@
 
 #import "CrushListViewController.h"
 
+#import "ViewController.h"
+
 @implementation CrushAppDelegate
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions

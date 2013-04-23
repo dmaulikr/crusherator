@@ -121,11 +121,11 @@
     [super viewDidLoad];
     
 // modes and defaults
-    lengthOfWorkBlocks = 5;
-    lengthOfRelaxBlocks = 5;
+    lengthOfWorkBlocks = 25*60;
+    lengthOfRelaxBlocks = 5*60;
     defaultTasksOnScreen = 1;
-    buzzEndWork = FALSE;
-    buzzEndPlay = FALSE;
+    buzzEndWork = TRUE;
+    buzzEndPlay = TRUE;
     
 // set page properties
     screenWidth = self.view.frame.size.width;
@@ -307,7 +307,7 @@
                                               withTitle:@"Feel relaxed?"
                                             withMessage:@"Good. Time to crush some more work."
                                                withType:TSMessageNotificationTypeMessage
-                                           withDuration:15.0
+                                           withDuration:5.0
                                            withCallback:^{
                                                // user dismissed callback
                                            }];
@@ -330,7 +330,7 @@
                                               withTitle:@"Good work!"
                                             withMessage:@"You crushed it. Now do something relaxing."
                                                withType:TSMessageNotificationTypeMessage
-                                           withDuration:15.0
+                                           withDuration:5.0
                                            withCallback:^{
                                                // user dismissed callback
                                            }];

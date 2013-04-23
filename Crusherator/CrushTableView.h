@@ -9,11 +9,21 @@
 #import <UIKit/UIKit.h>
 #import "CrushTableViewDataSource.h"
 #import "CrushListTableViewCell.h"
+#import "JTTableViewGestureRecognizer.h"
 
-@interface CrushTableView : UIView <UIScrollViewDelegate>
+@interface CrushTableView : UIView <
+UIScrollViewDelegate,
+JTTableViewGestureMoveRowDelegate
+>
 
 // the object that acts as the data source for this table
 @property (nonatomic, assign) id<CrushTableViewDataSource> dataSource;
+
+@property (nonatomic, strong) NSMutableArray *rows;
+@property (nonatomic, strong) JTTableViewGestureRecognizer *tableViewRecognizer;
+@property (nonatomic, strong) id grabbedObject;
+
+- (void)moveRowToBottomForIndexPath:(NSIndexPath *)indexPath;
 
 // dequeues a cell that can be reused
 -(UIView*)dequeueReusableCell;

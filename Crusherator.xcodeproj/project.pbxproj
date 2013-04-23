@@ -93,6 +93,18 @@
 		35D0E4F71726797B00A4D6CF /* NotificationBackgroundWarningIcon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 35D0E4C61726797B00A4D6CF /* NotificationBackgroundWarningIcon@2x.png */; };
 		35D0E4F81726797B00A4D6CF /* TSMessages.podspec in Resources */ = {isa = PBXBuildFile; fileRef = 35D0E4C71726797B00A4D6CF /* TSMessages.podspec */; };
 		35D0E4F91726797B00A4D6CF /* TSMessageView.m in Sources */ = {isa = PBXBuildFile; fileRef = 35D0E4CA1726797B00A4D6CF /* TSMessageView.m */; };
+		35D0E5021726820300A4D6CF /* JTTableViewGestureRecognizer.m in Sources */ = {isa = PBXBuildFile; fileRef = 35D0E5011726820300A4D6CF /* JTTableViewGestureRecognizer.m */; };
+		35D0E5031726820300A4D6CF /* JTTableViewGestureRecognizer.m in Sources */ = {isa = PBXBuildFile; fileRef = 35D0E5011726820300A4D6CF /* JTTableViewGestureRecognizer.m */; };
+		35D0E5061726835B00A4D6CF /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 35D0E5051726835B00A4D6CF /* ViewController.m */; };
+		35D0E5071726835B00A4D6CF /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 35D0E5051726835B00A4D6CF /* ViewController.m */; };
+		35D0E50A1726837300A4D6CF /* ViewController_iPhone.xib in Resources */ = {isa = PBXBuildFile; fileRef = 35D0E5081726837300A4D6CF /* ViewController_iPhone.xib */; };
+		35D0E50B1726837300A4D6CF /* ViewController_iPhone.xib in Resources */ = {isa = PBXBuildFile; fileRef = 35D0E5081726837300A4D6CF /* ViewController_iPhone.xib */; };
+		35D0E50C1726837300A4D6CF /* ViewController_iPad.xib in Resources */ = {isa = PBXBuildFile; fileRef = 35D0E5091726837300A4D6CF /* ViewController_iPad.xib */; };
+		35D0E50D1726837300A4D6CF /* ViewController_iPad.xib in Resources */ = {isa = PBXBuildFile; fileRef = 35D0E5091726837300A4D6CF /* ViewController_iPad.xib */; };
+		35D0E5101726839B00A4D6CF /* JTTransformableTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 35D0E50F1726839B00A4D6CF /* JTTransformableTableViewCell.m */; };
+		35D0E5111726839B00A4D6CF /* JTTransformableTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 35D0E50F1726839B00A4D6CF /* JTTransformableTableViewCell.m */; };
+		35D0E514172683A600A4D6CF /* UIColor+JTGestureBasedTableViewHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 35D0E513172683A500A4D6CF /* UIColor+JTGestureBasedTableViewHelper.m */; };
+		35D0E515172683A600A4D6CF /* UIColor+JTGestureBasedTableViewHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 35D0E513172683A500A4D6CF /* UIColor+JTGestureBasedTableViewHelper.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -209,7 +221,16 @@
 		35D0E4C71726797B00A4D6CF /* TSMessages.podspec */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = TSMessages.podspec; sourceTree = "<group>"; };
 		35D0E4C91726797B00A4D6CF /* TSMessageView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TSMessageView.h; sourceTree = "<group>"; };
 		35D0E4CA1726797B00A4D6CF /* TSMessageView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TSMessageView.m; sourceTree = "<group>"; };
-		35D8DC921721287500A96C5E /* CrushOutputView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = CrushOutputView.xib; sourceTree = "<group>"; };
+		35D0E5001726820300A4D6CF /* JTTableViewGestureRecognizer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JTTableViewGestureRecognizer.h; sourceTree = "<group>"; };
+		35D0E5011726820300A4D6CF /* JTTableViewGestureRecognizer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JTTableViewGestureRecognizer.m; sourceTree = "<group>"; };
+		35D0E5041726835B00A4D6CF /* ViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ViewController.h; sourceTree = "<group>"; };
+		35D0E5051726835B00A4D6CF /* ViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ViewController.m; sourceTree = "<group>"; };
+		35D0E5081726837300A4D6CF /* ViewController_iPhone.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ViewController_iPhone.xib; sourceTree = "<group>"; };
+		35D0E5091726837300A4D6CF /* ViewController_iPad.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ViewController_iPad.xib; sourceTree = "<group>"; };
+		35D0E50E1726839B00A4D6CF /* JTTransformableTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JTTransformableTableViewCell.h; sourceTree = "<group>"; };
+		35D0E50F1726839B00A4D6CF /* JTTransformableTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JTTransformableTableViewCell.m; sourceTree = "<group>"; };
+		35D0E512172683A500A4D6CF /* UIColor+JTGestureBasedTableViewHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIColor+JTGestureBasedTableViewHelper.h"; sourceTree = "<group>"; };
+		35D0E513172683A500A4D6CF /* UIColor+JTGestureBasedTableViewHelper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIColor+JTGestureBasedTableViewHelper.m"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -366,6 +387,14 @@
 				354FBB02171ACA3B003D57DF /* CrushTableViewCellDelegate.h */,
 				35C7D5F317195A530043C374 /* CrushListTableViewCell.h */,
 				35C7D5F417195A530043C374 /* CrushListTableViewCell.m */,
+				35D0E5001726820300A4D6CF /* JTTableViewGestureRecognizer.h */,
+				35D0E5011726820300A4D6CF /* JTTableViewGestureRecognizer.m */,
+				35D0E50E1726839B00A4D6CF /* JTTransformableTableViewCell.h */,
+				35D0E50F1726839B00A4D6CF /* JTTransformableTableViewCell.m */,
+				35D0E512172683A500A4D6CF /* UIColor+JTGestureBasedTableViewHelper.h */,
+				35D0E513172683A500A4D6CF /* UIColor+JTGestureBasedTableViewHelper.m */,
+				35D0E5041726835B00A4D6CF /* ViewController.h */,
+				35D0E5051726835B00A4D6CF /* ViewController.m */,
 				354FBB0E171AFA1A003D57DF /* CrushTableView.h */,
 				354FBB0F171AFA1A003D57DF /* CrushTableView.m */,
 				354FBB11171AFDEB003D57DF /* CrushTableViewDataSource.h */,
@@ -403,7 +432,8 @@
 				351C8738171775890014968D /* first@2x.png */,
 				351C873D171775890014968D /* second.png */,
 				351C873F171775890014968D /* second@2x.png */,
-				35D8DC921721287500A96C5E /* CrushOutputView.xib */,
+				35D0E5081726837300A4D6CF /* ViewController_iPhone.xib */,
+				35D0E5091726837300A4D6CF /* ViewController_iPad.xib */,
 				351C8741171775890014968D /* CrushWorkViewController_iPhone.xib */,
 				351C8744171775890014968D /* CrushWorkViewController_iPad.xib */,
 				351C8747171775890014968D /* CrushListViewController_iPhone.xib */,
@@ -600,6 +630,8 @@
 				35D0E4F61726797B00A4D6CF /* NotificationBackgroundWarningIcon.png in Resources */,
 				35D0E4F71726797B00A4D6CF /* NotificationBackgroundWarningIcon@2x.png in Resources */,
 				35D0E4F81726797B00A4D6CF /* TSMessages.podspec in Resources */,
+				35D0E50A1726837300A4D6CF /* ViewController_iPhone.xib in Resources */,
+				35D0E50C1726837300A4D6CF /* ViewController_iPad.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -625,6 +657,8 @@
 				351C87881717837F0014968D /* Gotham-XLight.ttf in Resources */,
 				351C87891717837F0014968D /* Gotham-XLightItalic.ttf in Resources */,
 				35100A701726174300B48B18 /* taskList.sqlite3 in Resources */,
+				35D0E50B1726837300A4D6CF /* ViewController_iPhone.xib in Resources */,
+				35D0E50D1726837300A4D6CF /* ViewController_iPad.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -667,6 +701,10 @@
 				35D0E4CD1726797B00A4D6CF /* TSMessage.m in Sources */,
 				35D0E4D01726797B00A4D6CF /* UIColor+MLColorAdditions.m in Sources */,
 				35D0E4F91726797B00A4D6CF /* TSMessageView.m in Sources */,
+				35D0E5021726820300A4D6CF /* JTTableViewGestureRecognizer.m in Sources */,
+				35D0E5061726835B00A4D6CF /* ViewController.m in Sources */,
+				35D0E5101726839B00A4D6CF /* JTTransformableTableViewCell.m in Sources */,
+				35D0E514172683A600A4D6CF /* UIColor+JTGestureBasedTableViewHelper.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -675,6 +713,10 @@
 			buildActionMask = 2147483647;
 			files = (
 				351C8761171775890014968D /* CrusheratorTests.m in Sources */,
+				35D0E5031726820300A4D6CF /* JTTableViewGestureRecognizer.m in Sources */,
+				35D0E5071726835B00A4D6CF /* ViewController.m in Sources */,
+				35D0E5111726839B00A4D6CF /* JTTransformableTableViewCell.m in Sources */,
+				35D0E515172683A600A4D6CF /* UIColor+JTGestureBasedTableViewHelper.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

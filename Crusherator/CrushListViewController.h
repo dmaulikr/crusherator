@@ -14,6 +14,7 @@
 #import "CrushTableViewDragAddNew.h"
 #import "CrushTaskDatabase.h"
 #import "CrushTableViewDataSource.h"
+#import "JTTableViewGestureRecognizer.h"
 
 @interface CrushListViewController : UIViewController
 <

@@ -62,6 +62,10 @@ const float UI_CUES_WIDTH = 50.0f;
         recognizer.delegate = self;
         [self addGestureRecognizer:recognizer];
         
+        UIGestureRecognizer* lrecognizer = [[UILongPressGestureRecognizer alloc] initWithTarget:self action:@selector(handlePan:)];
+        lrecognizer.delegate = self;
+        [self addGestureRecognizer:lrecognizer];
+        
         // create a label that renders the to-do item text
         _label = [[CrushStrikeLabel alloc] initWithFrame:CGRectNull];
         _label.offset = -2.0;
@@ -146,12 +150,13 @@ const float LABEL_RIGHT_MARGIN = 15.0f;
 #pragma mark - horizontal pan gesture methods
 -(BOOL)gestureRecognizerShouldBegin:(UIPanGestureRecognizer *)gestureRecognizer
 {
-    CGPoint translation = [gestureRecognizer translationInView:[self superview]];
-    // Check for horizontal gesture
-    if (fabsf(translation.x) > fabsf(translation.y)) {
+//    
+//    CGPoint translation = [gestureRecognizer translationInView:[self superview]];
+//    // Check for horizontal gesture
+//    if (fabsf(translation.x) > fabsf(translation.y)) {
         return YES;
-    }
-    return NO;
+//    }
+//    return NO;
 }
 
 -(void)handlePan:(UIPanGestureRecognizer *)recognizer
