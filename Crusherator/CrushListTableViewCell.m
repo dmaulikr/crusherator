@@ -69,6 +69,18 @@ const float UI_CUES_WIDTH = 50.0f;
         _label.font = fontDialogStrong;
         _label.backgroundColor = [UIColor clearColor];
         [self addSubview:_label];
+
+        // create a label that renders the to-do item text
+        _workLabel = [[CrushStrikeLabel alloc] initWithFrame:CGRectNull];
+        _workLabel.textColor = [UIColor blackColor];
+        _workLabel.font = fontDialogStrong;
+        _workLabel.text = @"0";
+        _workLabel.backgroundColor = [UIColor clearColor];
+        _workLabel.textAlignment = NSTextAlignmentRight;
+        _workLabel.contentVerticalAlignment = UIControlContentVerticalAlignmentCenter;
+        _workLabel.enabled = NO;
+        [self addSubview:_workLabel];
+
         
         _label.delegate = self;
         _label.contentVerticalAlignment = UIControlContentVerticalAlignmentCenter;
@@ -90,6 +102,7 @@ const float UI_CUES_WIDTH = 50.0f;
 }
 
 const float LABEL_LEFT_MARGIN = 15.0f;
+const float LABEL_RIGHT_MARGIN = 15.0f;
 
 -(void)layoutSubviews
 {
@@ -99,6 +112,9 @@ const float LABEL_LEFT_MARGIN = 15.0f;
     _itemCompleteLayer.frame = self.bounds;
     _label.frame = CGRectMake(LABEL_LEFT_MARGIN, 0,
                               self.bounds.size.width - LABEL_LEFT_MARGIN,self.bounds.size.height);
+    
+    _workLabel.frame = CGRectMake(LABEL_LEFT_MARGIN, 0,
+                              self.bounds.size.width - LABEL_LEFT_MARGIN*2,self.bounds.size.height);
     
     _tickLabel.frame = CGRectMake(-UI_CUES_WIDTH - UI_CUES_MARGIN, 0,
                                   UI_CUES_WIDTH, self.bounds.size.height);
@@ -111,6 +127,10 @@ const float LABEL_LEFT_MARGIN = 15.0f;
     _toDoItem = todoItem;
     // we must update all the visual state associated with the model item
     _label.text = todoItem.text;
+    for(int i=0;i<=(todoItem.works);i++)
+    {
+        _workLabel.text = [@"" stringByPaddingToLength:todoItem.works withString:@"|" startingAtIndex:0];
+    }
     _label.strikethrough = todoItem.completed;
     _label.strikethroughThickness = 2.0;
     _itemCompleteLayer.hidden = !todoItem.completed;

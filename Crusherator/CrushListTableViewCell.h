@@ -23,5 +23,6 @@
 
 // the label used to render the to-do text
 @property (nonatomic, strong, readonly) CrushStrikeLabel* label;
+@property (nonatomic, strong, readonly) CrushStrikeLabel* workLabel;
 
 @end
