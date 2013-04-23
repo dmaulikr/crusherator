@@ -302,6 +302,16 @@
             [buttonGoStop setTitle:@"CRUSH!" forState:(UIControlStateNormal)];
             gradientCold.hidden = YES;
             gradientHot.hidden = NO;
+            
+            [TSMessage showNotificationInViewController:self
+                                              withTitle:@"Feel relaxed?"
+                                            withMessage:@"Good. Time to crush some more work."
+                                               withType:TSMessageNotificationTypeMessage
+                                           withDuration:15.0
+                                           withCallback:^{
+                                               // user dismissed callback
+                                           }];
+            
         }
         else if ([modeName isEqualToString:@"playReady"])
         {
@@ -315,6 +325,15 @@
             gradientHot.hidden = YES;
             [self addWork];
             [workCount setText:[NSString stringWithFormat:@"Crushed: %d",workUnitsCompleted]];
+            
+            [TSMessage showNotificationInViewController:self
+                                              withTitle:@"Good work!"
+                                            withMessage:@"You crushed it. Now do something relaxing."
+                                               withType:TSMessageNotificationTypeMessage
+                                           withDuration:15.0
+                                           withCallback:^{
+                                               // user dismissed callback
+                                           }];
         }
         else if ([modeName isEqualToString:@"workPaused"])
         {
@@ -444,17 +463,19 @@
          [self.view addSubview:taskLabel];
          taskLabel.alpha = 1.0;
      }
-                    completion:^(BOOL finished){}
+                    completion:^(BOOL finished)
+                    {
+                        if(item.completed)
+                        {
+                            [self nextTask];
+                        }
+                    }
      ];
     
     [taskLabels addObject:taskLabel];
     tasksOnScreen++;
     taskCount.text = [NSString stringWithFormat:@"Tasks: %d",tasksCompleted];
     [self updateLabels];
-    if(item.completed)
-    {
-        [self nextTask];
-    }
 }
 
 // marks a task complete and calls for next task
@@ -467,7 +488,7 @@
     currentTaskLabel.text.text = item.text;
     [currentTaskLabel strike:(item.completed)];
     tasksCompleted++;
-    [self nextTask];
+    [self nextTask];    
 }
 
 - (void)addWork

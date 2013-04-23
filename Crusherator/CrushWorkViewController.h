@@ -10,6 +10,7 @@
 #import "listItem.h"
 #import "CrushListViewController.h"
 #import "CrushTask.h"
+#import "TSMessage.h"
 
 @interface CrushWorkViewController : UIViewController
 
