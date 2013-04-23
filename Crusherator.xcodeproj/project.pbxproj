@@ -68,7 +68,6 @@
 		35B11AA1171BA97800F143F5 /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 35B11AA0171BA97800F143F5 /* AudioToolbox.framework */; };
 		35C7D5F2171951320043C374 /* listItem.m in Sources */ = {isa = PBXBuildFile; fileRef = 35C7D5F1171951320043C374 /* listItem.m */; };
 		35C7D5F517195A530043C374 /* CrushListTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 35C7D5F417195A530043C374 /* CrushListTableViewCell.m */; };
-		35D8DC931721287500A96C5E /* CrushOutputView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 35D8DC921721287500A96C5E /* CrushOutputView.xib */; };
 		35F318EA171CE6C400C66DCF /* tasks.sqlite3 in Resources */ = {isa = PBXBuildFile; fileRef = 35F318E9171CE6C400C66DCF /* tasks.sqlite3 */; };
 		35F318EB171CE6C400C66DCF /* tasks.sqlite3 in Resources */ = {isa = PBXBuildFile; fileRef = 35F318E9171CE6C400C66DCF /* tasks.sqlite3 */; };
 		35F318ED171DEA3100C66DCF /* taskList.sqlite3 in Resources */ = {isa = PBXBuildFile; fileRef = 35F318EC171DEA3100C66DCF /* taskList.sqlite3 */; };
@@ -462,7 +461,6 @@
 				35A4B5E81719401000D1C36F /* crusherator-icon.png in Resources */,
 				35F318EA171CE6C400C66DCF /* tasks.sqlite3 in Resources */,
 				35F318ED171DEA3100C66DCF /* taskList.sqlite3 in Resources */,
-				35D8DC931721287500A96C5E /* CrushOutputView.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

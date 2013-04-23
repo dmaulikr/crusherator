@@ -12,7 +12,7 @@
 
 {
     // an array of to-do items
-    CrushTaskDatabase *database;
+    NSMutableArray* _toDoItems;
     
     // the offset applied to cells when entering “edit mode”
     float _editingOffset;
@@ -52,7 +52,7 @@
     // self.navigationItem.rightBarButtonItem = self.editButtonItem;
     
     
-//    self.tableView.dataSource = self;
+    self.tableView.dataSource = self;
 //    [self.tableView registerClass:[CrushListTableViewCell class] forCellReuseIdentifier:@"cell"];
 //    
 //    self.tableView.delegate = self;
@@ -83,7 +83,7 @@
 
 -(UIColor*)colorForIndex:(NSInteger) index
 {
-    NSUInteger itemCount = database.taskInfos.count - 1;
+    NSUInteger itemCount = _tasks.count - 1;
     float val = ((float)index / (float)itemCount) * 0.6;
     return [UIColor colorWithRed: 1.0 green:val blue: 0.0 alpha:1.0];
 }
@@ -102,13 +102,13 @@
 #pragma mark - CrushTableViewDataSource methods
 -(NSInteger)numberOfRows
 {
-    return database.taskInfos.count;
+    return _tasks.count;
 }
 
 -(UITableViewCell *)cellForRow:(NSInteger)row
 {
     CrushListTableViewCell* cell = (CrushListTableViewCell*)[self.tableView dequeueReusableCell];
-    CrushTaskInfo *item = database.taskInfos[row];
+    CrushTaskInfo *item = _tasks[row];
     cell.toDoItem = item;
     cell.delegate = self;
     cell.backgroundColor = [self colorForIndex:row];
