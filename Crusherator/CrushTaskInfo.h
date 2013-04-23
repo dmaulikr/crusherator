@@ -15,7 +15,7 @@
     sqlite3 *_database;
     int _uniqueId;
     NSString *_text;
-//    double _works;
+    int _works;
     bool _completed;
 //    bool _deleted;
 //    NSDate *_dateCreated;
@@ -27,7 +27,7 @@
 
 @property (nonatomic, assign) int uniqueId;
 @property (nonatomic, copy) NSString *text;
-@property (nonatomic, assign) double works;
+@property (nonatomic, assign) int works;
 @property (nonatomic, assign) bool completed;
 @property (nonatomic, assign) bool deleted;
 @property (nonatomic, copy) NSDate *dateCreated;

@@ -103,7 +103,7 @@
         database = [CrushTaskDatabase sharedInstance];
         taskList = database.taskInfos;
         
-        self.title = NSLocalizedString(@"Crush", @"Crush");
+        self.title = NSLocalizedString(@"Work", @"Work");
         self.tabBarItem.image = [UIImage imageNamed:@"first"];
         
     }
@@ -463,6 +463,7 @@
     CrushTask *currentTaskLabel = taskLabels[tasksOnScreen-1];
     CrushTaskInfo *item = currentTaskLabel.task;
     item.completed = !item.completed;
+    [item editInDatabase];
     currentTaskLabel.text.text = item.text;
     [currentTaskLabel strike:(item.completed)];
     tasksCompleted++;
@@ -474,6 +475,7 @@
     CrushTask *currentTaskLabel = taskLabels[tasksOnScreen-1];
     CrushTaskInfo *item = currentTaskLabel.task;
     item.works++;
+    [item editInDatabase];
     [self updateLabels];
     workUnitsCompleted++;
 }

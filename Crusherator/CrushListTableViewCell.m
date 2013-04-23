@@ -20,6 +20,7 @@
 	CALayer *_itemCompleteLayer;
     UILabel *_tickLabel;
 	UILabel *_crossLabel;
+    UIFont *fontDialogStrong;
 }
 
 const float UI_CUES_MARGIN = 10.0f;
@@ -29,6 +30,8 @@ const float UI_CUES_WIDTH = 50.0f;
 {
     self = [super initWithStyle:style reuseIdentifier:reuseIdentifier];
     if (self) {
+        fontDialogStrong = [UIFont fontWithName:@"Gotham Medium" size:15.0];
+        
         // add a tick and cross
         _tickLabel = [self createCueLabel];
         _tickLabel.text = @"\u2713";
@@ -61,8 +64,9 @@ const float UI_CUES_WIDTH = 50.0f;
         
         // create a label that renders the to-do item text
         _label = [[CrushStrikeLabel alloc] initWithFrame:CGRectNull];
-        _label.textColor = [UIColor whiteColor];
-        _label.font = [UIFont boldSystemFontOfSize:16];
+        _label.offset = -2.0;
+        _label.textColor = [UIColor blackColor];
+        _label.font = fontDialogStrong;
         _label.backgroundColor = [UIColor clearColor];
         [self addSubview:_label];
         

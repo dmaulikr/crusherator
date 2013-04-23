@@ -19,7 +19,7 @@
     self = [super initWithFrame:frame];
     if (self) {
         _strikethroughLayer = [CALayer layer];
-        _strikethroughLayer.backgroundColor = [[UIColor whiteColor] CGColor];
+        _strikethroughLayer.backgroundColor = [[UIColor blackColor] CGColor];
         _strikethroughLayer.opacity = self.alpha;
         _strikethroughLayer.hidden = YES;
         [self.layer addSublayer:_strikethroughLayer];

@@ -47,6 +47,11 @@
         works.alpha = 1.0;
         works.textAlignment = NSTextAlignmentRight;
         works.enabled = NO;
+        for(int i=0;i<=(task.works);i++)
+        {
+            works.text = [@"" stringByPaddingToLength:task.works withString:@"|" startingAtIndex:0];
+        }
+
         [self addSubview:works];
 
     }

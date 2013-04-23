@@ -91,37 +91,37 @@ static CrushTaskDatabase *instance = NULL;
                         
                         int completedZeroOne = sqlite3_column_int (statement, 2);
                         bool completed = (completedZeroOne == 1)? true : false;
-    //                    
-    //                    int deletedZeroOne = sqlite3_column_int (statement, 4);
-    //                    bool deleted = (deletedZeroOne == 1)? true : false;
-    //                    
-    //                    NSDateFormatter *dateFormat = [[NSDateFormatter alloc] init];
-    //                    [dateFormat setDateFormat:@"yyyy-MM-dd HH:mm:ss"];
-    //                    
-    //                    char *dateCreatedChars = (char *) sqlite3_column_text(statement, 7);
-    //                    NSString *createdText = [NSString stringWithFormat:(@"%s"),dateCreatedChars];
-    //                    NSDate *dateCreated =[dateFormat dateFromString:createdText];
-    //                    
-    //                    char *dateCompletedChars = (char *) sqlite3_column_text(statement, 7);
-    //                    NSString *completedText = [NSString stringWithFormat:(@"%s"),dateCompletedChars];
-    //                    NSDate *dateCompleted =[dateFormat dateFromString:completedText];
-    //                    
-    //                    char *dateDeletedChars = (char *) sqlite3_column_text(statement, 7);
-    //                    NSString *deletedText = [NSString stringWithFormat:(@"%s"),dateDeletedChars];
-    //                    NSDate *dateDeleted =[dateFormat dateFromString:deletedText];
-    //                    
-    //                    char *categoryChars = (char *) sqlite3_column_text(statement, 7);
-    //                    NSString *category = [NSString stringWithFormat:(@"%s"),categoryChars];
-    //                    
-    //                    char *projectChars = (char *) sqlite3_column_text(statement, 8);
-    //                    NSString *project = [NSString stringWithFormat:(@"%s"),projectChars];
-    //                    
+
+                        int works = sqlite3_column_int (statement, 3);
+                        
+//
+//                      NSDateFormatter *dateFormat = [[NSDateFormatter alloc] init];
+//                      [dateFormat setDateFormat:@"yyyy-MM-dd HH:mm:ss"];
+//
+//                      char *dateCreatedChars = (char *) sqlite3_column_text(statement, 7);
+//                      NSString *createdText = [NSString stringWithFormat:(@"%s"),dateCreatedChars];
+//                      NSDate *dateCreated =[dateFormat dateFromString:createdText];
+//                    
+//                      char *dateCompletedChars = (char *) sqlite3_column_text(statement, 7);
+//                      NSString *completedText = [NSString stringWithFormat:(@"%s"),dateCompletedChars];
+//                      NSDate *dateCompleted =[dateFormat dateFromString:completedText];
+//                    
+//                      char *dateDeletedChars = (char *) sqlite3_column_text(statement, 7);
+//                      NSString *deletedText = [NSString stringWithFormat:(@"%s"),dateDeletedChars];
+//                      NSDate *dateDeleted =[dateFormat dateFromString:deletedText];
+//                    
+//                      char *categoryChars = (char *) sqlite3_column_text(statement, 7);
+//                      NSString *category = [NSString stringWithFormat:(@"%s"),categoryChars];
+//                    
+//                      char *projectChars = (char *) sqlite3_column_text(statement, 8);
+//                      NSString *project = [NSString stringWithFormat:(@"%s"),projectChars];
+//                    
                         CrushTaskInfo *info = [[CrushTaskInfo alloc]
                                                initWithUniqueId:uniqueId
                                                text:text];
                         
                         [retval addObject:info];
-    //                    info.works = works;
+                        info.works = works;
                         info.completed = completed;
     //                    info.deleted = deleted;
     //                    info.dateCreated = dateCreated;
