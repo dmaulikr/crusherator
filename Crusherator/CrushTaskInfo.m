@@ -88,18 +88,7 @@ static sqlite3_stmt *insert_statement = nil;
     return self;
 }
 
-- (void) reset {
-    self.text = nil;
-//    self.works = 0;
-    self.deleted = nil;
-//    self.dateCreated = nil;
-//    self.dateCompleted = nil;
-//    self.dateDeleted = nil;
-//    self.category = nil;
-//    self.project = nil;
-}
-
-- (void) dehydrate {
+- (void) editInDatabase {
     if (dehydrate_statement == nil) {
         const char *sql = "UPDATE tasks SET text = ? , completed = ? WHERE uniqueId=?";
         if (sqlite3_prepare_v2(_database, sql, -1, &dehydrate_statement, NULL) != SQLITE_OK) {

@@ -41,6 +41,6 @@
 
 - (void) deleteFromDatabase;
 + (NSInteger) insertIntoDatabase:(sqlite3 *)database;
-- (void) dehydrate;
+- (void) editInDatabase;
 
 @end

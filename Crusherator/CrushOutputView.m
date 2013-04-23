@@ -1,18 +1,18 @@
 //
-//  CrushListViewController.m
+//  CrushViewController.m
 //  Crusherator
 //
-//  Created by Raj on 4/13/13.
+//  Created by Raj on 4/18/13.
 //  Copyright (c) 2013 Raj. All rights reserved.
 //
 
-#import "CrushListViewController.h"
+#import "CrushOutputView.h"
 
-@interface CrushListViewController ()
+@interface CrushOutputView ()
 
 {
     // an array of to-do items
-    CrushTaskDatabase *database;
+    CrushTaskDatabase* database;
     
     // the offset applied to cells when entering “edit mode”
     float _editingOffset;
@@ -21,7 +21,7 @@
 
 @end
 
-@implementation CrushListViewController
+@implementation CrushOutputView
 
 
 -(id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
@@ -30,12 +30,8 @@
     if (self)
     {
         // access database
-        CrushTaskDatabase *database = [CrushTaskDatabase sharedInstance];
-        self.tasks = database.taskInfos;
-
-        self.title = NSLocalizedString(@"List", @"List");
-        self.tabBarItem.image = [UIImage imageNamed:@"second"];
-        
+        database = [[CrushTaskDatabase alloc] init];
+        NSLog(@"Work accessed taskInfos with %i tasks",database.taskInfos.count);
     }
     return self;
 }
@@ -43,21 +39,22 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-
+    
     
     // Uncomment the following line to preserve selection between presentations.
     // self.clearsSelectionOnViewWillAppear = NO;
- 
+    
     // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
     // self.navigationItem.rightBarButtonItem = self.editButtonItem;
     
     
-//    self.tableView.dataSource = self;
-//    [self.tableView registerClass:[CrushListTableViewCell class] forCellReuseIdentifier:@"cell"];
-//    
-//    self.tableView.delegate = self;
-//    
-//    self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
+    self.tableView.dataSource = self;
+    //    [self.tableView registerClass:[CrushListTableViewCell class] forCellReuseIdentifier:@"cell"];
+    //
+    //    self.tableView.delegate = self;
+    //
+    //    self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
+    self.view.backgroundColor = [UIColor redColor];
     self.tableView.backgroundColor = [UIColor blackColor];
     [self.tableView registerClassForCells:[CrushListTableViewCell class]];
     
@@ -66,13 +63,6 @@
                                    action:@selector(dismissKeyboard)];
     
     [self.view addGestureRecognizer:tap];
-}
-
-- (void)viewWillAppear:(BOOL)animated
-{
-    [_tableView reloadData];
-    NSLog(@"data reloaded");
-    animated = NO;
 }
 
 - (void)didReceiveMemoryWarning
@@ -119,10 +109,7 @@
 {
     float delay = 0.5;
     
-    CrushTaskDatabase *database = [CrushTaskDatabase sharedInstance];
-    
     [database removeTask:todoItem];
-//    [_tasks removeObject:todoItem];
     
     // find the visible cells
     NSArray* visibleCells = [self.tableView visibleCells];
@@ -150,21 +137,49 @@
     }
 }
 
+-(void)reload
+{
+    float delay = 0.5;
+    
+    // find the visible cells
+    NSArray* visibleCells = [self.tableView visibleCells];
+    
+    UIView* lastView = [visibleCells lastObject];
+    bool startAnimating = false;
+    
+    // iterate over all of the cells
+    for(CrushListTableViewCell* cell in visibleCells) {
+        if (startAnimating) {
+            [UIView animateWithDuration:0.3 delay:delay options:UIViewAnimationOptionCurveEaseInOut animations:^{
+                cell.frame = CGRectOffset(cell.frame, 0.0f, -cell.frame.size.height);
+            } completion:^(BOOL finished){
+                if (cell == lastView) {
+                    [self.tableView reloadData];
+                }
+            }];
+            delay+=0.01;
+        }
+        // if we have reached the item that was deleted, start animating
+            startAnimating = true;
+            cell.hidden = YES;
+    }
+}
+
 -(void)cellDidBeginEditing:(CrushListTableViewCell *)editingCell
 {
-//    NSLog(@"1 %@",cellBeingEdited.toDoItem.text);
-//    if (cellBeingEdited!=NULL && cellBeingEdited!=editingCell){
-//        [self dismissKeyboard];
-//        NSLog(@"if statement");
-//        [editingCell textFieldShouldReturn:editingCell.label];
-//        cellBeingEdited = NULL;
-//        return;
-//    }
-//    else {
-        cellBeingEdited = editingCell;
-//    }
-//    NSLog(@"2 %@",cellBeingEdited.toDoItem.text);
-//    NSLog(@"3 %@",cellBeingEdited.toDoItem.text);
+    //    NSLog(@"1 %@",cellBeingEdited.toDoItem.text);
+    //    if (cellBeingEdited!=NULL && cellBeingEdited!=editingCell){
+    //        [self dismissKeyboard];
+    //        NSLog(@"if statement");
+    //        [editingCell textFieldShouldReturn:editingCell.label];
+    //        cellBeingEdited = NULL;
+    //        return;
+    //    }
+    //    else {
+    cellBeingEdited = editingCell;
+    //    }
+    //    NSLog(@"2 %@",cellBeingEdited.toDoItem.text);
+    //    NSLog(@"3 %@",cellBeingEdited.toDoItem.text);
     _editingOffset = _tableView.scrollView.contentOffset.y - editingCell.frame.origin.y;
     for(CrushListTableViewCell* cell in [_tableView visibleCells]) {
         [UIView animateWithDuration:0.3
@@ -179,8 +194,8 @@
 
 -(void)cellDidEndEditing:(CrushListTableViewCell *)editingCell
 {
-//    NSLog(@"done editing %@",cellBeingEdited);
-//    cellBeingEdited = NULL;
+    //    NSLog(@"done editing %@",cellBeingEdited);
+    //    cellBeingEdited = NULL;
     for(CrushListTableViewCell* cell in [_tableView visibleCells]) {
         [UIView animateWithDuration:0.3
                          animations:^{
@@ -196,10 +211,8 @@
 -(void)itemAdded
 {
     // create the new item
-    CrushTaskDatabase *database = [CrushTaskDatabase sharedInstance];
     CrushTaskInfo* todoItem = [database addTask:@"task name"];
     
-//    [_tasks insertObject:todoItem atIndex:0];
     // refresh the table
     [_tableView reloadData];
     // enter edit mode
@@ -219,3 +232,4 @@
 }
 
 @end
+

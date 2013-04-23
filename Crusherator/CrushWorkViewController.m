@@ -17,6 +17,9 @@
 
 @interface CrushWorkViewController ()
 {
+    // an array of to-do items
+    CrushTaskDatabase *database;
+    
     // Variables that make the timer work
     bool running;
     NSTimeInterval startTime;
@@ -76,6 +79,7 @@
 
 // Timer interface
 @synthesize countdown;
+@synthesize list;
 @synthesize buttonGoStop;
 @synthesize buttonNextTask;
 @synthesize buttonCompleteTask;
@@ -245,13 +249,24 @@
         [self nextTask];
     }
     
-    
-    
 // initiate the timer
     [self changeModes:@"workReady"];
     running = FALSE;    
     [NSTimer scheduledTimerWithTimeInterval:1.0 target:self selector:@selector(incrementTimer) userInfo:nil repeats:YES];
 
+//  add subview list
+    list = [[CrushOutputView alloc] initWithNibName:@"CrushListViewController_iPhone" bundle:nil];
+    [list.view setFrame:CGRectMake(xpad,ypad,widthPage,heightOutput)];
+    [self addChildViewController:list];
+    [self.view addSubview:list.view];
+    
+}
+
+- (void)viewWillAppear:(BOOL)animated
+{
+    [self.list reload];
+    
+    NSLog(@"reloaded with %i tasks!",database.taskInfos.count);
 }
 
 // pressing button changes modes
