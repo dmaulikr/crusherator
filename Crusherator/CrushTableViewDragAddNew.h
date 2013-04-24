@@ -10,4 +10,7 @@
 
 @interface CrushTableViewDragAddNew : CrushTableView
 
+@property(nonatomic) BOOL alwaysBounceVertical; // default NO. if YES and bounces is YES, even if content is smaller than bounds, allow drag vertically
+@property(nonatomic) BOOL alwaysBounceHorizontal; // default NO. if YES and bounces is YES, even if content is smaller than bounds, allow drag horizontally
+
 @end

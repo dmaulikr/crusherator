@@ -203,7 +203,6 @@
 		35D0E4C71726797B00A4D6CF /* TSMessages.podspec */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = TSMessages.podspec; sourceTree = "<group>"; };
 		35D0E4C91726797B00A4D6CF /* TSMessageView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TSMessageView.h; sourceTree = "<group>"; };
 		35D0E4CA1726797B00A4D6CF /* TSMessageView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TSMessageView.m; sourceTree = "<group>"; };
-		35D8DC921721287500A96C5E /* CrushOutputView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = CrushOutputView.xib; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -393,7 +392,6 @@
 				351C8738171775890014968D /* first@2x.png */,
 				351C873D171775890014968D /* second.png */,
 				351C873F171775890014968D /* second@2x.png */,
-				35D8DC921721287500A96C5E /* CrushOutputView.xib */,
 				351C8741171775890014968D /* CrushWorkViewController_iPhone.xib */,
 				351C8744171775890014968D /* CrushWorkViewController_iPad.xib */,
 				351C8747171775890014968D /* CrushListTableViewController_iPhone.xib */,

@@ -18,6 +18,9 @@
     BOOL _pullDownInProgress;
 }
 
+@synthesize alwaysBounceHorizontal;
+@synthesize alwaysBounceVertical;
+
 -(id)initWithCoder:(NSCoder *)aDecoder {
     self = [super initWithCoder:aDecoder];
     if (self) {
@@ -38,7 +41,6 @@
 
 -(void)scrollViewDidScroll:(UIScrollView *)scrollView {
     [super scrollViewDidScroll:scrollView];
-    
     if (_pullDownInProgress && self.scrollView.contentOffset.y <= 0.0f) {
         // maintain the location of the placeholder
         _placeholderCell.frame = CGRectMake(0, - self.scrollView.contentOffset.y - SHC_ROW_HEIGHT,

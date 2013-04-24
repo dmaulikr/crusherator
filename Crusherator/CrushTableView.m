@@ -30,6 +30,7 @@
         
          _reuseCells = [[NSMutableSet alloc] init];
         _scrollView.delegate = self;
+        _scrollView.alwaysBounceVertical = YES;
     }
     return self;
 }
