@@ -47,8 +47,6 @@
         _placeholderCell.label.text = -self.scrollView.contentOffset.y > SHC_ROW_HEIGHT ?
         @"Release to Add Item" : @"Pull to Add Item";
         _placeholderCell.alpha = MIN(1.0f, - self.scrollView.contentOffset.y / SHC_ROW_HEIGHT);
-    } else {
-        _pullDownInProgress = false;
     }
 }
 
