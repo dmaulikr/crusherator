@@ -29,8 +29,7 @@
 
 #pragma mark - UIScrollViewDelegate
 -(void)scrollViewWillBeginDragging:(UIScrollView *)scrollView {
-    // this behaviour starts when a user pulls down while at the top of the table
-    _pullDownInProgress = scrollView.contentOffset.y <= 0.0f;
+    _pullDownInProgress = true;
     if (_pullDownInProgress) {
         // add your placeholder
         [self insertSubview:_placeholderCell atIndex:0];
