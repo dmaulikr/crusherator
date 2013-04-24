@@ -7,9 +7,8 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "listItem.h"
-#import "CrushListViewController.h"
-#import "CrushTask.h"
+#import "CrushListTableViewController.h"
+#import "CrushWorkTaskListItem.h"
 #import "TSMessage.h"
 
 @interface CrushWorkViewController : UIViewController

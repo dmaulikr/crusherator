@@ -8,7 +8,7 @@
 
 #import "CrushListTableViewCell.h"
 #import "CrushStrikeLabel.h"
-#import "CrushTaskInfo.h"
+#import "CrushTaskObject.h"
 #import <QuartzCore/QuartzCore.h>
 
 @implementation CrushListTableViewCell
@@ -21,6 +21,7 @@
     UILabel *_tickLabel;
 	UILabel *_crossLabel;
     UIFont *fontDialogStrong;
+    BOOL _isBeingEdited;
 }
 
 const float UI_CUES_MARGIN = 10.0f;
@@ -84,6 +85,7 @@ const float UI_CUES_WIDTH = 50.0f;
         
         _label.delegate = self;
         _label.contentVerticalAlignment = UIControlContentVerticalAlignmentCenter;
+        self.isBeingEdited = NO;
         
         // remove the default blue highlight for selected cells
         self.selectionStyle = UITableViewCellSelectionStyleNone;
@@ -122,7 +124,7 @@ const float LABEL_RIGHT_MARGIN = 15.0f;
                                    UI_CUES_WIDTH, self.bounds.size.height);
 }
 
--(void)setToDoItem:(CrushTaskInfo *)todoItem
+-(void)setToDoItem:(CrushTaskObject *)todoItem
 {
     _toDoItem = todoItem;
     // we must update all the visual state associated with the model item
@@ -211,6 +213,11 @@ const float LABEL_RIGHT_MARGIN = 15.0f;
     }
 }
 
+-(void)dismissKeyboard
+{
+    [self.label resignFirstResponder];
+}
+
 #pragma mark - UITextFieldDelegate
 -(BOOL)textFieldShouldReturn:(UITextField *)textField
 {
@@ -230,6 +237,11 @@ const float LABEL_RIGHT_MARGIN = 15.0f;
 {
     [self.delegate cellDidBeginEditing:self];
     [self.toDoItem editInDatabase];
+}
+
+-(BOOL)textFieldShouldBeginEditing:(UITextField *)textField
+{
+    return [self.delegate cellShouldBeginEditing:self];
 }
 
 @end

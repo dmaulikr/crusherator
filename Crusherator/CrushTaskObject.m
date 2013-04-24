@@ -6,9 +6,9 @@
 //  Copyright (c) 2013 Raj. All rights reserved.
 //
 
-#import "CrushTaskInfo.h"
+#import "CrushTaskObject.h"
 
-@implementation CrushTaskInfo
+@implementation CrushTaskObject
 
 static sqlite3_stmt *init_statement = nil;
 static sqlite3_stmt *dehydrate_statement = nil;

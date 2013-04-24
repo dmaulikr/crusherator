@@ -7,7 +7,6 @@
 //
 
 #import "CrushWorkViewController.h"
-#import "listItem.h"
 #import "CrushStrikeLabel.h"
 #import "CrushTaskDatabase.h"
 #import <AudioToolbox/AudioToolbox.h>
@@ -31,7 +30,7 @@
 
     // Variables that make the task list work
     NSMutableArray *taskList;
-    CrushTask *currentTask;
+    CrushWorkTaskListItem *currentTask;
     
     // Options that will be changeable by the user in the future
     int lengthOfWorkBlocks;
@@ -393,8 +392,8 @@
     
     for (int i = 0; i<=taskLabels.count-1; i++)
     {
-        CrushTask *task = taskLabels[i];
-        CrushTaskInfo *item = task.task;
+        CrushWorkTaskListItem *task = taskLabels[i];
+        CrushTaskObject *item = task.task;
         for(int i=0;i<=(item.works);i++)
         {
             task.works.text = [@"" stringByPaddingToLength:item.works withString:@"|" startingAtIndex:0];
@@ -407,7 +406,7 @@
 - (void)clearTasks
 {
     for(UIView *subview in [self.view subviews]) {
-        if([subview isKindOfClass:[CrushTask class]])
+        if([subview isKindOfClass:[CrushWorkTaskListItem class]])
         {
             [subview removeFromSuperview];
         }
@@ -427,7 +426,7 @@
     for (int i=0;i<taskLabels.count;i++)
     {
         int jump = 0;
-        CrushTask *taskListMember = taskLabels[i];
+        CrushWorkTaskListItem *taskListMember = taskLabels[i];
         int labelBottom = (taskListMember.frame.origin.y+taskListMember.frame.size.height);
         int countdownTop = (countdown.frame.origin.y - taskListMember.frame.size.height);
         int countdownBottom = (countdown.frame.origin.y+countdown.frame.size.height);
@@ -449,8 +448,8 @@
          ];
     }
     
-    CrushTaskInfo *item = database.taskInfos[tasksOnScreen];
-    CrushTask *taskLabel = [[CrushTask alloc] initWithFrame:(CGRectMake(indent,ypad,widthLabel,17.0)) withTask:item];
+    CrushTaskObject *item = database.taskInfos[tasksOnScreen];
+    CrushWorkTaskListItem *taskLabel = [[CrushWorkTaskListItem alloc] initWithFrame:(CGRectMake(indent,ypad,widthLabel,17.0)) withTask:item];
     taskLabel.alpha = 0.0;
     taskLabel.center = CGPointMake(taskLabel.center.x+100,taskLabel.center.y);
     
@@ -481,8 +480,8 @@
 // marks a task complete and calls for next task
 - (void)completeTask
 {
-    CrushTask *currentTaskLabel = taskLabels[tasksOnScreen-1];
-    CrushTaskInfo *item = currentTaskLabel.task;
+    CrushWorkTaskListItem *currentTaskLabel = taskLabels[tasksOnScreen-1];
+    CrushTaskObject *item = currentTaskLabel.task;
     item.completed = !item.completed;
     [item editInDatabase];
     currentTaskLabel.text.text = item.text;
@@ -493,8 +492,8 @@
 
 - (void)addWork
 {
-    CrushTask *currentTaskLabel = taskLabels[tasksOnScreen-1];
-    CrushTaskInfo *item = currentTaskLabel.task;
+    CrushWorkTaskListItem *currentTaskLabel = taskLabels[tasksOnScreen-1];
+    CrushTaskObject *item = currentTaskLabel.task;
     item.works++;
     [item editInDatabase];
     [self updateLabels];

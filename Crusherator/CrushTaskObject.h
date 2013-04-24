@@ -10,7 +10,7 @@
 #import <sqlite3.h>
 #import "CrushTaskDatabase.h"
 
-@interface CrushTaskInfo : NSObject
+@interface CrushTaskObject : NSObject
 {
     sqlite3 *_database;
     int _uniqueId;

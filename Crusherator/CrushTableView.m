@@ -99,9 +99,9 @@
 }
 
 // returns the cell for the given row, or nil if it doesn't exist
--(UIView*) cellForRow:(NSInteger)row {
+-(CrushListTableViewCell*) cellForRow:(NSInteger)row {
     float topEdgeForRow = row * SHC_ROW_HEIGHT;
-    for (UIView* cell in [self cellSubviews]) {
+    for (CrushListTableViewCell* cell in [self cellSubviews]) {
         if (cell.frame.origin.y == topEdgeForRow) {
             return cell;
         }

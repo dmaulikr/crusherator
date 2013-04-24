@@ -8,7 +8,7 @@
 
 #import <UIKit/UIKit.h>
 #import "CrushTableViewCellDelegate.h"
-#import "CrushTaskInfo.h"
+#import "CrushTaskObject.h"
 #import "CrushStrikeLabel.h"
 #define SHC_ROW_HEIGHT 50.0f
 
@@ -16,13 +16,18 @@
 @interface CrushListTableViewCell : UITableViewCell <UITextFieldDelegate>
 
 // The item that this cell renders.
-@property (nonatomic) CrushTaskInfo *toDoItem;
+@property (nonatomic) CrushTaskObject *toDoItem;
 
 // The object that acts as delegate for this cell. 
 @property (nonatomic, assign) id<CrushTableViewCellDelegate> delegate;
 
+// Tells whether cell is being edited or not.
+@property (nonatomic, assign) BOOL isBeingEdited;
+
 // the label used to render the to-do text
-@property (nonatomic, strong, readonly) CrushStrikeLabel* label;
-@property (nonatomic, strong, readonly) CrushStrikeLabel* workLabel;
+@property (nonatomic, strong) CrushStrikeLabel* label;
+@property (nonatomic, strong) CrushStrikeLabel* workLabel;
+
+-(void)dismissKeyboard;
 
 @end

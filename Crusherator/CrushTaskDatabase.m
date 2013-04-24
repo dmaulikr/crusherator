@@ -7,7 +7,7 @@
 //
 
 #import "CrushTaskDatabase.h"
-#import "CrushTaskInfo.h"
+#import "CrushTaskObject.h"
 
 @implementation CrushTaskDatabase
 
@@ -116,7 +116,7 @@ static CrushTaskDatabase *instance = NULL;
 //                      char *projectChars = (char *) sqlite3_column_text(statement, 8);
 //                      NSString *project = [NSString stringWithFormat:(@"%s"),projectChars];
 //                    
-                        CrushTaskInfo *info = [[CrushTaskInfo alloc]
+                        CrushTaskObject *info = [[CrushTaskObject alloc]
                                                initWithUniqueId:uniqueId
                                                text:text];
                         
@@ -145,7 +145,7 @@ static CrushTaskDatabase *instance = NULL;
     else return retval;
 }
 
--(void)removeTask:(CrushTaskInfo *)task {
+-(void)removeTask:(CrushTaskObject *)task {
 	NSUInteger index = [retval indexOfObject:task];
     
     if (index == NSNotFound) return;
@@ -155,10 +155,10 @@ static CrushTaskDatabase *instance = NULL;
     NSLog(@"removeTask called");
 }
 
--(CrushTaskInfo *) addTask:(NSString *)text {
+-(CrushTaskObject *) addTask:(NSString *)text {
 //    Need to make delegate to create uniqueId automatically
-	NSInteger uniqueId = [CrushTaskInfo insertIntoDatabase:_database];
-    CrushTaskInfo *newTask = [[CrushTaskInfo alloc]initWithUniqueId:uniqueId text:text];
+	NSInteger uniqueId = [CrushTaskObject insertIntoDatabase:_database];
+    CrushTaskObject *newTask = [[CrushTaskObject alloc]initWithUniqueId:uniqueId text:text];
 //    NSLog(@"Database add %i,%@",uniqueId,text);
     
 	[retval insertObject:newTask atIndex:0];

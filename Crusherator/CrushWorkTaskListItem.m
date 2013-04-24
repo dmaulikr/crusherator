@@ -6,9 +6,9 @@
 //  Copyright (c) 2013 Raj. All rights reserved.
 //
 
-#import "CrushTask.h"
+#import "CrushWorkTaskListItem.h"
 
-@implementation CrushTask
+@implementation CrushWorkTaskListItem
 {
     UIFont *fontDialog;
     UIFont *fontDialogStrong;
@@ -18,7 +18,7 @@
 @synthesize works;
 @synthesize task;
 
-- (id)initWithFrame:(CGRect)frame withTask:(CrushTaskInfo *)item
+- (id)initWithFrame:(CGRect)frame withTask:(CrushTaskObject *)item
 {
     self = [super initWithFrame:frame];
     if (self) {

@@ -8,7 +8,7 @@
 
 #import <Foundation/Foundation.h>
 #import <sqlite3.h>
-@class CrushTaskInfo;
+@class CrushTaskObject;
 
 @interface CrushTaskDatabase : NSObject <UIApplicationDelegate>
 
@@ -18,7 +18,7 @@
 
 + (CrushTaskDatabase *)sharedInstance;
 - (NSMutableArray *)taskInfos;
-- (CrushTaskInfo *)addTask:text;
+- (CrushTaskObject *)addTask:text;
 - (void)removeTask:task;
 - (sqlite3 *)databaseAccess;
 

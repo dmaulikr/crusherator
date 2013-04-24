@@ -8,16 +8,16 @@
 
 #import <UIKit/UIKit.h>
 #import "CrushStrikeLabel.h"
-#import "CrushTaskInfo.h"
+#import "CrushTaskObject.h"
 
-@interface CrushTask : UIView
+@interface CrushWorkTaskListItem : UIView
 
 @property (nonatomic,retain) CrushStrikeLabel *text;
 @property (nonatomic,retain) CrushStrikeLabel *works;
-@property (nonatomic,retain) CrushTaskInfo *task;
+@property (nonatomic,retain) CrushTaskObject *task;
 
 - (id)initWithFrame:(CGRect)frame
-           withTask:(CrushTaskInfo *)item;
+           withTask:(CrushTaskObject *)item;
 
 - (void)strike:(BOOL)strike;
 - (void)bold:(BOOL)bold;

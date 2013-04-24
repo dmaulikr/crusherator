@@ -27,6 +27,9 @@
 // forces the table to dispose of all the cells and re-build the table.
 -(void)reloadData;
 
+// returns cell for row.
+-(CrushListTableViewCell*) cellForRow:(NSInteger)row;
+
 @property (nonatomic, assign, readonly) UIScrollView* scrollView;
 
 @end

@@ -9,7 +9,7 @@
 /* Begin PBXBuildFile section */
 		35100A6F1726174300B48B18 /* taskList.sqlite3 in Resources */ = {isa = PBXBuildFile; fileRef = 35100A6E1726174300B48B18 /* taskList.sqlite3 */; };
 		35100A701726174300B48B18 /* taskList.sqlite3 in Resources */ = {isa = PBXBuildFile; fileRef = 35100A6E1726174300B48B18 /* taskList.sqlite3 */; };
-		3514FE5217235DEA0043B2DA /* CrushTask.m in Sources */ = {isa = PBXBuildFile; fileRef = 3514FE5117235DEA0043B2DA /* CrushTask.m */; };
+		3514FE5217235DEA0043B2DA /* CrushWorkTaskListItem.m in Sources */ = {isa = PBXBuildFile; fileRef = 3514FE5117235DEA0043B2DA /* CrushWorkTaskListItem.m */; };
 		351C871C171775890014968D /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 351C871B171775890014968D /* UIKit.framework */; };
 		351C871E171775890014968D /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 351C871D171775890014968D /* Foundation.framework */; };
 		351C8720171775890014968D /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 351C871F171775890014968D /* CoreGraphics.framework */; };
@@ -26,7 +26,7 @@
 		351C8740171775890014968D /* second@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 351C873F171775890014968D /* second@2x.png */; };
 		351C8743171775890014968D /* CrushWorkViewController_iPhone.xib in Resources */ = {isa = PBXBuildFile; fileRef = 351C8741171775890014968D /* CrushWorkViewController_iPhone.xib */; };
 		351C8746171775890014968D /* CrushWorkViewController_iPad.xib in Resources */ = {isa = PBXBuildFile; fileRef = 351C8744171775890014968D /* CrushWorkViewController_iPad.xib */; };
-		351C8749171775890014968D /* CrushListViewController_iPhone.xib in Resources */ = {isa = PBXBuildFile; fileRef = 351C8747171775890014968D /* CrushListViewController_iPhone.xib */; };
+		351C8749171775890014968D /* CrushListTableViewController_iPhone.xib in Resources */ = {isa = PBXBuildFile; fileRef = 351C8747171775890014968D /* CrushListTableViewController_iPhone.xib */; };
 		351C874C171775890014968D /* CrushListViewController_iPad.xib in Resources */ = {isa = PBXBuildFile; fileRef = 351C874A171775890014968D /* CrushListViewController_iPad.xib */; };
 		351C8754171775890014968D /* SenTestingKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 351C8753171775890014968D /* SenTestingKit.framework */; };
 		351C8755171775890014968D /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 351C871B171775890014968D /* UIKit.framework */; };
@@ -61,14 +61,12 @@
 		35A4B5DF1718C82200D1C36F /* Gotham-Light.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 351C87701717837F0014968D /* Gotham-Light.ttf */; };
 		35A4B5E61719400B00D1C36F /* crusherator-iconx1.png in Resources */ = {isa = PBXBuildFile; fileRef = 35A4B5E51719400B00D1C36F /* crusherator-iconx1.png */; };
 		35A4B5E81719401000D1C36F /* crusherator-icon.png in Resources */ = {isa = PBXBuildFile; fileRef = 35A4B5E71719401000D1C36F /* crusherator-icon.png */; };
-		35A4B5EB1719420A00D1C36F /* CrushListViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 35A4B5EA1719420A00D1C36F /* CrushListViewController.m */; };
-		35A857DD171E3655003C435A /* CrushDummyTaskDatabase.m in Sources */ = {isa = PBXBuildFile; fileRef = 35A857DC171E3655003C435A /* CrushDummyTaskDatabase.m */; };
+		35A4B5EB1719420A00D1C36F /* CrushListTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 35A4B5EA1719420A00D1C36F /* CrushListTableViewController.m */; };
 		35AE975E171AB48D009A73B0 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 35AE975D171AB48D009A73B0 /* QuartzCore.framework */; };
-		35B11A9A171B918400F143F5 /* CrushTaskInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = 35B11A99171B918400F143F5 /* CrushTaskInfo.m */; };
+		35B11A9A171B918400F143F5 /* CrushTaskObject.m in Sources */ = {isa = PBXBuildFile; fileRef = 35B11A99171B918400F143F5 /* CrushTaskObject.m */; };
 		35B11A9D171BA31800F143F5 /* CrushTaskDatabase.m in Sources */ = {isa = PBXBuildFile; fileRef = 35B11A9C171BA31800F143F5 /* CrushTaskDatabase.m */; };
 		35B11A9F171BA96F00F143F5 /* libsqlite3.0.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 35B11A9E171BA96F00F143F5 /* libsqlite3.0.dylib */; };
 		35B11AA1171BA97800F143F5 /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 35B11AA0171BA97800F143F5 /* AudioToolbox.framework */; };
-		35C7D5F2171951320043C374 /* listItem.m in Sources */ = {isa = PBXBuildFile; fileRef = 35C7D5F1171951320043C374 /* listItem.m */; };
 		35C7D5F517195A530043C374 /* CrushListTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 35C7D5F417195A530043C374 /* CrushListTableViewCell.m */; };
 		35D0E4CB1726797B00A4D6CF /* .gitignore in Resources */ = {isa = PBXBuildFile; fileRef = 35D0E4731726797B00A4D6CF /* .gitignore */; };
 		35D0E4CC1726797B00A4D6CF /* .gitmodules in Resources */ = {isa = PBXBuildFile; fileRef = 35D0E4741726797B00A4D6CF /* .gitmodules */; };
@@ -107,8 +105,8 @@
 
 /* Begin PBXFileReference section */
 		35100A6E1726174300B48B18 /* taskList.sqlite3 */ = {isa = PBXFileReference; lastKnownFileType = file; path = taskList.sqlite3; sourceTree = "<group>"; };
-		3514FE5017235DEA0043B2DA /* CrushTask.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CrushTask.h; sourceTree = "<group>"; };
-		3514FE5117235DEA0043B2DA /* CrushTask.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CrushTask.m; sourceTree = "<group>"; };
+		3514FE5017235DEA0043B2DA /* CrushWorkTaskListItem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CrushWorkTaskListItem.h; sourceTree = "<group>"; };
+		3514FE5117235DEA0043B2DA /* CrushWorkTaskListItem.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CrushWorkTaskListItem.m; sourceTree = "<group>"; };
 		351C8718171775890014968D /* Crusherator.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Crusherator.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		351C871B171775890014968D /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		351C871D171775890014968D /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
@@ -130,7 +128,7 @@
 		351C873F171775890014968D /* second@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "second@2x.png"; sourceTree = "<group>"; };
 		351C8742171775890014968D /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = en.lproj/CrushWorkViewController_iPhone.xib; sourceTree = "<group>"; };
 		351C8745171775890014968D /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = en.lproj/CrushWorkViewController_iPad.xib; sourceTree = "<group>"; };
-		351C8748171775890014968D /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = en.lproj/CrushListViewController_iPhone.xib; sourceTree = "<group>"; };
+		351C8748171775890014968D /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = en.lproj/CrushListTableViewController_iPhone.xib; sourceTree = "<group>"; };
 		351C874B171775890014968D /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = en.lproj/CrushListViewController_iPad.xib; sourceTree = "<group>"; };
 		351C8752171775890014968D /* CrusheratorTests.octest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = CrusheratorTests.octest; sourceTree = BUILT_PRODUCTS_DIR; };
 		351C8753171775890014968D /* SenTestingKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SenTestingKit.framework; path = Library/Frameworks/SenTestingKit.framework; sourceTree = DEVELOPER_DIR; };
@@ -168,19 +166,15 @@
 		354FBB13171B30C0003D57DF /* CrushTableViewDragAddNew.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CrushTableViewDragAddNew.m; sourceTree = "<group>"; };
 		35A4B5E51719400B00D1C36F /* crusherator-iconx1.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "crusherator-iconx1.png"; sourceTree = "<group>"; };
 		35A4B5E71719401000D1C36F /* crusherator-icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "crusherator-icon.png"; sourceTree = "<group>"; };
-		35A4B5E91719420A00D1C36F /* CrushListViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CrushListViewController.h; sourceTree = "<group>"; };
-		35A4B5EA1719420A00D1C36F /* CrushListViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = CrushListViewController.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
-		35A857DB171E3655003C435A /* CrushDummyTaskDatabase.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CrushDummyTaskDatabase.h; sourceTree = "<group>"; };
-		35A857DC171E3655003C435A /* CrushDummyTaskDatabase.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CrushDummyTaskDatabase.m; sourceTree = "<group>"; };
+		35A4B5E91719420A00D1C36F /* CrushListTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CrushListTableViewController.h; sourceTree = "<group>"; };
+		35A4B5EA1719420A00D1C36F /* CrushListTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = CrushListTableViewController.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
 		35AE975D171AB48D009A73B0 /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
-		35B11A98171B918400F143F5 /* CrushTaskInfo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CrushTaskInfo.h; sourceTree = "<group>"; };
-		35B11A99171B918400F143F5 /* CrushTaskInfo.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CrushTaskInfo.m; sourceTree = "<group>"; };
+		35B11A98171B918400F143F5 /* CrushTaskObject.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CrushTaskObject.h; sourceTree = "<group>"; };
+		35B11A99171B918400F143F5 /* CrushTaskObject.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CrushTaskObject.m; sourceTree = "<group>"; };
 		35B11A9B171BA31800F143F5 /* CrushTaskDatabase.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CrushTaskDatabase.h; sourceTree = "<group>"; };
 		35B11A9C171BA31800F143F5 /* CrushTaskDatabase.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CrushTaskDatabase.m; sourceTree = "<group>"; };
 		35B11A9E171BA96F00F143F5 /* libsqlite3.0.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libsqlite3.0.dylib; path = usr/lib/libsqlite3.0.dylib; sourceTree = SDKROOT; };
 		35B11AA0171BA97800F143F5 /* AudioToolbox.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AudioToolbox.framework; path = System/Library/Frameworks/AudioToolbox.framework; sourceTree = SDKROOT; };
-		35C7D5F0171951320043C374 /* listItem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = listItem.h; sourceTree = "<group>"; };
-		35C7D5F1171951320043C374 /* listItem.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = listItem.m; sourceTree = "<group>"; };
 		35C7D5F317195A530043C374 /* CrushListTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CrushListTableViewCell.h; sourceTree = "<group>"; };
 		35C7D5F417195A530043C374 /* CrushListTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CrushListTableViewCell.m; sourceTree = "<group>"; };
 		35D0E4731726797B00A4D6CF /* .gitignore */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = .gitignore; sourceTree = "<group>"; };
@@ -279,10 +273,10 @@
 			children = (
 				351C872A171775890014968D /* CrushAppDelegate.h */,
 				351C872B171775890014968D /* CrushAppDelegate.m */,
+				35B11A9B171BA31800F143F5 /* CrushTaskDatabase.h */,
+				35B11A9C171BA31800F143F5 /* CrushTaskDatabase.m */,
 				35C7D5F717195C7A0043C374 /* Work */,
 				35C7D5F617195C670043C374 /* List */,
-				35C7D5F0171951320043C374 /* listItem.h */,
-				35C7D5F1171951320043C374 /* listItem.m */,
 				35C7D5F817195C990043C374 /* Resources */,
 				351C8722171775890014968D /* Supporting Files */,
 			);
@@ -361,11 +355,11 @@
 		35C7D5F617195C670043C374 /* List */ = {
 			isa = PBXGroup;
 			children = (
-				35A4B5E91719420A00D1C36F /* CrushListViewController.h */,
-				35A4B5EA1719420A00D1C36F /* CrushListViewController.m */,
-				354FBB02171ACA3B003D57DF /* CrushTableViewCellDelegate.h */,
+				35A4B5E91719420A00D1C36F /* CrushListTableViewController.h */,
+				35A4B5EA1719420A00D1C36F /* CrushListTableViewController.m */,
 				35C7D5F317195A530043C374 /* CrushListTableViewCell.h */,
 				35C7D5F417195A530043C374 /* CrushListTableViewCell.m */,
+				354FBB02171ACA3B003D57DF /* CrushTableViewCellDelegate.h */,
 				354FBB0E171AFA1A003D57DF /* CrushTableView.h */,
 				354FBB0F171AFA1A003D57DF /* CrushTableView.m */,
 				354FBB11171AFDEB003D57DF /* CrushTableViewDataSource.h */,
@@ -380,16 +374,12 @@
 		35C7D5F717195C7A0043C374 /* Work */ = {
 			isa = PBXGroup;
 			children = (
-				35A857DB171E3655003C435A /* CrushDummyTaskDatabase.h */,
-				35A857DC171E3655003C435A /* CrushDummyTaskDatabase.m */,
 				351C8733171775890014968D /* CrushWorkViewController.h */,
 				351C8734171775890014968D /* CrushWorkViewController.m */,
-				3514FE5017235DEA0043B2DA /* CrushTask.h */,
-				3514FE5117235DEA0043B2DA /* CrushTask.m */,
-				35B11A9B171BA31800F143F5 /* CrushTaskDatabase.h */,
-				35B11A9C171BA31800F143F5 /* CrushTaskDatabase.m */,
-				35B11A98171B918400F143F5 /* CrushTaskInfo.h */,
-				35B11A99171B918400F143F5 /* CrushTaskInfo.m */,
+				3514FE5017235DEA0043B2DA /* CrushWorkTaskListItem.h */,
+				3514FE5117235DEA0043B2DA /* CrushWorkTaskListItem.m */,
+				35B11A98171B918400F143F5 /* CrushTaskObject.h */,
+				35B11A99171B918400F143F5 /* CrushTaskObject.m */,
 			);
 			name = Work;
 			sourceTree = "<group>";
@@ -406,7 +396,7 @@
 				35D8DC921721287500A96C5E /* CrushOutputView.xib */,
 				351C8741171775890014968D /* CrushWorkViewController_iPhone.xib */,
 				351C8744171775890014968D /* CrushWorkViewController_iPad.xib */,
-				351C8747171775890014968D /* CrushListViewController_iPhone.xib */,
+				351C8747171775890014968D /* CrushListTableViewController_iPhone.xib */,
 				351C874A171775890014968D /* CrushListViewController_iPad.xib */,
 			);
 			name = Resources;
@@ -571,7 +561,7 @@
 				35A4B5DF1718C82200D1C36F /* Gotham-Light.ttf in Resources */,
 				351C8743171775890014968D /* CrushWorkViewController_iPhone.xib in Resources */,
 				351C8746171775890014968D /* CrushWorkViewController_iPad.xib in Resources */,
-				351C8749171775890014968D /* CrushListViewController_iPhone.xib in Resources */,
+				351C8749171775890014968D /* CrushListTableViewController_iPhone.xib in Resources */,
 				351C874C171775890014968D /* CrushListViewController_iPad.xib in Resources */,
 				351C879017178B180014968D /* Button.png in Resources */,
 				351C879117178B180014968D /* Button@2x.png in Resources */,
@@ -654,16 +644,14 @@
 				351C8728171775890014968D /* main.m in Sources */,
 				351C872C171775890014968D /* CrushAppDelegate.m in Sources */,
 				351C8735171775890014968D /* CrushWorkViewController.m in Sources */,
-				35A4B5EB1719420A00D1C36F /* CrushListViewController.m in Sources */,
-				35C7D5F2171951320043C374 /* listItem.m in Sources */,
+				35A4B5EB1719420A00D1C36F /* CrushListTableViewController.m in Sources */,
 				35C7D5F517195A530043C374 /* CrushListTableViewCell.m in Sources */,
 				354FBB0D171AD994003D57DF /* CrushStrikeLabel.m in Sources */,
 				354FBB10171AFA1B003D57DF /* CrushTableView.m in Sources */,
 				354FBB14171B30C0003D57DF /* CrushTableViewDragAddNew.m in Sources */,
-				35B11A9A171B918400F143F5 /* CrushTaskInfo.m in Sources */,
+				35B11A9A171B918400F143F5 /* CrushTaskObject.m in Sources */,
 				35B11A9D171BA31800F143F5 /* CrushTaskDatabase.m in Sources */,
-				35A857DD171E3655003C435A /* CrushDummyTaskDatabase.m in Sources */,
-				3514FE5217235DEA0043B2DA /* CrushTask.m in Sources */,
+				3514FE5217235DEA0043B2DA /* CrushWorkTaskListItem.m in Sources */,
 				35D0E4CD1726797B00A4D6CF /* TSMessage.m in Sources */,
 				35D0E4D01726797B00A4D6CF /* UIColor+MLColorAdditions.m in Sources */,
 				35D0E4F91726797B00A4D6CF /* TSMessageView.m in Sources */,
@@ -713,12 +701,12 @@
 			name = CrushWorkViewController_iPad.xib;
 			sourceTree = "<group>";
 		};
-		351C8747171775890014968D /* CrushListViewController_iPhone.xib */ = {
+		351C8747171775890014968D /* CrushListTableViewController_iPhone.xib */ = {
 			isa = PBXVariantGroup;
 			children = (
 				351C8748171775890014968D /* en */,
 			);
-			name = CrushListViewController_iPhone.xib;
+			name = CrushListTableViewController_iPhone.xib;
 			sourceTree = "<group>";
 		};
 		351C874A171775890014968D /* CrushListViewController_iPad.xib */ = {

@@ -8,18 +8,17 @@
 
 #import <UIKit/UIKit.h>
 #import "CrushTableViewCellDelegate.h"
-#import "listItem.h"
 #import "CrushListTableViewCell.h"
 #import "CrushTableView.h"
 #import "CrushTableViewDragAddNew.h"
 #import "CrushTaskDatabase.h"
 #import "CrushTableViewDataSource.h"
 
-@interface CrushListViewController : UIViewController
+@interface CrushListTableViewController : UIViewController
 <
-UITableViewDelegate,
-CrushTableViewCellDelegate,
-CrushTableViewDataSource
+UITableViewDelegate, // Allows managing selections, configuring section headings and footers, help to delete and reorder cells, and perform other actions.
+CrushTableViewCellDelegate, // Handles deleting, and editing, CrushListTableViewCells.
+CrushTableViewDataSource // Implements numberOfRows, rowForIndex, and adding CrushListTableViewCells.
 >
 
 @property (weak, nonatomic) IBOutlet CrushTableViewDragAddNew *tableView;
