@@ -15,6 +15,8 @@
 // the object that acts as the data source for this table
 @property (nonatomic, assign) id<CrushTableViewDataSource> dataSource;
 
+@property (nonatomic, assign) id<UIScrollViewDelegate> delegate;
+
 // dequeues a cell that can be reused
 -(UIView*)dequeueReusableCell;
 

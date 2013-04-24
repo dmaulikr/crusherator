@@ -19,6 +19,8 @@
     float _editingOffset;
     BOOL _cellIsBeingEdited;
     CrushListTableViewCell *_cellBeingEdited;
+    
+    CrushTableViewDragAddNew *_dragAddNew;
 }
 
 @end
@@ -55,6 +57,8 @@
                                    initWithTarget:self
                                    action:@selector(dismissKeyboard)];
     [self.view addGestureRecognizer:tap];
+    
+    _dragAddNew = [[CrushTableViewDragAddNew alloc] initWithTableView:self.tableView];
 }
 
 //     Reloads data when switching back from list view

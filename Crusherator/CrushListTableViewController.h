@@ -21,7 +21,7 @@ CrushTableViewCellDelegate, // Handles deleting, and editing, CrushListTableView
 CrushTableViewDataSource // Implements numberOfRows, rowForIndex, and adding CrushListTableViewCells.
 >
 
-@property (weak, nonatomic) IBOutlet CrushTableViewDragAddNew *tableView;
+@property (weak, nonatomic) IBOutlet CrushTableView *tableView;
 
 @property (nonatomic, retain) NSMutableArray *tasks;
 

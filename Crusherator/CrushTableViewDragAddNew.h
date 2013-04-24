@@ -8,9 +8,11 @@
 
 #import "CrushTableView.h"
 
-@interface CrushTableViewDragAddNew : CrushTableView
+@interface CrushTableViewDragAddNew : NSObject <UIScrollViewDelegate>
 
 @property(nonatomic) BOOL alwaysBounceVertical; // default NO. if YES and bounces is YES, even if content is smaller than bounds, allow drag vertically
 @property(nonatomic) BOOL alwaysBounceHorizontal; // default NO. if YES and bounces is YES, even if content is smaller than bounds, allow drag horizontally
+
+-(id)initWithTableView:(CrushTableView *)tableView;
 
 @end
