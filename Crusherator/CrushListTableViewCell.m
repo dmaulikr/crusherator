@@ -22,7 +22,14 @@
 	UILabel *_crossLabel;
     UIFont *fontDialogStrong;
     BOOL _isBeingEdited;
+    BOOL _gestureInProgress;
+    CGFloat _scrollingRate;
+    UIPanGestureRecognizer *panRecognizer;
+    UILongPressGestureRecognizer *longRecognizer;
+    NSTimer *movingTimer;
 }
+
+#define CELL_SNAPSHOT_TAG 100000
 
 const float UI_CUES_MARGIN = 10.0f;
 const float UI_CUES_WIDTH = 50.0f;
@@ -59,9 +66,14 @@ const float UI_CUES_WIDTH = 50.0f;
         _itemCompleteLayer.hidden = YES;
         [self.layer insertSublayer:_itemCompleteLayer atIndex:0];
         
-        UIGestureRecognizer* recognizer = [[UIPanGestureRecognizer alloc] initWithTarget:self action:@selector(handlePan:)];
-        recognizer.delegate = self;
-        [self addGestureRecognizer:recognizer];
+        panRecognizer = [[UIPanGestureRecognizer alloc] initWithTarget:self action:@selector(handlePan:)];
+        panRecognizer.delegate = self;
+        [self addGestureRecognizer:panRecognizer];
+        
+        longRecognizer = [[UILongPressGestureRecognizer alloc] initWithTarget:self action:@selector(handlePan:)];
+        longRecognizer.delegate = self;
+        [longRecognizer setMinimumPressDuration:0.5];
+        [self addGestureRecognizer:longRecognizer];
         
         // create a label that renders the to-do item text
         _label = [[CrushStrikeLabel alloc] initWithFrame:CGRectNull];
@@ -69,6 +81,7 @@ const float UI_CUES_WIDTH = 50.0f;
         _label.textColor = [UIColor blackColor];
         _label.font = fontDialogStrong;
         _label.backgroundColor = [UIColor clearColor];
+        [_label addGestureRecognizer:longRecognizer];
         [self addSubview:_label];
 
         // create a label that renders the to-do item text
@@ -146,71 +159,192 @@ const float LABEL_RIGHT_MARGIN = 15.0f;
 }
 
 #pragma mark - horizontal pan gesture methods
--(BOOL)gestureRecognizerShouldBegin:(UIPanGestureRecognizer *)gestureRecognizer
+-(BOOL)gestureRecognizerShouldBegin:(id)gestureRecognizer
 {
-    CGPoint translation = [gestureRecognizer translationInView:[self superview]];
-    // Check for horizontal gesture
-    if (fabsf(translation.x) > fabsf(translation.y)) {
+    if(gestureRecognizer == panRecognizer)
+    {
+        UIPanGestureRecognizer *recognizer = (UIPanGestureRecognizer *)gestureRecognizer;
+        CGPoint translation = [recognizer translationInView:[self superview]];
+        // Check for horizontal gesture
+        if (fabsf(translation.x) > fabsf(translation.y)) {
+            return YES;
+        }
+    else return NO;
+    }
+    
+    if(gestureRecognizer == longRecognizer)
+    {
+        _gestureInProgress = YES;
         return YES;
     }
-    return NO;
+    else return NO;
 }
 
--(void)handlePan:(UIPanGestureRecognizer *)recognizer
+-(void)handlePan:(id)gestureRecognizer
 {
-    // 1
-    if (recognizer.state == UIGestureRecognizerStateBegan) {
-        // if the gesture has just started, record the current centre location
-        _originalCenter = self.center;
+    if(gestureRecognizer == panRecognizer)
+    {
+        UIPanGestureRecognizer *recognizer = (UIPanGestureRecognizer *)gestureRecognizer;
+        
+        // 1
+        if (recognizer.state == UIGestureRecognizerStateBegan) {
+            // if the gesture has just started, record the current centre location
+            _originalCenter = self.center;
+        }
+        
+        // 2
+        if (recognizer.state == UIGestureRecognizerStateChanged) {
+            // translate the center
+            CGPoint translation = [recognizer translationInView:self];
+            self.center = CGPointMake(_originalCenter.x + translation.x, _originalCenter.y);
+            // determine whether the item has been dragged far enough to initiate a delete / complete
+            _deleteOnDragRelease = self.frame.origin.x < -self.frame.size.width / 2;
+            _completeOnDragRelease = self.frame.origin.x > self.frame.size.width / 2;
+            
+            // fade the contextual cues
+            float cueAlpha = fabsf(self.frame.origin.x) / (self.frame.size.width / 2);
+            _tickLabel.alpha = cueAlpha;
+            _crossLabel.alpha = cueAlpha;
+            
+            // indicate when the item have been pulled far enough to invoke the given action
+            _tickLabel.textColor = _completeOnDragRelease ?
+            [UIColor greenColor] : [UIColor whiteColor];
+            _crossLabel.textColor = _deleteOnDragRelease ?
+            [UIColor redColor] : [UIColor whiteColor];
+        }
+        
+        // 3
+        if (recognizer.state == UIGestureRecognizerStateEnded) {
+            // the frame this cell would have had before being dragged
+            CGRect originalFrame = CGRectMake(0, self.frame.origin.y,
+                                              self.bounds.size.width, self.bounds.size.height);
+            if (!_deleteOnDragRelease) {
+                // if the item is not being deleted, snap back to the original location
+                [UIView animateWithDuration:0.2
+                                 animations:^{
+                                     self.frame = originalFrame;
+                                 }
+                 ];
+            }
+            if (_deleteOnDragRelease) {
+                // notify the delegate that this item should be deleted
+                [self.delegate toDoItemDeleted:self.toDoItem];
+            }
+            
+            if (_completeOnDragRelease) {
+                // mark the item as complete and update the UI state
+                self.toDoItem.completed = !(self.toDoItem.completed);
+                [self.toDoItem editInDatabase];
+                _itemCompleteLayer.hidden = !_itemCompleteLayer.hidden;
+                _label.strikethrough = !_label.strikethrough;
+            }
+        }
     }
     
-    // 2
-    if (recognizer.state == UIGestureRecognizerStateChanged) {
-        // translate the center
-        CGPoint translation = [recognizer translationInView:self];
-        self.center = CGPointMake(_originalCenter.x + translation.x, _originalCenter.y);
-        // determine whether the item has been dragged far enough to initiate a delete / complete
-        _deleteOnDragRelease = self.frame.origin.x < -self.frame.size.width / 2;
-        _completeOnDragRelease = self.frame.origin.x > self.frame.size.width / 2;
+    if (gestureRecognizer == longRecognizer)
+    {
+        UILongPressGestureRecognizer *recognizer = (UILongPressGestureRecognizer *)gestureRecognizer;
+        CGPoint location = [recognizer locationInView:self.superview];
+        if (recognizer.state == UIGestureRecognizerStateBegan)
+        {
+            CrushListTableViewCell *cell = self;
+            UIGraphicsBeginImageContextWithOptions(cell.bounds.size, NO, 0);
+            [cell.layer renderInContext:UIGraphicsGetCurrentContext()];
+            UIImage *cellImage = UIGraphicsGetImageFromCurrentImageContext();
+            UIGraphicsEndImageContext();
+            
+            // We create an imageView for caching the cell snapshot here
+            UIImageView *snapShotView = (UIImageView *)[cell viewWithTag:CELL_SNAPSHOT_TAG];
+            if ( ! snapShotView) {
+                snapShotView = [[UIImageView alloc] initWithImage:cellImage];
+                snapShotView.tag = CELL_SNAPSHOT_TAG;
+                [self.superview addSubview:snapShotView];
+                CGRect rect = cell.frame;
+                snapShotView.frame = CGRectOffset(snapShotView.bounds, rect.origin.x, rect.origin.y);
+            }
+            
+            // Make a zoom in effect for the cell
+            [UIView beginAnimations:@"zoomCell" context:nil];
+            snapShotView.transform = CGAffineTransformMakeScale(1.1, 1.1);
+            snapShotView.center = CGPointMake(self.superview.center.x, location.y);
+            [UIView commitAnimations];
+            
+//            [self.superview beginUpdates];
+//            [self.tableView deleteRowsAtIndexPaths:[NSArray arrayWithObject:indexPath] withRowAnimation:UITableViewRowAnimationNone];
+//            [self.tableView insertRowsAtIndexPaths:[NSArray arrayWithObject:indexPath] withRowAnimation:UITableViewRowAnimationNone];
+//            [self.delegate gestureRecognizer:self needsCreatePlaceholderForRowAtIndexPath:indexPath];
+//            
+//            self.addingIndexPath = indexPath;
+//            
+//            [self.tableView endUpdates];
+            
+            // Start timer to prepare for auto scrolling
+//            movingTimer = [NSTimer timerWithTimeInterval:1/8 target:self selector:@selector(scrollTable) userInfo:nil repeats:YES];
+//            [[NSRunLoop mainRunLoop] addTimer:movingTimer forMode:NSDefaultRunLoopMode];
+        }
         
-        // fade the contextual cues
-        float cueAlpha = fabsf(self.frame.origin.x) / (self.frame.size.width / 2);
-        _tickLabel.alpha = cueAlpha;
-        _crossLabel.alpha = cueAlpha;
-        
-        // indicate when the item have been pulled far enough to invoke the given action
-        _tickLabel.textColor = _completeOnDragRelease ?
-        [UIColor greenColor] : [UIColor whiteColor];
-        _crossLabel.textColor = _deleteOnDragRelease ?
-        [UIColor redColor] : [UIColor whiteColor];
+        if (recognizer.state == UIGestureRecognizerStateChanged)
+        {
+            // While our finger moves, we also moves the snapshot imageView
+            UIImageView *snapShotView = (UIImageView *)[self.superview viewWithTag:CELL_SNAPSHOT_TAG];
+            snapShotView.center = CGPointMake(self.superview.center.x, location.y);
+            
+//            CGRect rect      = self.superview.bounds;
+//            CGPoint location = [recognizer locationInView:self.superview];
+//            location.y -= self.superview.contentOffset.y;       // We needed to compensate actual contentOffset.y to get the relative y position of touch.
+            
+//            [self updateAddingIndexPathForCurrentLocation];
+            
+//            CGFloat bottomDropZoneHeight = self.superview.bounds.size.height / 6;
+//            CGFloat topDropZoneHeight    = bottomDropZoneHeight;
+//            CGFloat bottomDiff = location.y - (rect.size.height - bottomDropZoneHeight);
+//            if (bottomDiff > 0) {
+//                _scrollingRate = bottomDiff / (bottomDropZoneHeight / 1);
+//            } else if (location.y <= topDropZoneHeight) {
+//                _scrollingRate = -(topDropZoneHeight - MAX(location.y, 0)) / bottomDropZoneHeight;
+//            } else {
+//                _scrollingRate = 0;
+//            }
+        }
+        if (recognizer.state == UIGestureRecognizerStateEnded)
+        {
+            // While long press ends, we remove the snapshot imageView
+            
+            __block __weak UIImageView *snapShotView = (UIImageView *)[self.superview viewWithTag:CELL_SNAPSHOT_TAG];
+//            __block __weak UILongPressGestureRecognizer *weakSelf = recognizer; //!!!
+            
+            // We use self.addingIndexPath directly to make sure we dropped on a valid indexPath
+            // which we've already ensure while UIGestureRecognizerStateChanged
+//            __block __weak NSIndexPath *indexPath = self.addingIndexPath;
+            
+            // Stop timer
+//            [self.movingTimer invalidate]; self.movingTimer = nil;
+//            self.scrollingRate = 0;
+            
+//            [UIView animateWithDuration:2.0
+//                             animations:^{
+//                                 CGRect rect = [self.superview rectForRowAtIndexPath:indexPath];
+//                                 snapShotView.transform = CGAffineTransformIdentity;    // restore the transformed value
+//                                 snapShotView.frame = CGRectOffset(snapShotView.bounds, rect.origin.x, rect.origin.y);
+//                             } completion:^(BOOL finished) {
+                                 [snapShotView removeFromSuperview];
+//
+//                                 [weakSelf.tableView beginUpdates];
+//                                 [weakSelf.tableView deleteRowsAtIndexPaths:[NSArray arrayWithObject:indexPath] withRowAnimation:UITableViewRowAnimationNone];
+//                                 [weakSelf.tableView insertRowsAtIndexPaths:[NSArray arrayWithObject:indexPath] withRowAnimation:UITableViewRowAnimationNone];
+//                                 [weakSelf.delegate gestureRecognizer:weakSelf needsReplacePlaceholderForRowAtIndexPath:indexPath];
+//                                 [weakSelf.tableView endUpdates];
+//                                 
+//                                 [weakSelf.tableView reloadVisibleRowsExceptIndexPath:indexPath];
+//                                 // Update state and clear instance variables
+//                                 weakSelf.cellSnapshot = nil;
+//                                 weakSelf.addingIndexPath = nil;
+//                                 weakSelf.state = JTTableViewGestureRecognizerStateNone;
+//                             }];
+        }
     }
     
-    // 3
-    if (recognizer.state == UIGestureRecognizerStateEnded) {
-        // the frame this cell would have had before being dragged
-        CGRect originalFrame = CGRectMake(0, self.frame.origin.y,
-                                          self.bounds.size.width, self.bounds.size.height);
-        if (!_deleteOnDragRelease) {
-            // if the item is not being deleted, snap back to the original location
-            [UIView animateWithDuration:0.2
-                             animations:^{
-                                 self.frame = originalFrame;
-                             }
-             ];
-        }
-        if (_deleteOnDragRelease) {
-            // notify the delegate that this item should be deleted
-            [self.delegate toDoItemDeleted:self.toDoItem];
-        }
-        
-        if (_completeOnDragRelease) {
-            // mark the item as complete and update the UI state
-            self.toDoItem.completed = !(self.toDoItem.completed);
-            [self.toDoItem editInDatabase];
-            _itemCompleteLayer.hidden = !_itemCompleteLayer.hidden;
-            _label.strikethrough = !_label.strikethrough;
-        }
-    }
+    _gestureInProgress = NO;
 }
 
 -(void)dismissKeyboard

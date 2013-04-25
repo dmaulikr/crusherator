@@ -97,7 +97,7 @@
     return database.taskInfos.count;
 }
 
--(UITableViewCell *)cellForRow:(NSInteger)row
+-(CrushListTableViewCell *)cellForRow:(NSInteger)row
 {
     CrushListTableViewCell* cell = (CrushListTableViewCell*)[self.tableView dequeueReusableCell];
     CrushTaskObject *item = database.taskInfos[row];
@@ -105,6 +105,11 @@
     cell.delegate = self;
     cell.backgroundColor = [self colorForIndex:row];
     return cell;
+}
+
+- (CGRect)rectForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    
 }
 
 // 

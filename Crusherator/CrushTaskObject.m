@@ -64,7 +64,6 @@ static sqlite3_stmt *insert_statement = nil;
         if (sqlite3_step(init_statement) == SQLITE_ROW) {
             self.text = [NSString stringWithUTF8String:(char *)sqlite3_column_text(init_statement, 0)];
 			self.completed = sqlite3_column_int(init_statement,1);
-            NSLog(@"task initiated with text = %@ and complete = %i and works = %i",_text, _completed, _works);
         } else {
             self.text = @"Nothing";
         }
@@ -99,7 +98,6 @@ static sqlite3_stmt *insert_statement = nil;
     sqlite3_bind_int(dehydrate_statement, 4, self.uniqueId);
     sqlite3_bind_int(dehydrate_statement, 3, self.works);
     sqlite3_bind_int(dehydrate_statement, 2, self.completed);
-    NSLog(@"database %@ updated with complete = %i and works = %i",self.text, self.completed, self.works);
     sqlite3_bind_text(dehydrate_statement, 1, [self.text UTF8String], -1, SQLITE_TRANSIENT);
     int success = sqlite3_step(dehydrate_statement);
     

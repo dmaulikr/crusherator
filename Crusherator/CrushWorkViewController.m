@@ -255,7 +255,7 @@
 
 - (void)viewWillAppear:(BOOL)animated
 {    
-    NSLog(@"reloaded with %i tasks!",database.taskInfos.count);
+
 }
 
 // pressing button changes modes

@@ -44,7 +44,6 @@ static CrushTaskDatabase *instance = NULL;
             NSAssert1(0, @"Failed to create writable database file with message '%@'.", defaultDBPath);
         }
     }
-    NSLog(@"Singleton initialized");
     return self;
 }
 
@@ -64,7 +63,6 @@ static CrushTaskDatabase *instance = NULL;
             return _database;
         }
     }
-    else NSLog (@"Couldn't access database");
     return NULL;
 }
 
@@ -152,7 +150,6 @@ static CrushTaskDatabase *instance = NULL;
     
     [task deleteFromDatabase];
     [retval removeObject:task];
-    NSLog(@"removeTask called");
 }
 
 -(CrushTaskObject *) addTask:(NSString *)text {
@@ -162,7 +159,6 @@ static CrushTaskDatabase *instance = NULL;
 //    NSLog(@"Database add %i,%@",uniqueId,text);
     
 	[retval insertObject:newTask atIndex:0];
-    NSLog(@"addTask called");
     return newTask;
 }
 
