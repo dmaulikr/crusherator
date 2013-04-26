@@ -10,7 +10,7 @@
 #import "CrushTableViewCellDelegate.h"
 #import "CrushTaskObject.h"
 #import "CrushStrikeLabel.h"
-#define SHC_ROW_HEIGHT 50.0f
+#define SHC_ROW_HEIGHT 70.0f
 
 // A custom table cell that renders listItem items.
 @interface CrushListTableViewCell : UITableViewCell <UITextFieldDelegate>

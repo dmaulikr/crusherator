@@ -60,6 +60,11 @@
 		35A4B5E61719400B00D1C36F /* crusherator-iconx1.png in Resources */ = {isa = PBXBuildFile; fileRef = 35A4B5E51719400B00D1C36F /* crusherator-iconx1.png */; };
 		35A4B5E81719401000D1C36F /* crusherator-icon.png in Resources */ = {isa = PBXBuildFile; fileRef = 35A4B5E71719401000D1C36F /* crusherator-icon.png */; };
 		35A4B5EB1719420A00D1C36F /* CrushListTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 35A4B5EA1719420A00D1C36F /* CrushListTableViewController.m */; };
+		35A71C8E172A415500F05C47 /* MediaPlayer.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 35A71C8D172A415500F05C47 /* MediaPlayer.framework */; };
+		35A71C91172A5F8000F05C47 /* CrushSettingsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 35A71C90172A5F8000F05C47 /* CrushSettingsViewController.m */; };
+		35A71C93172A605400F05C47 /* settings@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 35A71C92172A605400F05C47 /* settings@2x.png */; };
+		35A71C98172A611F00F05C47 /* CrushSettingsViewController_iPad.xib in Resources */ = {isa = PBXBuildFile; fileRef = 35A71C94172A611F00F05C47 /* CrushSettingsViewController_iPad.xib */; };
+		35A71C99172A611F00F05C47 /* CrushSettingsViewController_iPhone.xib in Resources */ = {isa = PBXBuildFile; fileRef = 35A71C96172A611F00F05C47 /* CrushSettingsViewController_iPhone.xib */; };
 		35AE975E171AB48D009A73B0 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 35AE975D171AB48D009A73B0 /* QuartzCore.framework */; };
 		35B11A9A171B918400F143F5 /* CrushTaskObject.m in Sources */ = {isa = PBXBuildFile; fileRef = 35B11A99171B918400F143F5 /* CrushTaskObject.m */; };
 		35B11A9D171BA31800F143F5 /* CrushTaskDatabase.m in Sources */ = {isa = PBXBuildFile; fileRef = 35B11A9C171BA31800F143F5 /* CrushTaskDatabase.m */; };
@@ -167,6 +172,12 @@
 		35A4B5E71719401000D1C36F /* crusherator-icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "crusherator-icon.png"; sourceTree = "<group>"; };
 		35A4B5E91719420A00D1C36F /* CrushListTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CrushListTableViewController.h; sourceTree = "<group>"; };
 		35A4B5EA1719420A00D1C36F /* CrushListTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = CrushListTableViewController.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
+		35A71C8D172A415500F05C47 /* MediaPlayer.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MediaPlayer.framework; path = System/Library/Frameworks/MediaPlayer.framework; sourceTree = SDKROOT; };
+		35A71C8F172A5F7F00F05C47 /* CrushSettingsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CrushSettingsViewController.h; sourceTree = "<group>"; };
+		35A71C90172A5F8000F05C47 /* CrushSettingsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CrushSettingsViewController.m; sourceTree = "<group>"; };
+		35A71C92172A605400F05C47 /* settings@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "settings@2x.png"; sourceTree = "<group>"; };
+		35A71C95172A611F00F05C47 /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = en.lproj/CrushSettingsViewController_iPad.xib; sourceTree = "<group>"; };
+		35A71C97172A611F00F05C47 /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = en.lproj/CrushSettingsViewController_iPhone.xib; sourceTree = "<group>"; };
 		35AE975D171AB48D009A73B0 /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
 		35B11A98171B918400F143F5 /* CrushTaskObject.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CrushTaskObject.h; sourceTree = "<group>"; };
 		35B11A99171B918400F143F5 /* CrushTaskObject.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CrushTaskObject.m; sourceTree = "<group>"; };
@@ -210,6 +221,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				35A71C8E172A415500F05C47 /* MediaPlayer.framework in Frameworks */,
 				35B11AA1171BA97800F143F5 /* AudioToolbox.framework in Frameworks */,
 				35B11A9F171BA96F00F143F5 /* libsqlite3.0.dylib in Frameworks */,
 				35AE975E171AB48D009A73B0 /* QuartzCore.framework in Frameworks */,
@@ -235,9 +247,6 @@
 		351C870F171775890014968D = {
 			isa = PBXGroup;
 			children = (
-				35B11AA0171BA97800F143F5 /* AudioToolbox.framework */,
-				35B11A9E171BA96F00F143F5 /* libsqlite3.0.dylib */,
-				35AE975D171AB48D009A73B0 /* QuartzCore.framework */,
 				35A4B5E71719401000D1C36F /* crusherator-icon.png */,
 				35A4B5E51719400B00D1C36F /* crusherator-iconx1.png */,
 				351C8721171775890014968D /* Crusherator */,
@@ -259,6 +268,10 @@
 		351C871A171775890014968D /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				35A71C8D172A415500F05C47 /* MediaPlayer.framework */,
+				35B11AA0171BA97800F143F5 /* AudioToolbox.framework */,
+				35B11A9E171BA96F00F143F5 /* libsqlite3.0.dylib */,
+				35AE975D171AB48D009A73B0 /* QuartzCore.framework */,
 				351C871B171775890014968D /* UIKit.framework */,
 				351C871D171775890014968D /* Foundation.framework */,
 				351C871F171775890014968D /* CoreGraphics.framework */,
@@ -272,6 +285,8 @@
 			children = (
 				351C872A171775890014968D /* CrushAppDelegate.h */,
 				351C872B171775890014968D /* CrushAppDelegate.m */,
+				35A71C8F172A5F7F00F05C47 /* CrushSettingsViewController.h */,
+				35A71C90172A5F8000F05C47 /* CrushSettingsViewController.m */,
 				35B11A9B171BA31800F143F5 /* CrushTaskDatabase.h */,
 				35B11A9C171BA31800F143F5 /* CrushTaskDatabase.m */,
 				35C7D5F717195C7A0043C374 /* Work */,
@@ -392,6 +407,9 @@
 				351C8738171775890014968D /* first@2x.png */,
 				351C873D171775890014968D /* second.png */,
 				351C873F171775890014968D /* second@2x.png */,
+				35A71C92172A605400F05C47 /* settings@2x.png */,
+				35A71C94172A611F00F05C47 /* CrushSettingsViewController_iPad.xib */,
+				35A71C96172A611F00F05C47 /* CrushSettingsViewController_iPhone.xib */,
 				351C8741171775890014968D /* CrushWorkViewController_iPhone.xib */,
 				351C8744171775890014968D /* CrushWorkViewController_iPad.xib */,
 				351C8747171775890014968D /* CrushListTableViewController_iPhone.xib */,
@@ -588,6 +606,9 @@
 				35D0E4F71726797B00A4D6CF /* NotificationBackgroundWarningIcon@2x.png in Resources */,
 				35D0E4F81726797B00A4D6CF /* TSMessages.podspec in Resources */,
 				35F7981C172A2AF2003D86CC /* taskList.sqlite3 in Resources */,
+				35A71C93172A605400F05C47 /* settings@2x.png in Resources */,
+				35A71C98172A611F00F05C47 /* CrushSettingsViewController_iPad.xib in Resources */,
+				35A71C99172A611F00F05C47 /* CrushSettingsViewController_iPhone.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -653,6 +674,7 @@
 				35D0E4CD1726797B00A4D6CF /* TSMessage.m in Sources */,
 				35D0E4D01726797B00A4D6CF /* UIColor+MLColorAdditions.m in Sources */,
 				35D0E4F91726797B00A4D6CF /* TSMessageView.m in Sources */,
+				35A71C91172A5F8000F05C47 /* CrushSettingsViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -721,6 +743,22 @@
 				351C875D171775890014968D /* en */,
 			);
 			name = InfoPlist.strings;
+			sourceTree = "<group>";
+		};
+		35A71C94172A611F00F05C47 /* CrushSettingsViewController_iPad.xib */ = {
+			isa = PBXVariantGroup;
+			children = (
+				35A71C95172A611F00F05C47 /* en */,
+			);
+			name = CrushSettingsViewController_iPad.xib;
+			sourceTree = "<group>";
+		};
+		35A71C96172A611F00F05C47 /* CrushSettingsViewController_iPhone.xib */ = {
+			isa = PBXVariantGroup;
+			children = (
+				35A71C97172A611F00F05C47 /* en */,
+			);
+			name = CrushSettingsViewController_iPhone.xib;
 			sourceTree = "<group>";
 		};
 /* End PBXVariantGroup section */

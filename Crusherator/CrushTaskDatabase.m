@@ -160,6 +160,14 @@ static CrushTaskDatabase *instance = NULL;
     
     [task deleteFromDatabase];
     [retval removeObject:task];
+    for(CrushTaskObject *object in retval)
+    {
+        if(object.ordering > task.ordering)
+        {
+            object.ordering --;
+            [object editInDatabase];
+        }
+    }
 }
 
 -(CrushTaskObject *) addTask:(NSString *)text {

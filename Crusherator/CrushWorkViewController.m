@@ -11,6 +11,7 @@
 #import "CrushTaskDatabase.h"
 #import <AudioToolbox/AudioToolbox.h>
 #import <QuartzCore/QuartzCore.h>
+#import <MediaPlayer/MediaPlayer.h>
 
 #define UIColorFromRGB(rgbValue) [UIColor colorWithRed:((float)((rgbValue & 0xFF0000) >> 16))/255.0 green:((float)((rgbValue & 0xFF00) >> 8))/255.0 blue:((float)(rgbValue & 0xFF))/255.0 alpha:1.0]
 
@@ -264,6 +265,7 @@
     if ([currentMode isEqual:@"workReady"])
     {
         [self changeModes:@"workRunning"];
+        [self startMusic];
     }
     else if ([currentMode isEqual:@"workRunning"])
     {
@@ -333,6 +335,7 @@
                                            withCallback:^{
                                                // user dismissed callback
                                            }];
+            [self stopMusic];
         }
         else if ([modeName isEqualToString:@"workPaused"])
         {
@@ -378,6 +381,18 @@
             [relaxedCount setText:[NSString stringWithFormat:@"Relaxed: %d",relaxUnitsCompleted]];
         }
     }
+}
+
+- (void)startMusic
+{
+    [[MPMusicPlayerController iPodMusicPlayer] play];
+    NSLog(@"playing");
+}
+
+- (void)stopMusic
+{
+    [[MPMusicPlayerController iPodMusicPlayer] pause];
+    NSLog(@"paused");
 }
 
 // updates the time shown

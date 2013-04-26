@@ -12,22 +12,26 @@
 
 #import "CrushListTableViewController.h"
 
+#import "CrushSettingsViewController.h"
+
 @implementation CrushAppDelegate
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
     self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
     // Override point for customization after application launch.
-    UIViewController *viewController1, *viewController2;
+    UIViewController *viewController1, *viewController2, *viewController3;
     if ([[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPhone) {
         viewController1 = [[CrushWorkViewController alloc] initWithNibName:@"CrushWorkViewController_iPhone" bundle:nil];
         viewController2 = [[CrushListTableViewController alloc]initWithNibName:@"CrushListTableViewController_iPhone" bundle:nil];
+        viewController3 = [[CrushSettingsViewController alloc]initWithNibName:@"CrushSettingsViewController_iPhone" bundle:nil];
     } else {
         viewController1 = [[CrushWorkViewController alloc] initWithNibName:@"CrushWorkViewController_iPad" bundle:nil];
         viewController2 = [[CrushListTableViewController alloc]initWithNibName:@"CrushListTableViewController_iPad" bundle:nil];
+        viewController3 = [[CrushSettingsViewController alloc]initWithNibName:@"CrushSettingsViewController_iPad" bundle:nil];
     }
     self.tabBarController = [[UITabBarController alloc] init];
-    self.tabBarController.viewControllers = @[viewController1, viewController2];
+    self.tabBarController.viewControllers = @[viewController1, viewController2, viewController3];
     self.window.rootViewController = self.tabBarController;
     [self.window makeKeyAndVisible];
     return YES;
@@ -35,6 +39,8 @@
 
 - (void)applicationWillResignActive:(UIApplication *)application
 {
+    [[UIApplication sharedApplication] setIdleTimerDisabled:YES];
+    
     // Sent when the application is about to move from active to inactive state. This can occur for certain types of temporary interruptions (such as an incoming phone call or SMS message) or when the user quits the application and it begins the transition to the background state.
     // Use this method to pause ongoing tasks, disable timers, and throttle down OpenGL ES frame rates. Games should use this method to pause the game.
 }

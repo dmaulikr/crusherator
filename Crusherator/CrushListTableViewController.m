@@ -161,10 +161,17 @@
     
     // iterate over all of the cells
     for(CrushListTableViewCell* referenceCell in visibleCells) {
-        if (cellBeingMoved == referenceCell) {
-            referenceCell.alpha = 1.0;
-        }
-        [self.tableView reloadData];
+        UIImageView *snapShotView = (UIImageView *)[self.view viewWithTag:CELL_SNAPSHOT_TAG];
+        [UIView animateWithDuration:0.3 delay:0.0 options:UIViewAnimationOptionCurveEaseInOut animations:^{
+            snapShotView.transform = CGAffineTransformMakeScale(1.0, 1.0);
+            snapShotView.frame = cellBeingMoved.frame;
+        } completion:^(BOOL finished){
+            if (cellBeingMoved == referenceCell) {
+                referenceCell.alpha = 1.0;
+            }
+            [[self.view viewWithTag:CELL_SNAPSHOT_TAG] removeFromSuperview];
+            [self.tableView reloadData];
+        }];
     }
 }
 

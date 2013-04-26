@@ -74,7 +74,7 @@ const float UI_CUES_WIDTH = 50.0f;
         
         longRecognizer = [[UILongPressGestureRecognizer alloc] initWithTarget:self action:@selector(handlePan:)];
         longRecognizer.delegate = self;
-        [longRecognizer setMinimumPressDuration:0.5];
+        [longRecognizer setMinimumPressDuration:0.3];
         [self addGestureRecognizer:longRecognizer];
         
         // create a label that renders the to-do item text
@@ -263,6 +263,11 @@ const float LABEL_RIGHT_MARGIN = 15.0f;
                 [self.superview addSubview:snapShotView];
                 CGRect rect = cell.frame;
                 snapShotView.frame = CGRectOffset(snapShotView.bounds, rect.origin.x, rect.origin.y);
+                snapShotView.layer.shadowColor = [UIColor blackColor].CGColor;
+                snapShotView.layer.shadowOffset = CGSizeMake(0,0);
+                snapShotView.layer.shadowOpacity = 0.7;
+                snapShotView.layer.shadowRadius = 5.0;
+                snapShotView.clipsToBounds = NO;
             }
             
             // Make a zoom in effect for the cell
@@ -282,12 +287,7 @@ const float LABEL_RIGHT_MARGIN = 15.0f;
                 [self.delegate cellIsBeingDragged:self to:snapShotView.center];
         }
         if (recognizer.state == UIGestureRecognizerStateEnded)
-        {
-            // While long press ends, we remove the snapshot imageView
-            
-            __block __weak UIImageView *snapShotView = (UIImageView *)[self.superview viewWithTag:CELL_SNAPSHOT_TAG];
-                                 [snapShotView removeFromSuperview];
-            
+        {   
             [self.delegate cellIsDoneBeingMoved:self];
         }
     }
