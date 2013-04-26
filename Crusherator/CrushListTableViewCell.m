@@ -271,19 +271,6 @@ const float LABEL_RIGHT_MARGIN = 15.0f;
             snapShotView.center = CGPointMake(self.superview.center.x, _beginningLocation.y);
             [UIView commitAnimations];
             [self.delegate cellIsBeingMoved:self];
-            
-//            [self.superview beginUpdates];
-//            [self.tableView deleteRowsAtIndexPaths:[NSArray arrayWithObject:indexPath] withRowAnimation:UITableViewRowAnimationNone];
-//            [self.tableView insertRowsAtIndexPaths:[NSArray arrayWithObject:indexPath] withRowAnimation:UITableViewRowAnimationNone];
-//            [self.delegate gestureRecognizer:self needsCreatePlaceholderForRowAtIndexPath:indexPath];
-//            
-//            self.addingIndexPath = indexPath;
-//            
-//            [self.tableView endUpdates];
-            
-            // Start timer to prepare for auto scrolling
-//            movingTimer = [NSTimer timerWithTimeInterval:1/8 target:self selector:@selector(scrollTable) userInfo:nil repeats:YES];
-//            [[NSRunLoop mainRunLoop] addTimer:movingTimer forMode:NSDefaultRunLoopMode];
         }
         
         if (recognizer.state == UIGestureRecognizerStateChanged)
@@ -293,56 +280,13 @@ const float LABEL_RIGHT_MARGIN = 15.0f;
             CGPoint currentLocation = [recognizer locationInView:self.superview];
             snapShotView.center = CGPointMake(self.superview.center.x, currentLocation.y);
                 [self.delegate cellIsBeingDragged:self to:snapShotView.center];
-//            location.y -= self.superview.contentOffset.y;       // We needed to compensate actual contentOffset.y to get the relative y position of touch.
-            
-//            [self updateAddingIndexPathForCurrentLocation];
-            
-//            CGFloat bottomDropZoneHeight = self.superview.bounds.size.height / 6;
-//            CGFloat topDropZoneHeight    = bottomDropZoneHeight;
-//            CGFloat bottomDiff = location.y - (rect.size.height - bottomDropZoneHeight);
-//            if (bottomDiff > 0) {
-//                _scrollingRate = bottomDiff / (bottomDropZoneHeight / 1);
-//            } else if (location.y <= topDropZoneHeight) {
-//                _scrollingRate = -(topDropZoneHeight - MAX(location.y, 0)) / bottomDropZoneHeight;
-//            } else {
-//                _scrollingRate = 0;
-//            }
         }
         if (recognizer.state == UIGestureRecognizerStateEnded)
         {
             // While long press ends, we remove the snapshot imageView
             
             __block __weak UIImageView *snapShotView = (UIImageView *)[self.superview viewWithTag:CELL_SNAPSHOT_TAG];
-//            __block __weak UILongPressGestureRecognizer *weakSelf = recognizer; //!!!
-            
-            // We use self.addingIndexPath directly to make sure we dropped on a valid indexPath
-            // which we've already ensure while UIGestureRecognizerStateChanged
-//            __block __weak NSIndexPath *indexPath = self.addingIndexPath;
-            
-            // Stop timer
-//            [self.movingTimer invalidate]; self.movingTimer = nil;
-//            self.scrollingRate = 0;
-            
-//            [UIView animateWithDuration:2.0
-//                             animations:^{
-//                                 CGRect rect = [self.superview rectForRowAtIndexPath:indexPath];
-//                                 snapShotView.transform = CGAffineTransformIdentity;    // restore the transformed value
-//                                 snapShotView.frame = CGRectOffset(snapShotView.bounds, rect.origin.x, rect.origin.y);
-//                             } completion:^(BOOL finished) {
                                  [snapShotView removeFromSuperview];
-//
-//                                 [weakSelf.tableView beginUpdates];
-//                                 [weakSelf.tableView deleteRowsAtIndexPaths:[NSArray arrayWithObject:indexPath] withRowAnimation:UITableViewRowAnimationNone];
-//                                 [weakSelf.tableView insertRowsAtIndexPaths:[NSArray arrayWithObject:indexPath] withRowAnimation:UITableViewRowAnimationNone];
-//                                 [weakSelf.delegate gestureRecognizer:weakSelf needsReplacePlaceholderForRowAtIndexPath:indexPath];
-//                                 [weakSelf.tableView endUpdates];
-//                                 
-//                                 [weakSelf.tableView reloadVisibleRowsExceptIndexPath:indexPath];
-//                                 // Update state and clear instance variables
-//                                 weakSelf.cellSnapshot = nil;
-//                                 weakSelf.addingIndexPath = nil;
-//                                 weakSelf.state = JTTableViewGestureRecognizerStateNone;
-//                             }];
             
             [self.delegate cellIsDoneBeingMoved:self];
         }

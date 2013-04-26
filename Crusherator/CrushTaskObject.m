@@ -54,7 +54,7 @@ static sqlite3_stmt *insert_statement = nil;
         _database = taskDatabase.databaseAccess;
         
         if (init_statement == nil) {
-            const char *sql = "SELECT text,completed FROM tasks WHERE uniqueId = ?";
+            const char *sql = "SELECT text,completed,works,ordering FROM tasks WHERE uniqueId = ?";
             if (sqlite3_prepare_v2(_database, sql, -1, &init_statement, NULL) != SQLITE_OK) {
                 NSAssert(0, @"Error: failed to prepare statement with message '%s'.", sqlite3_errmsg(_database));
             }
@@ -64,6 +64,8 @@ static sqlite3_stmt *insert_statement = nil;
         if (sqlite3_step(init_statement) == SQLITE_ROW) {
             self.text = [NSString stringWithUTF8String:(char *)sqlite3_column_text(init_statement, 0)];
 			self.completed = sqlite3_column_int(init_statement,1);
+            self.works = sqlite3_column_int(init_statement,2);
+            self.ordering = sqlite3_column_int(init_statement,3);
         } else {
             self.text = @"Nothing";
         }
@@ -89,13 +91,14 @@ static sqlite3_stmt *insert_statement = nil;
 
 - (void) editInDatabase {
     if (dehydrate_statement == nil) {
-        const char *sql = "UPDATE tasks SET text = ? , completed = ? , works = ? WHERE uniqueId=?";
+        const char *sql = "UPDATE tasks SET text = ? , completed = ? , works = ? , ordering = ? WHERE uniqueId=?";
         if (sqlite3_prepare_v2(_database, sql, -1, &dehydrate_statement, NULL) != SQLITE_OK) {
             NSAssert1(0, @"Error: failed to prepare statement with message '%s'.", sqlite3_errmsg(_database));
         }
     }
     
-    sqlite3_bind_int(dehydrate_statement, 4, self.uniqueId);
+    sqlite3_bind_int(dehydrate_statement, 5, self.uniqueId);
+    sqlite3_bind_int(dehydrate_statement, 4, self.ordering);
     sqlite3_bind_int(dehydrate_statement, 3, self.works);
     sqlite3_bind_int(dehydrate_statement, 2, self.completed);
     sqlite3_bind_text(dehydrate_statement, 1, [self.text UTF8String], -1, SQLITE_TRANSIENT);

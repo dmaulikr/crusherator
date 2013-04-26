@@ -75,7 +75,7 @@ static CrushTaskDatabase *instance = NULL;
             // Open the database. The database was prepared outside the application.
             if (sqlite3_open([path UTF8String], &_database) == SQLITE_OK) {
                 // Get the primary key for all books.
-                const char *sql = "SELECT * FROM tasks ORDER BY uniqueId DESC";
+                const char *sql = "SELECT * FROM tasks ORDER BY ordering DESC";
                 sqlite3_stmt *statement;
                 // Preparing a statement compiles the SQL query into a byte-code program in the SQLite library.
                 // The third parameter is either the length of the SQL string or -1 to read up to the first null terminator.
@@ -91,6 +91,7 @@ static CrushTaskDatabase *instance = NULL;
                         bool completed = (completedZeroOne == 1)? true : false;
 
                         int works = sqlite3_column_int (statement, 3);
+                        int ordering = sqlite3_column_int (statement, 4);
                         
 //
 //                      NSDateFormatter *dateFormat = [[NSDateFormatter alloc] init];
@@ -118,15 +119,16 @@ static CrushTaskDatabase *instance = NULL;
                                                initWithUniqueId:uniqueId
                                                text:text];
                         
-                        [retval addObject:info];
                         info.works = works;
                         info.completed = completed;
-    //                    info.deleted = deleted;
+                        info.ordering = ordering;
     //                    info.dateCreated = dateCreated;
     //                    info.dateCompleted = dateCompleted;
     //                    info.dateDeleted = dateDeleted;
     //                    info.category = category;
     //                    info.project = project;
+                        [retval addObject:info];
+                        NSLog(@"item %@, order %i",info.text,info.ordering);
                     }
                 }
                 // "Finalize" the statement - releases the resources associated with the statement.

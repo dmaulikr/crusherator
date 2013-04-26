@@ -149,8 +149,7 @@
     // iterate over all of the cells
     for(CrushListTableViewCell* referenceCell in visibleCells) {
         if (cellBeingMoved == referenceCell) {
-            referenceCell.backgroundColor = [UIColor blackColor];
-//            referenceCell.hidden = YES;
+            referenceCell.alpha = 0.0;
         }
     }
 }
@@ -163,9 +162,10 @@
     // iterate over all of the cells
     for(CrushListTableViewCell* referenceCell in visibleCells) {
         if (cellBeingMoved == referenceCell) {
-            referenceCell.backgroundColor = [self colorForIndex:cellBeingMoved.row];
-//            referenceCell.hidden = NO;
+            referenceCell.alpha = 1.0;
         }
+        
+        referenceCell.toDoItem.ordering = [visibleCells indexOfObject:referenceCell];
     }
 }
 
@@ -173,7 +173,6 @@
 {
     UIImageView *snapShotView = (UIImageView *)[self.view viewWithTag:CELL_SNAPSHOT_TAG];
     CGPoint center = snapShotView.center;
-    NSLog(@"center is %f",snapShotView.center.y);
     BOOL startAnimatingDown = FALSE;
     BOOL startAnimatingUp = FALSE;
     if(center.y > cellBeingMoved.frame.origin.y+cellBeingMoved.frame.size.height)
@@ -192,9 +191,6 @@
                 cell.frame = CGRectOffset(cell.frame, 0.0f, -cell.frame.size.height);
                 cellBeingMoved.frame = CGRectOffset(cellBeingMoved.frame, 0.0f, cellBeingMoved.frame.size.height);
             } completion:^(BOOL finished){
-                if (cell == lastView) {
-//                    [self.tableView reloadData];
-                }
             }];
         }
     }
@@ -205,9 +201,6 @@
                 cell.frame = CGRectOffset(cell.frame, 0.0f, cell.frame.size.height);
                 cellBeingMoved.frame = CGRectOffset(cellBeingMoved.frame, 0.0f, -cellBeingMoved.frame.size.height);
             } completion:^(BOOL finished){
-                if (cell == lastView) {
-                    //                    [self.tableView reloadData];
-                }
             }];
         }
     }
@@ -271,12 +264,4 @@
             break;
         }
     }
-    [editCell.label becomeFirstResponder];
-}
-
--(void)dismissKeyboard
-{
-    [_cellBeingEdited dismissKeyboard];
-}
-
-@end
+    [editCell.label becomeFir

@@ -17,7 +17,7 @@
     NSString *_text;
     int _works;
     bool _completed;
-//    bool _deleted;
+    NSInteger _ordering;
 //    NSDate *_dateCreated;
 //    NSDate *_dateCompleted;
 //    NSDate *_dateDeleted;
@@ -30,6 +30,7 @@
 @property (nonatomic, assign) int works;
 @property (nonatomic, assign) bool completed;
 @property (nonatomic, assign) bool deleted;
+@property (nonatomic, assign) NSInteger ordering;
 @property (nonatomic, copy) NSDate *dateCreated;
 @property (nonatomic, copy) NSDate *dateCompleted;
 @property (nonatomic, copy) NSDate *dateDeleted;

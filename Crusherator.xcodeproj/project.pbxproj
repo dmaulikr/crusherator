@@ -7,8 +7,6 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		35100A6F1726174300B48B18 /* taskList.sqlite3 in Resources */ = {isa = PBXBuildFile; fileRef = 35100A6E1726174300B48B18 /* taskList.sqlite3 */; };
-		35100A701726174300B48B18 /* taskList.sqlite3 in Resources */ = {isa = PBXBuildFile; fileRef = 35100A6E1726174300B48B18 /* taskList.sqlite3 */; };
 		3514FE5217235DEA0043B2DA /* CrushWorkTaskListItem.m in Sources */ = {isa = PBXBuildFile; fileRef = 3514FE5117235DEA0043B2DA /* CrushWorkTaskListItem.m */; };
 		351C871C171775890014968D /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 351C871B171775890014968D /* UIKit.framework */; };
 		351C871E171775890014968D /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 351C871D171775890014968D /* Foundation.framework */; };
@@ -91,6 +89,8 @@
 		35D0E4F71726797B00A4D6CF /* NotificationBackgroundWarningIcon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 35D0E4C61726797B00A4D6CF /* NotificationBackgroundWarningIcon@2x.png */; };
 		35D0E4F81726797B00A4D6CF /* TSMessages.podspec in Resources */ = {isa = PBXBuildFile; fileRef = 35D0E4C71726797B00A4D6CF /* TSMessages.podspec */; };
 		35D0E4F91726797B00A4D6CF /* TSMessageView.m in Sources */ = {isa = PBXBuildFile; fileRef = 35D0E4CA1726797B00A4D6CF /* TSMessageView.m */; };
+		35F7981C172A2AF2003D86CC /* taskList.sqlite3 in Resources */ = {isa = PBXBuildFile; fileRef = 35F7981B172A2AF2003D86CC /* taskList.sqlite3 */; };
+		35F7981D172A2AF2003D86CC /* taskList.sqlite3 in Resources */ = {isa = PBXBuildFile; fileRef = 35F7981B172A2AF2003D86CC /* taskList.sqlite3 */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -104,7 +104,6 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		35100A6E1726174300B48B18 /* taskList.sqlite3 */ = {isa = PBXFileReference; lastKnownFileType = file; path = taskList.sqlite3; sourceTree = "<group>"; };
 		3514FE5017235DEA0043B2DA /* CrushWorkTaskListItem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CrushWorkTaskListItem.h; sourceTree = "<group>"; };
 		3514FE5117235DEA0043B2DA /* CrushWorkTaskListItem.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CrushWorkTaskListItem.m; sourceTree = "<group>"; };
 		351C8718171775890014968D /* Crusherator.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Crusherator.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -203,6 +202,7 @@
 		35D0E4C71726797B00A4D6CF /* TSMessages.podspec */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = TSMessages.podspec; sourceTree = "<group>"; };
 		35D0E4C91726797B00A4D6CF /* TSMessageView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TSMessageView.h; sourceTree = "<group>"; };
 		35D0E4CA1726797B00A4D6CF /* TSMessageView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TSMessageView.m; sourceTree = "<group>"; };
+		35F7981B172A2AF2003D86CC /* taskList.sqlite3 */ = {isa = PBXFileReference; lastKnownFileType = file; path = taskList.sqlite3; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -386,8 +386,8 @@
 		35C7D5F817195C990043C374 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				35F7981B172A2AF2003D86CC /* taskList.sqlite3 */,
 				35D0E4721726797B00A4D6CF /* Messages */,
-				35100A6E1726174300B48B18 /* taskList.sqlite3 */,
 				351C8736171775890014968D /* first.png */,
 				351C8738171775890014968D /* first@2x.png */,
 				351C873D171775890014968D /* second.png */,
@@ -567,7 +567,6 @@
 				351C879317178B180014968D /* ButtonHighlighted@2x.png in Resources */,
 				35A4B5E61719400B00D1C36F /* crusherator-iconx1.png in Resources */,
 				35A4B5E81719401000D1C36F /* crusherator-icon.png in Resources */,
-				35100A6F1726174300B48B18 /* taskList.sqlite3 in Resources */,
 				35D0E4CB1726797B00A4D6CF /* .gitignore in Resources */,
 				35D0E4CC1726797B00A4D6CF /* .gitmodules in Resources */,
 				35D0E4CE1726797B00A4D6CF /* LICENCE in Resources */,
@@ -588,6 +587,7 @@
 				35D0E4F61726797B00A4D6CF /* NotificationBackgroundWarningIcon.png in Resources */,
 				35D0E4F71726797B00A4D6CF /* NotificationBackgroundWarningIcon@2x.png in Resources */,
 				35D0E4F81726797B00A4D6CF /* TSMessages.podspec in Resources */,
+				35F7981C172A2AF2003D86CC /* taskList.sqlite3 in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -612,7 +612,7 @@
 				351C87871717837F0014968D /* Gotham-UltraItalic.ttf in Resources */,
 				351C87881717837F0014968D /* Gotham-XLight.ttf in Resources */,
 				351C87891717837F0014968D /* Gotham-XLightItalic.ttf in Resources */,
-				35100A701726174300B48B18 /* taskList.sqlite3 in Resources */,
+				35F7981D172A2AF2003D86CC /* taskList.sqlite3 in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
