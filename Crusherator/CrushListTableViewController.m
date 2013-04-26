@@ -164,8 +164,7 @@
         if (cellBeingMoved == referenceCell) {
             referenceCell.alpha = 1.0;
         }
-        
-        referenceCell.toDoItem.ordering = [visibleCells indexOfObject:referenceCell];
+        [self.tableView reloadData];
     }
 }
 
@@ -184,9 +183,12 @@
         startAnimatingUp = TRUE;
     }
     NSArray *visibleCells = (NSArray *)[self.tableView visibleCells];
-    UIView* lastView = [visibleCells lastObject];
     for(CrushListTableViewCell* cell in visibleCells) {
         if (startAnimatingDown && ([visibleCells indexOfObject:cell] - [visibleCells indexOfObject:cellBeingMoved] == 1)) {
+            cell.toDoItem.ordering ++;
+            cellBeingMoved.toDoItem.ordering --;
+            [cell.toDoItem editInDatabase];
+            [cellBeingMoved.toDoItem editInDatabase];
             [UIView animateWithDuration:0.3 delay:0.0 options:UIViewAnimationOptionCurveEaseInOut animations:^{
                 cell.frame = CGRectOffset(cell.frame, 0.0f, -cell.frame.size.height);
                 cellBeingMoved.frame = CGRectOffset(cellBeingMoved.frame, 0.0f, cellBeingMoved.frame.size.height);
@@ -197,6 +199,10 @@
     
     for(CrushListTableViewCell* cell in visibleCells) {
         if (startAnimatingUp && ([visibleCells indexOfObject:cell] - [visibleCells indexOfObject:cellBeingMoved] == -1)) {
+            cell.toDoItem.ordering --;
+            cellBeingMoved.toDoItem.ordering ++;
+            [cell.toDoItem editInDatabase];
+            [cellBeingMoved.toDoItem editInDatabase];
             [UIView animateWithDuration:0.3 delay:0.0 options:UIViewAnimationOptionCurveEaseInOut animations:^{
                 cell.frame = CGRectOffset(cell.frame, 0.0f, cell.frame.size.height);
                 cellBeingMoved.frame = CGRectOffset(cellBeingMoved.frame, 0.0f, -cellBeingMoved.frame.size.height);
@@ -264,4 +270,12 @@
             break;
         }
     }
-    [editCell.label becomeFir
+    [editCell.label becomeFirstResponder];
+}
+
+-(void)dismissKeyboard
+{
+    [_cellBeingEdited dismissKeyboard];
+}
+
+@end

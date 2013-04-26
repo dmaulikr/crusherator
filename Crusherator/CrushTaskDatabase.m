@@ -142,7 +142,15 @@ static CrushTaskDatabase *instance = NULL;
         }
         return retval;
         }
-    else return retval;
+    else {
+        NSSortDescriptor *sortDescriptor;
+        sortDescriptor = [[NSSortDescriptor alloc] initWithKey:@"ordering"
+                                                      ascending:NO];
+        NSArray *sortDescriptors = [NSArray arrayWithObject:sortDescriptor];
+        NSArray *sortedArray;
+        sortedArray = [retval sortedArrayUsingDescriptors:sortDescriptors];
+        return (NSMutableArray*)sortedArray;
+    }
 }
 
 -(void)removeTask:(CrushTaskObject *)task {
@@ -158,6 +166,7 @@ static CrushTaskDatabase *instance = NULL;
 //    Need to make delegate to create uniqueId automatically
 	NSInteger uniqueId = [CrushTaskObject insertIntoDatabase:_database];
     CrushTaskObject *newTask = [[CrushTaskObject alloc]initWithUniqueId:uniqueId text:text];
+    newTask.ordering = retval.count+1;
 //    NSLog(@"Database add %i,%@",uniqueId,text);
     
 	[retval insertObject:newTask atIndex:0];

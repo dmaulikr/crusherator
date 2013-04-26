@@ -108,6 +108,8 @@ static sqlite3_stmt *insert_statement = nil;
         NSAssert1(0, @"Error: failed to save changes with message '%s'.", sqlite3_errmsg(_database));
     }
     sqlite3_reset(dehydrate_statement);
+    
+    NSLog(@"%@ edited; %i, %i, %i",self.text,self.completed,self.works,self.ordering);
 }
 
 -(void) deleteFromDatabase {

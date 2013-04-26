@@ -306,7 +306,7 @@
                                               withTitle:@"Feel relaxed?"
                                             withMessage:@"Good. Time to crush some more work."
                                                withType:TSMessageNotificationTypeMessage
-                                           withDuration:15.0
+                                           withDuration:5.0
                                            withCallback:^{
                                                // user dismissed callback
                                            }];
@@ -329,7 +329,7 @@
                                               withTitle:@"Good work!"
                                             withMessage:@"You crushed it. Now do something relaxing."
                                                withType:TSMessageNotificationTypeMessage
-                                           withDuration:15.0
+                                           withDuration:5.0
                                            withCallback:^{
                                                // user dismissed callback
                                            }];
