@@ -27,6 +27,8 @@
 
 @implementation CrushListTableViewController
 
+#define CELL_SNAPSHOT_TAG 100000
+
 -(id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
@@ -102,14 +104,10 @@
     CrushListTableViewCell* cell = (CrushListTableViewCell*)[self.tableView dequeueReusableCell];
     CrushTaskObject *item = database.taskInfos[row];
     cell.toDoItem = item;
+    cell.row = row;
     cell.delegate = self;
     cell.backgroundColor = [self colorForIndex:row];
     return cell;
-}
-
-- (CGRect)rectForRowAtIndexPath:(NSIndexPath *)indexPath
-{
-    
 }
 
 // 
@@ -139,6 +137,78 @@
         if (cell.toDoItem == todoItem) {
             startAnimating = true;
             cell.hidden = YES;
+        }
+    }
+}
+
+-(void)cellIsBeingMoved:(CrushListTableViewCell *)cellBeingMoved
+{
+    // find the visible cells
+    NSArray* visibleCells = [self.tableView visibleCells];
+    
+    // iterate over all of the cells
+    for(CrushListTableViewCell* referenceCell in visibleCells) {
+        if (cellBeingMoved == referenceCell) {
+            referenceCell.backgroundColor = [UIColor blackColor];
+//            referenceCell.hidden = YES;
+        }
+    }
+}
+
+-(void)cellIsDoneBeingMoved:(CrushListTableViewCell *)cellBeingMoved
+{
+    // find the visible cells
+    NSArray* visibleCells = [self.tableView visibleCells];
+    
+    // iterate over all of the cells
+    for(CrushListTableViewCell* referenceCell in visibleCells) {
+        if (cellBeingMoved == referenceCell) {
+            referenceCell.backgroundColor = [self colorForIndex:cellBeingMoved.row];
+//            referenceCell.hidden = NO;
+        }
+    }
+}
+
+-(void)cellIsBeingDragged:(CrushListTableViewCell *)cellBeingMoved to:(CGPoint)number;
+{
+    UIImageView *snapShotView = (UIImageView *)[self.view viewWithTag:CELL_SNAPSHOT_TAG];
+    CGPoint center = snapShotView.center;
+    NSLog(@"center is %f",snapShotView.center.y);
+    BOOL startAnimatingDown = FALSE;
+    BOOL startAnimatingUp = FALSE;
+    if(center.y > cellBeingMoved.frame.origin.y+cellBeingMoved.frame.size.height)
+    {
+        startAnimatingDown = TRUE;
+    }
+    if(center.y < cellBeingMoved.frame.origin.y)
+    {
+        startAnimatingUp = TRUE;
+    }
+    NSArray *visibleCells = (NSArray *)[self.tableView visibleCells];
+    UIView* lastView = [visibleCells lastObject];
+    for(CrushListTableViewCell* cell in visibleCells) {
+        if (startAnimatingDown && ([visibleCells indexOfObject:cell] - [visibleCells indexOfObject:cellBeingMoved] == 1)) {
+            [UIView animateWithDuration:0.3 delay:0.0 options:UIViewAnimationOptionCurveEaseInOut animations:^{
+                cell.frame = CGRectOffset(cell.frame, 0.0f, -cell.frame.size.height);
+                cellBeingMoved.frame = CGRectOffset(cellBeingMoved.frame, 0.0f, cellBeingMoved.frame.size.height);
+            } completion:^(BOOL finished){
+                if (cell == lastView) {
+//                    [self.tableView reloadData];
+                }
+            }];
+        }
+    }
+    
+    for(CrushListTableViewCell* cell in visibleCells) {
+        if (startAnimatingUp && ([visibleCells indexOfObject:cell] - [visibleCells indexOfObject:cellBeingMoved] == -1)) {
+            [UIView animateWithDuration:0.3 delay:0.0 options:UIViewAnimationOptionCurveEaseInOut animations:^{
+                cell.frame = CGRectOffset(cell.frame, 0.0f, cell.frame.size.height);
+                cellBeingMoved.frame = CGRectOffset(cellBeingMoved.frame, 0.0f, -cellBeingMoved.frame.size.height);
+            } completion:^(BOOL finished){
+                if (cell == lastView) {
+                    //                    [self.tableView reloadData];
+                }
+            }];
         }
     }
 }

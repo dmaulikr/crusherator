@@ -24,8 +24,10 @@
     BOOL _isBeingEdited;
     BOOL _gestureInProgress;
     CGFloat _scrollingRate;
+    CGFloat _indexChanged;
     UIPanGestureRecognizer *panRecognizer;
     UILongPressGestureRecognizer *longRecognizer;
+    CGPoint _beginningLocation;
     NSTimer *movingTimer;
 }
 
@@ -88,7 +90,7 @@ const float UI_CUES_WIDTH = 50.0f;
         _workLabel = [[CrushStrikeLabel alloc] initWithFrame:CGRectNull];
         _workLabel.textColor = [UIColor blackColor];
         _workLabel.font = fontDialogStrong;
-        _workLabel.text = @"0";
+        _workLabel.text = @"";
         _workLabel.backgroundColor = [UIColor clearColor];
         _workLabel.textAlignment = NSTextAlignmentRight;
         _workLabel.contentVerticalAlignment = UIControlContentVerticalAlignmentCenter;
@@ -244,10 +246,10 @@ const float LABEL_RIGHT_MARGIN = 15.0f;
     if (gestureRecognizer == longRecognizer)
     {
         UILongPressGestureRecognizer *recognizer = (UILongPressGestureRecognizer *)gestureRecognizer;
-        CGPoint location = [recognizer locationInView:self.superview];
         if (recognizer.state == UIGestureRecognizerStateBegan)
         {
             CrushListTableViewCell *cell = self;
+            _beginningLocation = [recognizer locationInView:self.superview];
             UIGraphicsBeginImageContextWithOptions(cell.bounds.size, NO, 0);
             [cell.layer renderInContext:UIGraphicsGetCurrentContext()];
             UIImage *cellImage = UIGraphicsGetImageFromCurrentImageContext();
@@ -266,8 +268,9 @@ const float LABEL_RIGHT_MARGIN = 15.0f;
             // Make a zoom in effect for the cell
             [UIView beginAnimations:@"zoomCell" context:nil];
             snapShotView.transform = CGAffineTransformMakeScale(1.1, 1.1);
-            snapShotView.center = CGPointMake(self.superview.center.x, location.y);
+            snapShotView.center = CGPointMake(self.superview.center.x, _beginningLocation.y);
             [UIView commitAnimations];
+            [self.delegate cellIsBeingMoved:self];
             
 //            [self.superview beginUpdates];
 //            [self.tableView deleteRowsAtIndexPaths:[NSArray arrayWithObject:indexPath] withRowAnimation:UITableViewRowAnimationNone];
@@ -287,10 +290,9 @@ const float LABEL_RIGHT_MARGIN = 15.0f;
         {
             // While our finger moves, we also moves the snapshot imageView
             UIImageView *snapShotView = (UIImageView *)[self.superview viewWithTag:CELL_SNAPSHOT_TAG];
-            snapShotView.center = CGPointMake(self.superview.center.x, location.y);
-            
-//            CGRect rect      = self.superview.bounds;
-//            CGPoint location = [recognizer locationInView:self.superview];
+            CGPoint currentLocation = [recognizer locationInView:self.superview];
+            snapShotView.center = CGPointMake(self.superview.center.x, currentLocation.y);
+                [self.delegate cellIsBeingDragged:self to:snapShotView.center];
 //            location.y -= self.superview.contentOffset.y;       // We needed to compensate actual contentOffset.y to get the relative y position of touch.
             
 //            [self updateAddingIndexPathForCurrentLocation];
@@ -341,6 +343,8 @@ const float LABEL_RIGHT_MARGIN = 15.0f;
 //                                 weakSelf.addingIndexPath = nil;
 //                                 weakSelf.state = JTTableViewGestureRecognizerStateNone;
 //                             }];
+            
+            [self.delegate cellIsDoneBeingMoved:self];
         }
     }
     

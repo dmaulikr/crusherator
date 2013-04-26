@@ -25,4 +25,10 @@
 // Indicates that the edit process has committed for the given cell
 -(BOOL)cellShouldBeginEditing:(CrushListTableViewCell*)cell;
 
+-(void)cellIsBeingMoved:(CrushListTableViewCell *)cellBeingMoved;
+
+-(void)cellIsDoneBeingMoved:(CrushListTableViewCell *)cellBeingMoved;
+
+-(void)cellIsBeingDragged:(CrushListTableViewCell *)cellBeingMoved to:(CGPoint)number;
+
 @end
