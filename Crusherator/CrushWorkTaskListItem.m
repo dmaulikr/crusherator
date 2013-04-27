@@ -30,9 +30,9 @@
         task = item;
         text.backgroundColor = [UIColor clearColor];
         text.strikethrough = item.completed;
-        text.color = [UIColor blackColor];
+        text.color = [UIColor whiteColor];
         text.font = fontDialogStrong;
-        text.textColor = [UIColor colorWithRed:0.0 green:0.0 blue:0.0 alpha:(1.0)];
+        text.textColor = [UIColor colorWithRed:1.0 green:1.0 blue:1.0 alpha:(1.0)];
         text.alpha = 1.0;
         text.text = item.text;
         text.strikethroughThickness = 2.0;
@@ -43,7 +43,7 @@
         works = [[CrushStrikeLabel alloc] initWithFrame:(CGRectMake(0,0,self.frame.size.width,self.frame.size.height))];
         works.backgroundColor = [UIColor clearColor];
         works.font = fontDialogStrong;
-        works.textColor = [UIColor colorWithRed:0.0 green:0.0 blue:0.0 alpha:(1.0)];
+        works.textColor = [UIColor colorWithRed:1.0 green:1.0 blue:1.0 alpha:(1.0)];
         works.alpha = 1.0;
         works.textAlignment = NSTextAlignmentRight;
         works.enabled = NO;

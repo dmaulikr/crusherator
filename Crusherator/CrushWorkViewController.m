@@ -121,8 +121,8 @@
     [super viewDidLoad];
     
 // modes and defaults
-    lengthOfWorkBlocks = 5;
-    lengthOfRelaxBlocks = 5;
+    lengthOfWorkBlocks = 25*60;
+    lengthOfRelaxBlocks = 5*60;
     defaultTasksOnScreen = 1;
     buzzEndWork = FALSE;
     buzzEndPlay = FALSE;
@@ -152,6 +152,7 @@
     countdown.center = CGPointMake(screenWidth/2,heightOutput/2);
     countdown.backgroundColor = [UIColor clearColor];
     countdown.font = fontCountdown;
+    countdown.textColor = [UIColor whiteColor];
     countdown.textAlignment = NSTextAlignmentCenter;
     countdown.layer.shadowColor = [UIColor blackColor].CGColor;
     countdown.layer.shadowOffset = CGSizeMake(0.0, 0.0);
@@ -178,27 +179,6 @@
     gradientCold.hidden = YES;
     [self.view.layer insertSublayer:gradientCold atIndex:0];
     
-// work counts for this session
-    workCount = [[UILabel alloc] initWithFrame:(CGRectMake(indent,heightOutput-ypad-heightDialogText*3-8.0,widthLabel,heightDialogText+7.0))];
-    workCount.backgroundColor = [UIColor clearColor];
-    workCount.font = fontDialogStrong;
-    workCount.text = [NSString stringWithFormat:@"Crushed: %d",workUnitsCompleted];
-    [self.view addSubview:workCount];
-
-// play counts for this session
-    relaxedCount = [[UILabel alloc] initWithFrame:(CGRectMake(indent,heightOutput-ypad-heightDialogText*2-4.0,widthLabel,heightDialogText+7.0))];
-    relaxedCount.backgroundColor = [UIColor clearColor];
-    relaxedCount.font = fontDialogStrong;
-    relaxedCount.text = [NSString stringWithFormat:@"Relaxed: %d",relaxUnitsCompleted];
-    [self.view addSubview:relaxedCount];
-
-// task counts for this session
-    taskCount = [[UILabel alloc] initWithFrame:(CGRectMake(indent,heightOutput-ypad-heightDialogText,widthLabel,heightDialogText+7.0))];
-    taskCount.backgroundColor = [UIColor clearColor];
-    taskCount.font = fontDialogStrong;
-    taskCount.text = [NSString stringWithFormat:@"Tasks: %d",tasksCompleted];
-    [self.view addSubview:taskCount];
-    
 // creating custom button properties
     UIColor *buttonColorDefault = [UIColor blackColor];
     UIColor *buttonColorHighlight = [UIColor blackColor];
@@ -222,7 +202,7 @@
     [buttonNextTask.titleLabel setFont:fontButton];
     [buttonNextTask setTitle:@"»" forState:UIControlStateNormal];
     [buttonNextTask setBackgroundColor:UIColorFromRGB(0x000000)];
-    [buttonNextTask setTitleColor:UIColorFromRGB(0x7f2d2d) forState:UIControlStateNormal];
+    [buttonNextTask setTitleColor:UIColorFromRGB(0xFFFFFF) forState:UIControlStateNormal];
     [buttonNextTask addTarget:self action:@selector(nextTask) forControlEvents:(UIControlEventTouchUpInside)];
     buttonNextTask.contentEdgeInsets = UIEdgeInsetsMake(5.0, 0.0, 0.0, 0.0);
     
@@ -234,7 +214,7 @@
     [buttonCompleteTask.titleLabel setFont:fontButton];
     [buttonCompleteTask setTitle:@"✓" forState:UIControlStateNormal];
     [buttonCompleteTask setBackgroundColor:UIColorFromRGB(0x000000)];
-    [buttonCompleteTask setTitleColor:UIColorFromRGB(0x378328) forState:UIControlStateNormal];
+    [buttonCompleteTask setTitleColor:UIColorFromRGB(0xFFFFFF) forState:UIControlStateNormal];
     [buttonCompleteTask addTarget:self action:@selector(completeTask) forControlEvents:(UIControlEventTouchUpInside)];
     buttonCompleteTask.contentEdgeInsets = UIEdgeInsetsMake(5.0, 0.0, 0.0, 0.0);
     
@@ -304,14 +284,14 @@
             gradientCold.hidden = YES;
             gradientHot.hidden = NO;
             
-            [TSMessage showNotificationInViewController:self
-                                              withTitle:@"Feel relaxed?"
-                                            withMessage:@"Good. Time to crush some more work."
-                                               withType:TSMessageNotificationTypeMessage
-                                           withDuration:5.0
-                                           withCallback:^{
-                                               // user dismissed callback
-                                           }];
+//            [TSMessage showNotificationInViewController:self
+//                                              withTitle:@"Feel relaxed?"
+//                                            withMessage:@"Good. Time to crush some more work."
+//                                               withType:TSMessageNotificationTypeMessage
+//                                           withDuration:5.0
+//                                           withCallback:^{
+//                                               // user dismissed callback
+//                                           }];
             
         }
         else if ([modeName isEqualToString:@"playReady"])
@@ -327,14 +307,14 @@
             [self addWork];
             [workCount setText:[NSString stringWithFormat:@"Crushed: %d",workUnitsCompleted]];
             
-            [TSMessage showNotificationInViewController:self
-                                              withTitle:@"Good work!"
-                                            withMessage:@"You crushed it. Now do something relaxing."
-                                               withType:TSMessageNotificationTypeMessage
-                                           withDuration:5.0
-                                           withCallback:^{
-                                               // user dismissed callback
-                                           }];
+//            [TSMessage showNotificationInViewController:self
+//                                              withTitle:@"Good work!"
+//                                            withMessage:@"You crushed it. Now do something relaxing."
+//                                               withType:TSMessageNotificationTypeMessage
+//                                           withDuration:5.0
+//                                           withCallback:^{
+//                                               // user dismissed callback
+//                                           }];
             [self stopMusic];
         }
         else if ([modeName isEqualToString:@"workPaused"])
@@ -385,7 +365,14 @@
 
 - (void)startMusic
 {
-    [[MPMusicPlayerController iPodMusicPlayer] play];
+    MPMusicPlayerController *player = [MPMusicPlayerController iPodMusicPlayer];
+    MPMediaQuery *query = [[MPMediaQuery alloc] init];
+    [query setGroupingType:MPMediaGroupingPlaylist];
+    NSArray *collection = [query collections];
+    [player setQueueWithItemCollection:collection[3]];
+    [player setShuffleMode:(MPMusicShuffleModeSongs)];
+    [player play];
+    NSLog(@"%@",collection);
     NSLog(@"playing");
 }
 
@@ -458,6 +445,7 @@
             taskListMember.center = CGPointMake(taskListMember.center.x,taskListMember.center.y+(jump*countdown.frame.size.height)+15+7);
             taskListMember.alpha = (1.0-(.08*(taskLabels.count-i)));
             [taskListMember bold:NO];
+            taskListMember.transform = CGAffineTransformMakeScale(1.0, 1.0);
         }
                         completion:^(BOOL finished){}
          ];
@@ -474,8 +462,15 @@
                     animations:^(void)
      {
          taskLabel.center = CGPointMake(taskLabel.center.x-100,taskLabel.center.y);
-         [self.view addSubview:taskLabel];
          taskLabel.alpha = 1.0;
+         taskLabel.transform = CGAffineTransformMakeScale(1.2, 1.2);
+         taskLabel.layer.shadowColor = [UIColor blackColor].CGColor;
+         taskLabel.layer.shadowOffset = CGSizeMake(3.0, 3.0);
+         taskLabel.layer.shadowRadius = 4.0;
+         taskLabel.layer.shadowOpacity = 0.4;
+         taskLabel.layer.masksToBounds = NO;
+         
+         [self.view addSubview:taskLabel];
      }
                     completion:^(BOOL finished)
                     {

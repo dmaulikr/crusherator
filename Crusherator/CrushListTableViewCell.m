@@ -80,7 +80,7 @@ const float UI_CUES_WIDTH = 50.0f;
         // create a label that renders the to-do item text
         _label = [[CrushStrikeLabel alloc] initWithFrame:CGRectNull];
         _label.offset = -2.0;
-        _label.textColor = [UIColor blackColor];
+        _label.textColor = [UIColor whiteColor];
         _label.font = fontDialogStrong;
         _label.backgroundColor = [UIColor clearColor];
         [_label addGestureRecognizer:longRecognizer];
@@ -88,7 +88,7 @@ const float UI_CUES_WIDTH = 50.0f;
 
         // create a label that renders the to-do item text
         _workLabel = [[CrushStrikeLabel alloc] initWithFrame:CGRectNull];
-        _workLabel.textColor = [UIColor blackColor];
+        _workLabel.textColor = [UIColor whiteColor];
         _workLabel.font = fontDialogStrong;
         _workLabel.text = @"";
         _workLabel.backgroundColor = [UIColor clearColor];
