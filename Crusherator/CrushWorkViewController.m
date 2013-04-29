@@ -369,7 +369,7 @@
     MPMediaQuery *query = [[MPMediaQuery alloc] init];
     [query setGroupingType:MPMediaGroupingPlaylist];
     NSArray *collection = [query collections];
-    [player setQueueWithItemCollection:collection[3]];
+//    [player setQueueWithItemCollection:collection[3]];
     [player setShuffleMode:(MPMusicShuffleModeSongs)];
     [player play];
     NSLog(@"%@",collection);

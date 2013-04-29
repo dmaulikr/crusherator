@@ -136,7 +136,7 @@ const float LABEL_RIGHT_MARGIN = 15.0f;
     _tickLabel.frame = CGRectMake(-UI_CUES_WIDTH - UI_CUES_MARGIN, 0,
                                   UI_CUES_WIDTH, self.bounds.size.height);
     _crossLabel.frame = CGRectMake(self.bounds.size.width + UI_CUES_MARGIN, 0,
-                                   UI_CUES_WIDTH, self.bounds.size.height);
+                                   UI_CUES_WIDTH, self.bounds.size.height);     
 }
 
 -(void)setToDoItem:(CrushTaskObject *)todoItem
@@ -167,8 +167,16 @@ const float LABEL_RIGHT_MARGIN = 15.0f;
     {
         UIPanGestureRecognizer *recognizer = (UIPanGestureRecognizer *)gestureRecognizer;
         CGPoint translation = [recognizer translationInView:[self superview]];
+        CGPoint location = [recognizer locationInView:[self superview]];
         // Check for horizontal gesture
+        
         if (fabsf(translation.x) > fabsf(translation.y)) {
+            NSLog(@"%f",location.x);
+            if(fabsf(location.x)<=30)
+            {
+                [self.delegate handlePan:gestureRecognizer];
+                return NO;
+            }
             return YES;
         }
     else return NO;

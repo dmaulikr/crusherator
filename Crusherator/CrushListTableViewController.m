@@ -18,9 +18,14 @@
     // the offset applied to cells when entering “edit mode”
     float _editingOffset;
     BOOL _cellIsBeingEdited;
+    BOOL _nextListActive;
     CrushListTableViewCell *_cellBeingEdited;
+    CrushListTableViewController *_nextList;
     
     CrushTableViewDragAddNew *_dragAddNew;
+    
+    UIPanGestureRecognizer *_swipe;
+    CGPoint _originalCenter;
 }
 
 @end
@@ -54,11 +59,10 @@
     self.tableView.backgroundColor = [UIColor blackColor];
     [self.tableView registerClassForCells:[CrushListTableViewCell class]];
     
-//    Gesture recognizer to dismiss keyboard when in editing mode
-    UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc]
+    _swipe = [[UIPanGestureRecognizer alloc]
                                    initWithTarget:self
-                                   action:@selector(dismissKeyboard)];
-    [self.view addGestureRecognizer:tap];
+                                   action:@selector(handlePan:)];
+    [self.view addGestureRecognizer:_swipe];
     
     _dragAddNew = [[CrushTableViewDragAddNew alloc] initWithTableView:self.tableView];
 }
@@ -284,5 +288,112 @@
 {
     [_cellBeingEdited dismissKeyboard];
 }
+
+-(BOOL)gestureRecognizerShouldBegin:(id)gestureRecognizer
+{
+    if(gestureRecognizer == _swipe)
+    {
+        UIPanGestureRecognizer *recognizer = (UIPanGestureRecognizer *)gestureRecognizer;
+        CGPoint translation = [recognizer translationInView:[self view]];
+        CGPoint location = [recognizer locationInView:[self view]];
+        NSLog(@"%f",location.x);
+        // Check for horizontal gesture
+        if (fabsf(translation.x) > fabsf(translation.y)) {
+            return YES;
+        }
+        else return NO;
+    }
+    else return NO;
+}
+
+-(void)handlePan:(id)gestureRecognizer
+{
+    if(gestureRecognizer == _swipe)
+    {
+        UIPanGestureRecognizer *recognizer = (UIPanGestureRecognizer *)gestureRecognizer;
+        
+        // 1
+        if (recognizer.state == UIGestureRecognizerStateBegan) {
+            // if the gesture has just started, record the current centre location
+            _originalCenter = self.view.center;
+            _nextList = [[CrushListTableViewController alloc]initWithNibName:@"CrushListTableViewController_iPhone" bundle:nil];
+            _nextList.view.backgroundColor = [UIColor purpleColor];
+            _nextList.view.center = CGPointMake((self.view.center.x - self.view.frame.size.width),self.view.center.y);
+            [self.view addSubview:_nextList.view];
+        }
+        
+        // 2
+        if (recognizer.state == UIGestureRecognizerStateChanged) {
+            // translate the center
+            CGPoint translation = [recognizer translationInView:[self view]];
+            if (translation.x >= self.view.frame.size.width/2)
+            {
+                _nextListActive = TRUE;
+            }
+            else _nextListActive = FALSE;
+
+            self.view.center = CGPointMake(_originalCenter.x + translation.x, _originalCenter.y);
+//            _nextList.view.center = CGPointMake(self.view.center.x - self.view.frame.size.width,self.view.center.y);
+            // determine whether the item has been dragged far enough to initiate a delete / complete
+//            _deleteOnDragRelease = self.frame.origin.x < -self.frame.size.width / 2;
+//            _completeOnDragRelease = self.frame.origin.x > self.frame.size.width / 2;
+            
+            // fade the contextual cues
+//            float cueAlpha = fabsf(self.frame.origin.x) / (self.frame.size.width / 2);
+//            _tickLabel.alpha = cueAlpha;
+//            _crossLabel.alpha = cueAlpha;
+            
+            // indicate when the item have been pulled far enough to invoke the given action
+//            _tickLabel.textColor = _completeOnDragRelease ?
+//            [UIColor greenColor] : [UIColor whiteColor];
+//            _crossLabel.textColor = _deleteOnDragRelease ?
+//            [UIColor redColor] : [UIColor whiteColor];
+        }
+        
+        // 3
+        if (recognizer.state == UIGestureRecognizerStateEnded) {
+            // the frame this cell would have had before being dragged
+            
+            if(!_nextListActive){
+                [UIView animateWithDuration:0.2
+                                animations:^{
+                                    self.view.center = _originalCenter;
+                                    _nextList.view.center = CGPointMake((self.view.center.x - self.view.frame.size.width),self.view.center.y);
+                                }
+                ];
+            }
+            else {
+                [UIView animateWithDuration:0.2
+                                 animations:^{
+                                     self.view.center = CGPointMake(_originalCenter.x + self.view.frame.size.width,_originalCenter.y);
+//                                     _nextList.view.center = CGPointMake((self.view.center.x - self.view.frame.size.width),self.view.center.y);
+                                 }
+                 ];
+
+            }
+            //            if (!_deleteOnDragRelease) {
+//                // if the item is not being deleted, snap back to the original location
+//                [UIView animateWithDuration:0.2
+//                                 animations:^{
+//                                     self.frame = originalFrame;
+//                                 }
+//                 ];
+//            }
+//            if (_deleteOnDragRelease) {
+//                // notify the delegate that this item should be deleted
+//                [self.delegate toDoItemDeleted:self.toDoItem];
+//            }
+//            
+//            if (_completeOnDragRelease) {
+//                // mark the item as complete and update the UI state
+//                self.toDoItem.completed = !(self.toDoItem.completed);
+//                [self.toDoItem editInDatabase];
+//                _itemCompleteLayer.hidden = !_itemCompleteLayer.hidden;
+//                _label.strikethrough = !_label.strikethrough;
+//            }
+        }
+    }
+}
+
 
 @end

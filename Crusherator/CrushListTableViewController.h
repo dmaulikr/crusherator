@@ -24,5 +24,6 @@ CrushTableViewDataSource // Implements numberOfRows, rowForIndex, and adding Cru
 @property (weak, nonatomic) IBOutlet CrushTableView *tableView;
 
 @property (nonatomic, retain) NSMutableArray *tasks;
+@property (nonatomic, assign) BOOL selfIsPrimaryList;
 
 @end

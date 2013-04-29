@@ -31,4 +31,6 @@
 
 -(void)cellIsBeingDragged:(CrushListTableViewCell *)cellBeingMoved to:(CGPoint)number;
 
+-(void)handlePan:(id)gestureRecognizer;
+
 @end
