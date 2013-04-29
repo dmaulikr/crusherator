@@ -20,6 +20,16 @@
     // an array of to-do items
     CrushTaskDatabase *database;
     
+    // Gesture variables
+    UIPanGestureRecognizer *panRecognizer;
+    CGPoint _originalCenter;
+    BOOL _completeOnDragRelease;
+    BOOL _nextOnDragRelease;
+    BOOL _pauseOnDragRelease;
+    BOOL _stopOnDragRelease;
+    UILabel *_tickLabel;
+	UILabel *_crossLabel;
+    
     // Variables that make the timer work
     bool running;
     NSTimeInterval startTime;
@@ -94,6 +104,9 @@
 // For shifting between work and play
 @synthesize currentMode;
 
+const float WORK_CUES_MARGIN = 10.0f;
+const float WORK_CUES_WIDTH = 50.0f;
+
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
@@ -105,6 +118,26 @@
         
         self.title = NSLocalizedString(@"Work", @"Work");
         self.tabBarItem.image = [UIImage imageNamed:@"first"];
+        
+        panRecognizer = [[UIPanGestureRecognizer alloc] initWithTarget:self action:@selector(handlePan:)];
+        [self.view addGestureRecognizer:panRecognizer];
+        
+        // add a tick and cross
+        _tickLabel = [self createCueLabel];
+        _tickLabel.text = @"\u2713";
+        _tickLabel.textAlignment = NSTextAlignmentLeft;
+        
+        [self.view addSubview:_tickLabel];
+        _crossLabel = [self createCueLabel];
+        _crossLabel.text = @"»";
+        _crossLabel.textAlignment = NSTextAlignmentLeft;
+        [self.view addSubview:_crossLabel];
+        
+        // ensure the gradient layers occupies the full bounds
+        _tickLabel.frame = CGRectMake(self.view.bounds.size.width + WORK_CUES_MARGIN, 0,
+                                      WORK_CUES_WIDTH, self.view.bounds.size.height);
+        _crossLabel.frame = CGRectMake(self.view.bounds.size.width + WORK_CUES_MARGIN, 0,
+                                       WORK_CUES_WIDTH, self.view.bounds.size.height);
         
     }
     return self;
@@ -132,7 +165,7 @@
     screenHeight = self.view.frame.size.height;
     heightButton = screenHeight*.1;
     ypad = screenHeight*.05;
-    heightOutput = screenHeight-heightButton;
+    heightOutput = screenHeight;
     heightOutputText = 80.0;
     heightDialogText = 15.0;
     indent = screenWidth*.15;
@@ -160,6 +193,18 @@
     countdown.layer.shadowOpacity = 0.4;
     countdown.layer.masksToBounds = NO;
     [self.view addSubview:countdown];
+
+    
+// building the buttons
+    buttonGoStop = [UIButton buttonWithType:UIButtonTypeCustom];
+    [buttonGoStop setFrame:CGRectMake(widthButton,heightOutput-100,widthButton,heightButton)];
+    
+    [buttonGoStop.titleLabel setFont:fontButton];
+    [buttonGoStop addTarget:self action:@selector(buttonPress:) forControlEvents:(UIControlEventTouchUpInside)];
+    [buttonGoStop setBackgroundColor:[UIColor clearColor]];
+    [buttonGoStop setTitleColor:UIColorFromRGB(0xFFFFFF) forState:UIControlStateNormal];
+    
+    [self.view addSubview:buttonGoStop];
     
 // add a layer that overlays the cell adding a subtle gradient effect
     gradientHot = [CAGradientLayer layer];
@@ -178,47 +223,6 @@
     gradientCold.locations = @[@0.00f, @1.00f];
     gradientCold.hidden = YES;
     [self.view.layer insertSublayer:gradientCold atIndex:0];
-    
-// creating custom button properties
-    UIColor *buttonColorDefault = [UIColor blackColor];
-    UIColor *buttonColorHighlight = [UIColor blackColor];
-
-// building the buttons
-    buttonGoStop = [UIButton buttonWithType:UIButtonTypeCustom];
-    [buttonGoStop setFrame:CGRectMake(widthButton,heightOutput,widthButton,heightButton)];
-    
-    [buttonGoStop.titleLabel setFont:fontButton];
-    [buttonGoStop setTitleColor:buttonColorDefault forState:UIControlStateNormal];
-    [buttonGoStop setTitleColor:buttonColorHighlight forState:UIControlStateHighlighted];
-    [buttonGoStop addTarget:self action:@selector(buttonPress:) forControlEvents:(UIControlEventTouchUpInside)];
-    [buttonGoStop setBackgroundColor:UIColorFromRGB(0x000000)];
-    [buttonGoStop setTitleColor:UIColorFromRGB(0xFFFFFF) forState:UIControlStateNormal];
-    
-    [self.view addSubview:buttonGoStop];
-    
-    buttonNextTask = [UIButton buttonWithType:UIButtonTypeCustom];
-    [buttonNextTask setFrame:CGRectMake(0,heightOutput,widthButton,heightButton)];
-    
-    [buttonNextTask.titleLabel setFont:fontButton];
-    [buttonNextTask setTitle:@"»" forState:UIControlStateNormal];
-    [buttonNextTask setBackgroundColor:UIColorFromRGB(0x000000)];
-    [buttonNextTask setTitleColor:UIColorFromRGB(0xFFFFFF) forState:UIControlStateNormal];
-    [buttonNextTask addTarget:self action:@selector(nextTask) forControlEvents:(UIControlEventTouchUpInside)];
-    buttonNextTask.contentEdgeInsets = UIEdgeInsetsMake(5.0, 0.0, 0.0, 0.0);
-    
-    [self.view addSubview:buttonNextTask];
-    
-    buttonCompleteTask = [UIButton buttonWithType:UIButtonTypeCustom];
-    [buttonCompleteTask setFrame:CGRectMake(widthButton*2,heightOutput,widthButton,heightButton)];
-    
-    [buttonCompleteTask.titleLabel setFont:fontButton];
-    [buttonCompleteTask setTitle:@"✓" forState:UIControlStateNormal];
-    [buttonCompleteTask setBackgroundColor:UIColorFromRGB(0x000000)];
-    [buttonCompleteTask setTitleColor:UIColorFromRGB(0xFFFFFF) forState:UIControlStateNormal];
-    [buttonCompleteTask addTarget:self action:@selector(completeTask) forControlEvents:(UIControlEventTouchUpInside)];
-    buttonCompleteTask.contentEdgeInsets = UIEdgeInsetsMake(5.0, 0.0, 0.0, 0.0);
-    
-    [self.view addSubview:buttonCompleteTask];
     
 // task list
     taskLabels = [[NSMutableArray alloc]init];
@@ -369,7 +373,7 @@
     MPMediaQuery *query = [[MPMediaQuery alloc] init];
     [query setGroupingType:MPMediaGroupingPlaylist];
     NSArray *collection = [query collections];
-//    [player setQueueWithItemCollection:collection[3]];
+    [player setQueueWithItemCollection:collection[3]];
     [player setShuffleMode:(MPMusicShuffleModeSongs)];
     [player play];
     NSLog(@"%@",collection);
@@ -520,5 +524,109 @@
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
 }
+
+// utility method for creating the contextual cues
+-(UILabel*) createCueLabel {
+    UILabel* label = [[UILabel alloc] initWithFrame:CGRectNull];
+    label.textColor = [UIColor whiteColor];
+    label.font = [UIFont boldSystemFontOfSize:32.0];
+    label.backgroundColor = [UIColor clearColor];
+    return label;
+}
+
+
+-(BOOL)gestureRecognizerShouldBegin:(id)gestureRecognizer
+{
+    if(gestureRecognizer == panRecognizer)
+    {
+        UIPanGestureRecognizer *recognizer = (UIPanGestureRecognizer *)gestureRecognizer;
+        CGPoint translation = [recognizer translationInView:[self view]];
+        CGPoint location = [recognizer locationInView:[self view]];
+        // Check for horizontal gesture
+        
+        if (fabsf(translation.x) > fabsf(translation.y)) {
+            NSLog(@"%f",location.x);
+            return YES;
+        }
+        else return NO;
+    }
+    else return NO;
+}
+
+-(void)handlePan:(id)gestureRecognizer
+{
+    if(gestureRecognizer == panRecognizer)
+    {
+        UIPanGestureRecognizer *recognizer = (UIPanGestureRecognizer *)gestureRecognizer;
+        
+        // 1
+        if (recognizer.state == UIGestureRecognizerStateBegan) {
+            // if the gesture has just started, record the current centre location
+            _originalCenter = self.view.center;
+        }
+        
+        // 2
+        if (recognizer.state == UIGestureRecognizerStateChanged) {
+            // translate the center
+            CGPoint translation = [recognizer translationInView:self.view];
+            self.view.center = CGPointMake(_originalCenter.x + translation.x, _originalCenter.y);
+            // determine whether the item has been dragged far enough to initiate a delete / complete
+            _nextOnDragRelease = self.view.frame.origin.x < -self.view.frame.size.width / 2;
+            _completeOnDragRelease = self.view.frame.origin.x < -self.view.frame.size.width / 4 && !_nextOnDragRelease;
+            
+            // fade the contextual cues
+            float cueAlpha = fabsf(self.view.frame.origin.x) / (self.view.frame.size.width / 2);
+            
+            // indicate when the item have been pulled far enough to invoke the given action
+            if(_completeOnDragRelease)
+            {
+                _tickLabel.textColor = [UIColor greenColor];
+                _tickLabel.alpha = 1.0;
+            }
+            else
+            {
+                _tickLabel.textColor = [UIColor whiteColor];
+                _tickLabel.alpha = cueAlpha;
+            }
+            if(_nextOnDragRelease)
+            {
+                _crossLabel.textColor = [UIColor redColor];
+                _crossLabel.alpha = cueAlpha;
+                _tickLabel.alpha = 0.0;
+            }
+            else
+            {
+                _crossLabel.textColor = [UIColor whiteColor];
+                _crossLabel.alpha = 0.0;
+            }
+        }
+        
+        // 3
+        if (recognizer.state == UIGestureRecognizerStateEnded) {
+            // the frame this cell would have had before being dragged
+            CGRect originalFrame = CGRectMake(0, self.view.frame.origin.y,
+                                              self.view.bounds.size.width, self.view.bounds.size.height);
+            if (!_nextOnDragRelease) {
+
+            }
+            if (_nextOnDragRelease) {
+                // notify the delegate that this item should be deleted
+                [self nextTask];
+            }
+            
+            if (_completeOnDragRelease) {
+                // mark the item as complete and update the UI state
+                [self completeTask];
+            }
+            
+            [UIView animateWithDuration:0.2
+                             animations:^{
+                                 self.view.frame = originalFrame;
+                             }
+             ];
+        }
+    }
+}
+
 
 @end

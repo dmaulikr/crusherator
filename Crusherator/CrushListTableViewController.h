@@ -13,6 +13,7 @@
 #import "CrushTableViewDragAddNew.h"
 #import "CrushTaskDatabase.h"
 #import "CrushTableViewDataSource.h"
+#import "CrushTableViewPinchToAddNew.h"
 
 @interface CrushListTableViewController : UIViewController
 <

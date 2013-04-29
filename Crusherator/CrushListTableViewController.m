@@ -23,6 +23,7 @@
     CrushListTableViewController *_nextList;
     
     CrushTableViewDragAddNew *_dragAddNew;
+    CrushTableViewPinchToAddNew *_pinchAddNew;
     
     UIPanGestureRecognizer *_swipe;
     CGPoint _originalCenter;
@@ -65,6 +66,7 @@
     [self.view addGestureRecognizer:_swipe];
     
     _dragAddNew = [[CrushTableViewDragAddNew alloc] initWithTableView:self.tableView];
+    _pinchAddNew = [[CrushTableViewPinchToAddNew alloc] initWithTableView:self.tableView];
 }
 
 //     Reloads data when switching back from list view
@@ -268,7 +270,12 @@
 -(void)itemAdded
 {
     // create the new item
-    CrushTaskObject* todoItem = [database addTask:@"task name"];
+    [self itemAddedAtIndex:0];
+}
+
+-(void)itemAddedAtIndex:(NSInteger)index {
+    // create the new item
+    CrushTaskObject* toDoItem = [database addTask:@"task name" atIndex:index];
     
     // refresh the table
     [_tableView reloadData];
@@ -276,7 +283,7 @@
     // enter edit mode
     CrushListTableViewCell* editCell;
     for (CrushListTableViewCell* cell in _tableView.visibleCells) {
-        if (cell.toDoItem == todoItem) {
+        if (cell.toDoItem == toDoItem) {
             editCell = cell;
             break;
         }
@@ -333,21 +340,6 @@
             else _nextListActive = FALSE;
 
             self.view.center = CGPointMake(_originalCenter.x + translation.x, _originalCenter.y);
-//            _nextList.view.center = CGPointMake(self.view.center.x - self.view.frame.size.width,self.view.center.y);
-            // determine whether the item has been dragged far enough to initiate a delete / complete
-//            _deleteOnDragRelease = self.frame.origin.x < -self.frame.size.width / 2;
-//            _completeOnDragRelease = self.frame.origin.x > self.frame.size.width / 2;
-            
-            // fade the contextual cues
-//            float cueAlpha = fabsf(self.frame.origin.x) / (self.frame.size.width / 2);
-//            _tickLabel.alpha = cueAlpha;
-//            _crossLabel.alpha = cueAlpha;
-            
-            // indicate when the item have been pulled far enough to invoke the given action
-//            _tickLabel.textColor = _completeOnDragRelease ?
-//            [UIColor greenColor] : [UIColor whiteColor];
-//            _crossLabel.textColor = _deleteOnDragRelease ?
-//            [UIColor redColor] : [UIColor whiteColor];
         }
         
         // 3
@@ -371,26 +363,6 @@
                  ];
 
             }
-            //            if (!_deleteOnDragRelease) {
-//                // if the item is not being deleted, snap back to the original location
-//                [UIView animateWithDuration:0.2
-//                                 animations:^{
-//                                     self.frame = originalFrame;
-//                                 }
-//                 ];
-//            }
-//            if (_deleteOnDragRelease) {
-//                // notify the delegate that this item should be deleted
-//                [self.delegate toDoItemDeleted:self.toDoItem];
-//            }
-//            
-//            if (_completeOnDragRelease) {
-//                // mark the item as complete and update the UI state
-//                self.toDoItem.completed = !(self.toDoItem.completed);
-//                [self.toDoItem editInDatabase];
-//                _itemCompleteLayer.hidden = !_itemCompleteLayer.hidden;
-//                _label.strikethrough = !_label.strikethrough;
-//            }
         }
     }
 }

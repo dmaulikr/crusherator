@@ -19,4 +19,7 @@
 // Informs the datasource that a new item has been added at the top of the table
 -(void)itemAdded;
 
+// Informs the datasource that a new item has been added at the top of the table
+-(void)itemAddedAtIndex:(int)index;
+
 @end
