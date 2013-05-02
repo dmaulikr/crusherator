@@ -110,7 +110,6 @@
     CrushListTableViewCell* cell = (CrushListTableViewCell*)[self.tableView dequeueReusableCell];
     CrushTaskObject *item = database.taskInfos[row];
     cell.toDoItem = item;
-    cell.row = row;
     cell.delegate = self;
     cell.backgroundColor = [self colorForIndex:row];
     return cell;
@@ -302,8 +301,6 @@
     {
         UIPanGestureRecognizer *recognizer = (UIPanGestureRecognizer *)gestureRecognizer;
         CGPoint translation = [recognizer translationInView:[self view]];
-        CGPoint location = [recognizer locationInView:[self view]];
-        NSLog(@"%f",location.x);
         // Check for horizontal gesture
         if (fabsf(translation.x) > fabsf(translation.y)) {
             return YES;

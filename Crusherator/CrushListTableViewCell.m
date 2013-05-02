@@ -10,6 +10,7 @@
 #import "CrushStrikeLabel.h"
 #import "CrushTaskObject.h"
 #import <QuartzCore/QuartzCore.h>
+#import "UIImage+CrushImage.h"
 
 @implementation CrushListTableViewCell
 {
@@ -18,8 +19,8 @@
 	BOOL _deleteOnDragRelease;
 	BOOL _completeOnDragRelease;
 	CALayer *_itemCompleteLayer;
-    UILabel *_tickLabel;
-	UILabel *_crossLabel;
+    UIImageView *_tickLabel;
+	UIImageView *_crossLabel;
     UIFont *fontDialogStrong;
     BOOL _isBeingEdited;
     BOOL _gestureInProgress;
@@ -43,13 +44,12 @@ const float UI_CUES_WIDTH = 50.0f;
         fontDialogStrong = [UIFont fontWithName:@"Gotham Medium" size:15.0];
         
         // add a tick and cross
-        _tickLabel = [self createCueLabel];
-        _tickLabel.text = @"\u2713";
-        _tickLabel.textAlignment = NSTextAlignmentRight;
+        UIImage *check = [[UIImage imageNamed:@"check.png"] imageWithOverlayColor:[UIColor grayColor]];
+        _tickLabel = [[UIImageView alloc] initWithImage:check];
         [self addSubview:_tickLabel];
-        _crossLabel = [self createCueLabel];
-        _crossLabel.text = @"\u2717";
-        _crossLabel.textAlignment = NSTextAlignmentLeft;
+        
+        UIImage *next = [[UIImage imageNamed:@"next.png"] imageWithOverlayColor:[UIColor grayColor]];
+        _crossLabel = [[UIImageView alloc] initWithImage:next];
         [self addSubview:_crossLabel];
         
         // add a layer that overlays the cell adding a subtle gradient effect
@@ -109,17 +109,8 @@ const float UI_CUES_WIDTH = 50.0f;
     return self;
 }
 
-// utility method for creating the contextual cues
--(UILabel*) createCueLabel {
-    UILabel* label = [[UILabel alloc] initWithFrame:CGRectNull];
-    label.textColor = [UIColor whiteColor];
-    label.font = [UIFont boldSystemFontOfSize:32.0];
-    label.backgroundColor = [UIColor clearColor];
-    return label;
-}
-
-const float LABEL_LEFT_MARGIN = 15.0f;
-const float LABEL_RIGHT_MARGIN = 15.0f;
+const float LABEL_LEFT_MARGIN = 10.0f;
+const float LABEL_RIGHT_MARGIN = 10.0f;
 
 -(void)layoutSubviews
 {
@@ -133,10 +124,11 @@ const float LABEL_RIGHT_MARGIN = 15.0f;
     _workLabel.frame = CGRectMake(LABEL_LEFT_MARGIN, 0,
                               self.bounds.size.width - LABEL_LEFT_MARGIN*2,self.bounds.size.height);
     
-    _tickLabel.frame = CGRectMake(-UI_CUES_WIDTH - UI_CUES_MARGIN, 0,
-                                  UI_CUES_WIDTH, self.bounds.size.height);
-    _crossLabel.frame = CGRectMake(self.bounds.size.width + UI_CUES_MARGIN, 0,
-                                   UI_CUES_WIDTH, self.bounds.size.height);     
+    // ensure the gradient layers occupies the full bounds
+    _tickLabel.frame = CGRectMake(0,0,30.0,30.0);
+    _tickLabel.center = CGPointMake(self.center.x + self.frame.size.width/2 + 30.0, self.frame.size.height/2);
+    _crossLabel.frame = CGRectMake(0,0,30.0,30.0);
+    _crossLabel.center = CGPointMake(self.center.x + self.frame.size.width/2 + 30.0, self.frame.size.height/2);
 }
 
 -(void)setToDoItem:(CrushTaskObject *)todoItem
@@ -171,7 +163,6 @@ const float LABEL_RIGHT_MARGIN = 15.0f;
         // Check for horizontal gesture
         
         if (fabsf(translation.x) > fabsf(translation.y)) {
-            NSLog(@"%f",location.x);
             if(fabsf(location.x)<=30)
             {
                 [self.delegate handlePan:gestureRecognizer];
@@ -209,18 +200,36 @@ const float LABEL_RIGHT_MARGIN = 15.0f;
             self.center = CGPointMake(_originalCenter.x + translation.x, _originalCenter.y);
             // determine whether the item has been dragged far enough to initiate a delete / complete
             _deleteOnDragRelease = self.frame.origin.x < -self.frame.size.width / 2;
-            _completeOnDragRelease = self.frame.origin.x > self.frame.size.width / 2;
+            _completeOnDragRelease = self.frame.origin.x < -self.frame.size.width / 4 && !_deleteOnDragRelease;
             
             // fade the contextual cues
             float cueAlpha = fabsf(self.frame.origin.x) / (self.frame.size.width / 2);
-            _tickLabel.alpha = cueAlpha;
-            _crossLabel.alpha = cueAlpha;
             
             // indicate when the item have been pulled far enough to invoke the given action
-            _tickLabel.textColor = _completeOnDragRelease ?
-            [UIColor greenColor] : [UIColor whiteColor];
-            _crossLabel.textColor = _deleteOnDragRelease ?
-            [UIColor redColor] : [UIColor whiteColor];
+            if(_completeOnDragRelease)
+            {
+                UIColor *color;
+                if(self.toDoItem.completed) color = [UIColor redColor];
+                if(!self.toDoItem.completed) color = [UIColor greenColor];
+                _tickLabel.image = [[UIImage imageNamed:@"check.png"] imageWithOverlayColor:color];
+                _tickLabel.alpha = 1.0;
+            }
+            else
+            {
+                _tickLabel.image = [[UIImage imageNamed:@"check.png"] imageWithOverlayColor:[UIColor whiteColor]];
+                _tickLabel.alpha = cueAlpha;
+            }
+            if(_deleteOnDragRelease)
+            {
+                _crossLabel.image = [[UIImage imageNamed:@"cross.png"] imageWithOverlayColor:[UIColor redColor]];
+                _crossLabel.alpha = cueAlpha;
+                _tickLabel.alpha = 0.0;
+            }
+            else
+            {
+                _crossLabel.image = [[UIImage imageNamed:@"cross.png"] imageWithOverlayColor:[UIColor whiteColor]];
+                _crossLabel.alpha = 0.0;
+            }
         }
         
         // 3

@@ -23,7 +23,6 @@
 
 // Tells whether cell is being edited or not.
 @property (nonatomic, assign) BOOL isBeingEdited;
-@property (nonatomic, assign) NSInteger row;
 
 // the label used to render the to-do text
 @property (nonatomic, strong) CrushStrikeLabel* label;

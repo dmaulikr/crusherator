@@ -12,6 +12,7 @@
 #import <AudioToolbox/AudioToolbox.h>
 #import <QuartzCore/QuartzCore.h>
 #import <MediaPlayer/MediaPlayer.h>
+#import "UIImage+CrushImage.h"
 
 #define UIColorFromRGB(rgbValue) [UIColor colorWithRed:((float)((rgbValue & 0xFF0000) >> 16))/255.0 green:((float)((rgbValue & 0xFF00) >> 8))/255.0 blue:((float)(rgbValue & 0xFF))/255.0 alpha:1.0]
 
@@ -27,8 +28,8 @@
     BOOL _nextOnDragRelease;
     BOOL _pauseOnDragRelease;
     BOOL _stopOnDragRelease;
-    UILabel *_tickLabel;
-	UILabel *_crossLabel;
+    UIImageView *_tickLabel;
+	UIImageView *_crossLabel;
     
     // Variables that make the timer work
     bool running;
@@ -123,21 +124,19 @@ const float WORK_CUES_WIDTH = 50.0f;
         [self.view addGestureRecognizer:panRecognizer];
         
         // add a tick and cross
-        _tickLabel = [self createCueLabel];
-        _tickLabel.text = @"\u2713";
-        _tickLabel.textAlignment = NSTextAlignmentLeft;
-        
+        UIImage *check = [[UIImage imageNamed:@"check.png"] imageWithOverlayColor:[UIColor grayColor]];
+        _tickLabel = [[UIImageView alloc] initWithImage:check];
         [self.view addSubview:_tickLabel];
-        _crossLabel = [self createCueLabel];
-        _crossLabel.text = @"»";
-        _crossLabel.textAlignment = NSTextAlignmentLeft;
+        
+        UIImage *next = [[UIImage imageNamed:@"next.png"] imageWithOverlayColor:[UIColor grayColor]];
+        _crossLabel = [[UIImageView alloc] initWithImage:next];
         [self.view addSubview:_crossLabel];
         
         // ensure the gradient layers occupies the full bounds
-        _tickLabel.frame = CGRectMake(self.view.bounds.size.width + WORK_CUES_MARGIN, 0,
-                                      WORK_CUES_WIDTH, self.view.bounds.size.height);
-        _crossLabel.frame = CGRectMake(self.view.bounds.size.width + WORK_CUES_MARGIN, 0,
-                                       WORK_CUES_WIDTH, self.view.bounds.size.height);
+        _tickLabel.frame = CGRectMake(0,0,50.0,50.0);
+        _tickLabel.center = CGPointMake(self.view.center.x + self.view.frame.size.width/2 + 50.0, self.view.center.y);
+        _crossLabel.frame = CGRectMake(0,0,50.0,50.0);
+        _crossLabel.center = CGPointMake(self.view.center.x + self.view.frame.size.width/2 + 50.0, self.view.center.y);
         
     }
     return self;
@@ -154,8 +153,8 @@ const float WORK_CUES_WIDTH = 50.0f;
     [super viewDidLoad];
     
 // modes and defaults
-    lengthOfWorkBlocks = 25*60;
-    lengthOfRelaxBlocks = 5*60;
+    lengthOfWorkBlocks = 25;
+    lengthOfRelaxBlocks = 5;
     defaultTasksOnScreen = 1;
     buzzEndWork = FALSE;
     buzzEndPlay = FALSE;
@@ -233,7 +232,12 @@ const float WORK_CUES_WIDTH = 50.0f;
     
 // initiate the timer
     [self changeModes:@"workReady"];
-    running = FALSE;    
+    running = FALSE;
+    UIBackgroundTaskIdentifier bgTask =0;
+    UIApplication  *app = [UIApplication sharedApplication];
+    bgTask = [app beginBackgroundTaskWithExpirationHandler:^{
+        [app endBackgroundTask:bgTask];
+    }];
     [NSTimer scheduledTimerWithTimeInterval:1.0 target:self selector:@selector(incrementTimer) userInfo:nil repeats:YES];
     
 }
@@ -377,13 +381,13 @@ const float WORK_CUES_WIDTH = 50.0f;
     [player setShuffleMode:(MPMusicShuffleModeSongs)];
     [player play];
     NSLog(@"%@",collection);
-    NSLog(@"playing");
+    NSLog(@"music should be playing");
 }
 
 - (void)stopMusic
 {
     [[MPMusicPlayerController iPodMusicPlayer] pause];
-    NSLog(@"paused");
+    NSLog(@"music should be paused");
 }
 
 // updates the time shown
@@ -541,11 +545,9 @@ const float WORK_CUES_WIDTH = 50.0f;
     {
         UIPanGestureRecognizer *recognizer = (UIPanGestureRecognizer *)gestureRecognizer;
         CGPoint translation = [recognizer translationInView:[self view]];
-        CGPoint location = [recognizer locationInView:[self view]];
         // Check for horizontal gesture
         
         if (fabsf(translation.x) > fabsf(translation.y)) {
-            NSLog(@"%f",location.x);
             return YES;
         }
         else return NO;
@@ -580,23 +582,23 @@ const float WORK_CUES_WIDTH = 50.0f;
             // indicate when the item have been pulled far enough to invoke the given action
             if(_completeOnDragRelease)
             {
-                _tickLabel.textColor = [UIColor greenColor];
+                _tickLabel.image = [[UIImage imageNamed:@"check.png"] imageWithOverlayColor:[UIColor greenColor]];
                 _tickLabel.alpha = 1.0;
             }
             else
             {
-                _tickLabel.textColor = [UIColor whiteColor];
+                _tickLabel.image = [[UIImage imageNamed:@"check.png"] imageWithOverlayColor:[UIColor whiteColor]];
                 _tickLabel.alpha = cueAlpha;
             }
             if(_nextOnDragRelease)
             {
-                _crossLabel.textColor = [UIColor redColor];
+                _crossLabel.image = [[UIImage imageNamed:@"next.png"] imageWithOverlayColor:[UIColor whiteColor]];
                 _crossLabel.alpha = cueAlpha;
                 _tickLabel.alpha = 0.0;
             }
             else
             {
-                _crossLabel.textColor = [UIColor whiteColor];
+                _crossLabel.image = [[UIImage imageNamed:@"next.png"] imageWithOverlayColor:[UIColor whiteColor]];
                 _crossLabel.alpha = 0.0;
             }
         }

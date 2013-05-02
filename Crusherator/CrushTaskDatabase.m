@@ -128,7 +128,7 @@ static CrushTaskDatabase *instance = NULL;
     //                    info.category = category;
     //                    info.project = project;
                         [retval addObject:info];
-                        NSLog(@"item %@, order %i",info.text,info.ordering);
+                        NSLog(@"Database pull: %@, order %i",info.text,info.ordering);
                     }
                 }
                 // "Finalize" the statement - releases the resources associated with the statement.
