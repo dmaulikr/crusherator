@@ -10,6 +10,7 @@
 #import "CrushListTableViewController.h"
 #import "CrushWorkTaskListItem.h"
 #import "TSMessage.h"
+#import "CircularTimer.h"
 
 @interface CrushWorkViewController : UIViewController
 
@@ -34,5 +35,10 @@
 // Arrays that hold the list labels
 @property (nonatomic, retain) NSMutableArray *taskLabels;
 @property (nonatomic, retain) NSMutableArray *workLabels;
+
+@property (nonatomic, strong) CircularTimer *circularTimer;
+
+- (void) moveToBackground;
+- (void) moveToForeground;
 
 @end

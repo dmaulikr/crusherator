@@ -60,6 +60,7 @@
 		355FF036172F508500D7ED68 /* UIImage+CrushImage.m in Sources */ = {isa = PBXBuildFile; fileRef = 355FF035172F508500D7ED68 /* UIImage+CrushImage.m */; };
 		355FF038172F542F00D7ED68 /* next.png in Resources */ = {isa = PBXBuildFile; fileRef = 355FF037172F542F00D7ED68 /* next.png */; };
 		355FF03A172F5B7E00D7ED68 /* cross.png in Resources */ = {isa = PBXBuildFile; fileRef = 355FF039172F5B7E00D7ED68 /* cross.png */; };
+		3578986A174173A200A11D49 /* CrushTimer.m in Sources */ = {isa = PBXBuildFile; fileRef = 35789869174173A200A11D49 /* CrushTimer.m */; };
 		35A4B5DE1718C81E00D1C36F /* Gotham-Thin.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 351C87741717837F0014968D /* Gotham-Thin.ttf */; };
 		35A4B5DF1718C82200D1C36F /* Gotham-Light.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 351C87701717837F0014968D /* Gotham-Light.ttf */; };
 		35A4B5E61719400B00D1C36F /* crusherator-iconx1.png in Resources */ = {isa = PBXBuildFile; fileRef = 35A4B5E51719400B00D1C36F /* crusherator-iconx1.png */; };
@@ -99,6 +100,8 @@
 		35D0E4F71726797B00A4D6CF /* NotificationBackgroundWarningIcon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 35D0E4C61726797B00A4D6CF /* NotificationBackgroundWarningIcon@2x.png */; };
 		35D0E4F81726797B00A4D6CF /* TSMessages.podspec in Resources */ = {isa = PBXBuildFile; fileRef = 35D0E4C71726797B00A4D6CF /* TSMessages.podspec */; };
 		35D0E4F91726797B00A4D6CF /* TSMessageView.m in Sources */ = {isa = PBXBuildFile; fileRef = 35D0E4CA1726797B00A4D6CF /* TSMessageView.m */; };
+		35E6204F1736F0E400DF78DC /* CircularTimer.m in Sources */ = {isa = PBXBuildFile; fileRef = 35E6204E1736F0E400DF78DC /* CircularTimer.m */; };
+		35E620501736F2CA00DF78DC /* CircularTimer.m in Sources */ = {isa = PBXBuildFile; fileRef = 35E6204E1736F0E400DF78DC /* CircularTimer.m */; };
 		35F7981C172A2AF2003D86CC /* taskList.sqlite3 in Resources */ = {isa = PBXBuildFile; fileRef = 35F7981B172A2AF2003D86CC /* taskList.sqlite3 */; };
 		35F7981D172A2AF2003D86CC /* taskList.sqlite3 in Resources */ = {isa = PBXBuildFile; fileRef = 35F7981B172A2AF2003D86CC /* taskList.sqlite3 */; };
 /* End PBXBuildFile section */
@@ -180,6 +183,8 @@
 		355FF035172F508500D7ED68 /* UIImage+CrushImage.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIImage+CrushImage.m"; sourceTree = "<group>"; };
 		355FF037172F542F00D7ED68 /* next.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = next.png; sourceTree = "<group>"; };
 		355FF039172F5B7E00D7ED68 /* cross.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = cross.png; sourceTree = "<group>"; };
+		35789868174173A200A11D49 /* CrushTimer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CrushTimer.h; sourceTree = "<group>"; };
+		35789869174173A200A11D49 /* CrushTimer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CrushTimer.m; sourceTree = "<group>"; };
 		35A4B5E51719400B00D1C36F /* crusherator-iconx1.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "crusherator-iconx1.png"; sourceTree = "<group>"; };
 		35A4B5E71719401000D1C36F /* crusherator-icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "crusherator-icon.png"; sourceTree = "<group>"; };
 		35A4B5E91719420A00D1C36F /* CrushListTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CrushListTableViewController.h; sourceTree = "<group>"; };
@@ -225,6 +230,8 @@
 		35D0E4C71726797B00A4D6CF /* TSMessages.podspec */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = TSMessages.podspec; sourceTree = "<group>"; };
 		35D0E4C91726797B00A4D6CF /* TSMessageView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TSMessageView.h; sourceTree = "<group>"; };
 		35D0E4CA1726797B00A4D6CF /* TSMessageView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TSMessageView.m; sourceTree = "<group>"; };
+		35E6204D1736F0E400DF78DC /* CircularTimer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CircularTimer.h; sourceTree = "<group>"; };
+		35E6204E1736F0E400DF78DC /* CircularTimer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CircularTimer.m; sourceTree = "<group>"; };
 		35F7981B172A2AF2003D86CC /* taskList.sqlite3 */ = {isa = PBXFileReference; lastKnownFileType = file; path = taskList.sqlite3; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -295,6 +302,8 @@
 		351C8721171775890014968D /* Crusherator */ = {
 			isa = PBXGroup;
 			children = (
+				35E6204D1736F0E400DF78DC /* CircularTimer.h */,
+				35E6204E1736F0E400DF78DC /* CircularTimer.m */,
 				351C872A171775890014968D /* CrushAppDelegate.h */,
 				351C872B171775890014968D /* CrushAppDelegate.m */,
 				35A71C8F172A5F7F00F05C47 /* CrushSettingsViewController.h */,
@@ -404,6 +413,8 @@
 			children = (
 				351C8733171775890014968D /* CrushWorkViewController.h */,
 				351C8734171775890014968D /* CrushWorkViewController.m */,
+				35789868174173A200A11D49 /* CrushTimer.h */,
+				35789869174173A200A11D49 /* CrushTimer.m */,
 				355FF034172F508500D7ED68 /* UIImage+CrushImage.h */,
 				355FF035172F508500D7ED68 /* UIImage+CrushImage.m */,
 				3514FE5017235DEA0043B2DA /* CrushWorkTaskListItem.h */,
@@ -682,6 +693,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				35E620501736F2CA00DF78DC /* CircularTimer.m in Sources */,
 				351C8728171775890014968D /* main.m in Sources */,
 				351C872C171775890014968D /* CrushAppDelegate.m in Sources */,
 				351C8735171775890014968D /* CrushWorkViewController.m in Sources */,
@@ -699,6 +711,7 @@
 				35A71C91172A5F8000F05C47 /* CrushSettingsViewController.m in Sources */,
 				355FF02B172F132800D7ED68 /* CrushTableViewPinchToAddNew.m in Sources */,
 				355FF036172F508500D7ED68 /* UIImage+CrushImage.m in Sources */,
+				3578986A174173A200A11D49 /* CrushTimer.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -707,6 +720,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				351C8761171775890014968D /* CrusheratorTests.m in Sources */,
+				35E6204F1736F0E400DF78DC /* CircularTimer.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

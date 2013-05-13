@@ -92,6 +92,7 @@
 @synthesize buttonGoStop;
 @synthesize buttonNextTask;
 @synthesize buttonCompleteTask;
+@synthesize circularTimer;
 
 // List elements
 @synthesize taskLabels;
@@ -142,6 +143,26 @@ const float WORK_CUES_WIDTH = 50.0f;
     return self;
 }
 
+- (void)scheduleAlarmForDate:(NSDate*)theDate withMessage:(NSString*)message
+{
+    UIApplication* app = [UIApplication sharedApplication];
+    NSArray* oldNotifications = [app scheduledLocalNotifications];
+    // Clear out the old notification before scheduling a new one.
+    if ([oldNotifications count] > 0)
+        [app cancelAllLocalNotifications];
+    // Create a new notification.
+    UILocalNotification* alarm = [[UILocalNotification alloc] init];
+    if (alarm)
+    {
+        alarm.fireDate = theDate;
+        alarm.timeZone = [NSTimeZone defaultTimeZone];
+        alarm.repeatInterval = 0;
+//        alarm.soundName = @"alarmsound.caf";
+        alarm.alertBody = message;
+        [app scheduleLocalNotification:alarm];
+    }
+}
+
 - (void)viewDidAppear:(BOOL)animated
 {
     [self.view setNeedsDisplay];
@@ -153,8 +174,8 @@ const float WORK_CUES_WIDTH = 50.0f;
     [super viewDidLoad];
     
 // modes and defaults
-    lengthOfWorkBlocks = 25;
-    lengthOfRelaxBlocks = 5;
+    lengthOfWorkBlocks = 25*60;
+    lengthOfRelaxBlocks = 5*60;
     defaultTasksOnScreen = 1;
     buzzEndWork = FALSE;
     buzzEndPlay = FALSE;
@@ -177,7 +198,6 @@ const float WORK_CUES_WIDTH = 50.0f;
     fontDialog = [UIFont fontWithName:@"Gotham Light" size:heightDialogText];
     fontDialogStrong = [UIFont fontWithName:@"Gotham Medium" size:15.0];
     [self.view setBackgroundColor:[UIColor blackColor]];
-    
     
 // text field for results
     countdown = [[UILabel alloc] initWithFrame:(CGRectMake(0,ypad,screenWidth,heightOutputText))];
@@ -242,9 +262,9 @@ const float WORK_CUES_WIDTH = 50.0f;
     
 }
 
-- (void)viewWillAppear:(BOOL)animated
+- (void)moveToBackground
 {    
-
+    
 }
 
 // pressing button changes modes
@@ -253,7 +273,6 @@ const float WORK_CUES_WIDTH = 50.0f;
     if ([currentMode isEqual:@"workReady"])
     {
         [self changeModes:@"workRunning"];
-        [self startMusic];
     }
     else if ([currentMode isEqual:@"workRunning"])
     {
@@ -291,16 +310,7 @@ const float WORK_CUES_WIDTH = 50.0f;
             [buttonGoStop setTitle:@"CRUSH!" forState:(UIControlStateNormal)];
             gradientCold.hidden = YES;
             gradientHot.hidden = NO;
-            
-//            [TSMessage showNotificationInViewController:self
-//                                              withTitle:@"Feel relaxed?"
-//                                            withMessage:@"Good. Time to crush some more work."
-//                                               withType:TSMessageNotificationTypeMessage
-//                                           withDuration:5.0
-//                                           withCallback:^{
-//                                               // user dismissed callback
-//                                           }];
-            
+            [self.circularTimer removeFromSuperview];
         }
         else if ([modeName isEqualToString:@"playReady"])
         {
@@ -314,15 +324,7 @@ const float WORK_CUES_WIDTH = 50.0f;
             gradientHot.hidden = YES;
             [self addWork];
             [workCount setText:[NSString stringWithFormat:@"Crushed: %d",workUnitsCompleted]];
-            
-//            [TSMessage showNotificationInViewController:self
-//                                              withTitle:@"Good work!"
-//                                            withMessage:@"You crushed it. Now do something relaxing."
-//                                               withType:TSMessageNotificationTypeMessage
-//                                           withDuration:5.0
-//                                           withCallback:^{
-//                                               // user dismissed callback
-//                                           }];
+            [self.circularTimer removeFromSuperview];
             [self stopMusic];
         }
         else if ([modeName isEqualToString:@"workPaused"])
@@ -330,6 +332,7 @@ const float WORK_CUES_WIDTH = 50.0f;
             running = FALSE;
             currentMode = @"workPaused";
             [buttonGoStop setTitle:@"?!" forState:(UIControlStateNormal)];
+            [self stopMusic];
         }
         else if ([modeName isEqualToString:@"playPaused"])
         {
@@ -342,13 +345,47 @@ const float WORK_CUES_WIDTH = 50.0f;
             running = TRUE;
             currentMode = @"workRunning";
             [buttonGoStop setTitle:@"ll" forState:(UIControlStateNormal)];
+            [self scheduleAlarmForDate:[NSDate dateWithTimeInterval:timeLeft sinceDate:[NSDate date]] withMessage:@"Session over. Do something relaxing!"];
+            NSLog(@"work timer set %f",timeLeft);
+            [self startMusic];
+            [self startCircularTimerWithTime:timeLeft];
         }
         else if ([modeName isEqualToString:@"playRunning"])
         {
             running = TRUE;
             currentMode = @"playRunning";
             [buttonGoStop setTitle:@"ll" forState:(UIControlStateNormal)];
+            [self scheduleAlarmForDate:[NSDate dateWithTimeInterval:timeLeft sinceDate:[NSDate date]] withMessage:@"Relaxed? Great. It's time to work!"];
+            NSLog(@"play timer set %f",timeLeft);
+            [self startCircularTimerWithTime:timeLeft];
         }
+}
+
+- (void)startCircularTimerWithTime:(int)time
+{   
+    // Initiate circular timer
+    int radius = 100;
+    int internalRadius = 70;
+    UIColor *circleStrokeColor = [UIColor whiteColor];
+    UIColor *activeCircleStrokeColor = ([currentMode isEqualToString:@"playRunning"]) ? [UIColor whiteColor]:[UIColor orangeColor];
+    NSDate *initialDate = [NSDate date];
+    NSDate *finalDate = [NSDate dateWithTimeInterval:time sinceDate:initialDate];
+    
+    self.circularTimer = [[CircularTimer alloc] initWithPosition:CGPointMake(0.0f, 0.0f)
+                                                          radius:radius
+                                                  internalRadius:internalRadius
+                                               circleStrokeColor:circleStrokeColor
+                                         activeCircleStrokeColor:activeCircleStrokeColor
+                                                     initialDate:initialDate
+                                                       finalDate:finalDate
+                                                   startCallback:^{
+                                                       //do something
+                                                   }
+                                                     endCallback:^{
+                                                         //do something
+                                                     }];
+    [self.view insertSubview:self.circularTimer belowSubview:countdown];
+    self.circularTimer.center = countdown.center;
 }
 
 // timer increments (only when running) and changes modes if it hits zero
@@ -377,7 +414,7 @@ const float WORK_CUES_WIDTH = 50.0f;
     MPMediaQuery *query = [[MPMediaQuery alloc] init];
     [query setGroupingType:MPMediaGroupingPlaylist];
     NSArray *collection = [query collections];
-    [player setQueueWithItemCollection:collection[3]];
+//    [player setQueueWithItemCollection:collection[3]];
     [player setShuffleMode:(MPMusicShuffleModeSongs)];
     [player play];
     NSLog(@"%@",collection);
