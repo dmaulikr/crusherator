@@ -17,9 +17,14 @@
 
 @interface CrushWorkViewController ()
 {
-    // an array of to-do items
-    CrushTaskDatabase *database;
+    // the timer
     CrushTimer *timer;
+    
+    // timer handlers
+    NSDate *timeBackgrounded;
+    NSString *modeBackgrounded;
+    NSTimeInterval timeElapsedWhenBackgrounded;
+    NSTimeInterval timeLeftWhenBackgrounded;
     
     // Gesture variables
     UIPanGestureRecognizer *panRecognizer;
@@ -32,18 +37,8 @@
     UIImageView *_tickLabel;
 	UIImageView *_crossLabel;
     
-    // Variables that make the timer work
-    bool running;
-    NSTimeInterval startTime;
-    NSTimeInterval elapsedTime;
-    NSTimeInterval timeLeft;
-    NSTimeInterval timerInterval;
-
-    // Variables that make the task list work
-    CrushWorkTaskListItem *currentTask;
-    
     // Options that will be changeable by the user in the future
-//    BOOL continuousMode;
+    BOOL continuousMode;
 //    BOOL ringEndWork;
 //    BOOL ringEndPlay;
     BOOL buzzEndWork;
@@ -63,17 +58,6 @@
 
 @implementation CrushWorkViewController
 
-// Timer interface
-@synthesize countdown;
-@synthesize buttonGoStop;
-@synthesize buttonNextTask;
-@synthesize buttonCompleteTask;
-@synthesize circularTimer;
-
-// List elements
-@synthesize taskLabels;
-@synthesize workLabels;
-
 // Statistics
 @synthesize workCount;
 @synthesize relaxedCount;
@@ -89,6 +73,8 @@
         
         self.title = NSLocalizedString(@"Work", @"Work");
         self.tabBarItem.image = [UIImage imageNamed:@"first"];
+        
+        continuousMode = FALSE;
         
         panRecognizer = [[UIPanGestureRecognizer alloc] initWithTarget:self action:@selector(handlePan:)];
         [self.view addGestureRecognizer:panRecognizer];
@@ -131,7 +117,7 @@
         alarm.fireDate = theDate;
         alarm.timeZone = [NSTimeZone defaultTimeZone];
         alarm.repeatInterval = 0;
-//        alarm.soundName = @"alarmsound.caf";
+        alarm.soundName = @"boxing-bell.wav";
         alarm.alertBody = message;
         [app scheduleLocalNotification:alarm];
     }
@@ -163,12 +149,37 @@
 
 - (void)moveToBackground
 {    
-    // save state
+    
+    if([timer.currentMode isEqual:@"workRunning"] || [timer.currentMode isEqual:@"playRunning"])
+    {
+        [self scheduleAlarmForDate:[NSDate dateWithTimeInterval:timer.timeLeft sinceDate:[NSDate date]] withMessage:@"Session over."];
+        timeBackgrounded = [NSDate date];
+        modeBackgrounded = timer.currentMode;
+        timeElapsedWhenBackgrounded = timer.elapsedTime;
+        timeLeftWhenBackgrounded = timer.timeLeft;
+        timer.running = FALSE;
+    }
 }
 
 - (void)moveToForeground
 {
-    // restore state
+    double timePassed = [[NSDate date] timeIntervalSinceDate:timeBackgrounded];
+    
+    [timer changeModes:modeBackgrounded];
+    if([timer.currentMode isEqual:@"workRunning"] || [timer.currentMode isEqual:@"playRunning"])
+    {
+        timer.elapsedTime = timeElapsedWhenBackgrounded;
+        if(continuousMode)
+        {
+            // continuous mode handling
+        }
+        else
+        {
+            if (timePassed<timeLeftWhenBackgrounded) timer.elapsedTime += timePassed;
+            else timer.elapsedTime += timeLeftWhenBackgrounded;
+        }
+        timer.running = TRUE;
+    }
 }
 
 // pressing button changes modes
@@ -178,28 +189,34 @@
     if ([timer.currentMode isEqual:@"workReady"])
     {
         [timer changeModes:@"workRunning"];
+        [self startMusic];
     }
     else if ([timer.currentMode isEqual:@"workRunning"])
     {
         [timer changeModes:@"workPaused"];
+        [self stopMusic];
     }
     else if ([timer.currentMode isEqual:@"workPaused"])
     {
         [timer changeModes:@"workRunning"];
-        [self scheduleAlarmForDate:[NSDate dateWithTimeInterval:timeLeft sinceDate:[NSDate date]] withMessage:@"Session over. Do something relaxing!"];
+        [self scheduleAlarmForDate:[NSDate dateWithTimeInterval:timer.timeLeft sinceDate:[NSDate date]] withMessage:@"Session over. Do something relaxing!"];
+        [self startMusic];
     }
     else if ([timer.currentMode isEqual:@"playReady"])
     {
         [timer changeModes:@"playRunning"];
-        [self scheduleAlarmForDate:[NSDate dateWithTimeInterval:timeLeft sinceDate:[NSDate date]] withMessage:@"Relaxed? Great. It's time to work!"];
+        [self scheduleAlarmForDate:[NSDate dateWithTimeInterval:timer.timeLeft sinceDate:[NSDate date]] withMessage:@"Relaxed? Great. It's time to work!"];
+        [self stopMusic];
     }
     else if ([timer.currentMode isEqual:@"playRunning"])
     {
         [timer changeModes:@"playPaused"];
+        [self stopMusic];
     }
     else if ([timer.currentMode isEqual:@"playPaused"])
     {
         [timer changeModes:@"playRunning"];
+        [self stopMusic];
     }
 }
 
@@ -210,15 +227,20 @@
     {
         timer.elapsedTime++;
         [timer updateLabels];
-        if((timeLeft==0) && ([currentMode isEqualToString:@"workRunning"]))
+        if((timer.timeLeft<=0) && ([timer.currentMode isEqualToString:@"workRunning"]))
         {
             [timer changeModes:@"playReady"];
+            if(continuousMode) [timer changeModes:@"playRunning"];
+            [self vibrate];
+            [self stopMusic];
+            workUnitsCompleted++;
         }
-        else if((timeLeft==0) && ([currentMode isEqualToString:@"playRunning"]))
+        else if((timer.timeLeft<=0) && ([timer.currentMode isEqualToString:@"playRunning"]))
         {
             [timer changeModes:@"workReady"];
+            if(continuousMode) [timer changeModes:@"workRunning"];
+            [self vibrate];
             relaxUnitsCompleted++;
-            [relaxedCount setText:[NSString stringWithFormat:@"Relaxed: %d",relaxUnitsCompleted]];
         }
     }
 }
@@ -229,7 +251,7 @@
     MPMediaQuery *query = [[MPMediaQuery alloc] init];
     [query setGroupingType:MPMediaGroupingPlaylist];
     NSArray *collection = [query collections];
-//    [player setQueueWithItemCollection:collection[3]];
+//    if(collection[3]) [player setQueueWithItemCollection:collection[3]];
     [player setShuffleMode:(MPMusicShuffleModeSongs)];
     [player play];
     NSLog(@"%@",collection);
@@ -245,6 +267,16 @@
 - (void)vibrate
 {
     AudioServicesPlaySystemSound (kSystemSoundID_Vibrate);
+    NSString *path = [NSString stringWithFormat:@"%@%@", [[NSBundle mainBundle] resourcePath], @"/boxing-bell.wav"];
+    SystemSoundID soundID;
+    NSURL *filePath = [NSURL fileURLWithPath:path isDirectory:NO];
+    
+    //Use audio sevices to create the sound
+    AudioServicesCreateSystemSoundID((__bridge CFURLRef)filePath, &soundID);
+    
+    //Use audio services to play the sound
+    
+    AudioServicesPlaySystemSound(soundID);
 }
 
 - (void)didReceiveMemoryWarning
@@ -337,12 +369,13 @@
             }
             if (_nextOnDragRelease) {
                 // notify the delegate that this item should be deleted
-                [timer nextTask];
+                [timer nextTaskWithAnimationDuration:0.5];
             }
             
             if (_completeOnDragRelease) {
                 // mark the item as complete and update the UI state
                 [timer completeTask];
+                tasksCompleted++;
             }
             
             [UIView animateWithDuration:0.2

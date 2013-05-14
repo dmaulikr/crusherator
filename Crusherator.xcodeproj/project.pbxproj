@@ -61,6 +61,7 @@
 		355FF038172F542F00D7ED68 /* next.png in Resources */ = {isa = PBXBuildFile; fileRef = 355FF037172F542F00D7ED68 /* next.png */; };
 		355FF03A172F5B7E00D7ED68 /* cross.png in Resources */ = {isa = PBXBuildFile; fileRef = 355FF039172F5B7E00D7ED68 /* cross.png */; };
 		3578986A174173A200A11D49 /* CrushTimer.m in Sources */ = {isa = PBXBuildFile; fileRef = 35789869174173A200A11D49 /* CrushTimer.m */; };
+		358A017617420DCD0056CD0B /* boxing-bell.wav in Resources */ = {isa = PBXBuildFile; fileRef = 358A017517420DCD0056CD0B /* boxing-bell.wav */; };
 		35A4B5DE1718C81E00D1C36F /* Gotham-Thin.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 351C87741717837F0014968D /* Gotham-Thin.ttf */; };
 		35A4B5DF1718C82200D1C36F /* Gotham-Light.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 351C87701717837F0014968D /* Gotham-Light.ttf */; };
 		35A4B5E61719400B00D1C36F /* crusherator-iconx1.png in Resources */ = {isa = PBXBuildFile; fileRef = 35A4B5E51719400B00D1C36F /* crusherator-iconx1.png */; };
@@ -185,6 +186,7 @@
 		355FF039172F5B7E00D7ED68 /* cross.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = cross.png; sourceTree = "<group>"; };
 		35789868174173A200A11D49 /* CrushTimer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CrushTimer.h; sourceTree = "<group>"; };
 		35789869174173A200A11D49 /* CrushTimer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CrushTimer.m; sourceTree = "<group>"; };
+		358A017517420DCD0056CD0B /* boxing-bell.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = "boxing-bell.wav"; sourceTree = "<group>"; };
 		35A4B5E51719400B00D1C36F /* crusherator-iconx1.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "crusherator-iconx1.png"; sourceTree = "<group>"; };
 		35A4B5E71719401000D1C36F /* crusherator-icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "crusherator-icon.png"; sourceTree = "<group>"; };
 		35A4B5E91719420A00D1C36F /* CrushListTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CrushListTableViewController.h; sourceTree = "<group>"; };
@@ -428,6 +430,7 @@
 		35C7D5F817195C990043C374 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				358A017517420DCD0056CD0B /* boxing-bell.wav */,
 				355FF039172F5B7E00D7ED68 /* cross.png */,
 				355FF037172F542F00D7ED68 /* next.png */,
 				355FF02C172F47FD00D7ED68 /* check.png */,
@@ -642,6 +645,7 @@
 				355FF02D172F47FD00D7ED68 /* check.png in Resources */,
 				355FF038172F542F00D7ED68 /* next.png in Resources */,
 				355FF03A172F5B7E00D7ED68 /* cross.png in Resources */,
+				358A017617420DCD0056CD0B /* boxing-bell.wav in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

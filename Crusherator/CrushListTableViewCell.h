@@ -27,6 +27,7 @@
 // the label used to render the to-do text
 @property (nonatomic, strong) CrushStrikeLabel* label;
 @property (nonatomic, strong) CrushStrikeLabel* workLabel;
+@property (nonatomic, strong) CrushStrikeLabel* estimatedWorksLabel;
 
 -(void)dismissKeyboard;
 

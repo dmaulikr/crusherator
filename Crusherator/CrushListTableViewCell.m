@@ -18,9 +18,12 @@
     CGPoint _originalCenter;
 	BOOL _deleteOnDragRelease;
 	BOOL _completeOnDragRelease;
+    BOOL _estimateWorksOnDragRelease;
+    int _estimatedWorks;
 	CALayer *_itemCompleteLayer;
     UIImageView *_tickLabel;
 	UIImageView *_crossLabel;
+    UILabel *_worksLabel;
     UIFont *fontDialogStrong;
     BOOL _isBeingEdited;
     BOOL _gestureInProgress;
@@ -51,6 +54,10 @@ const float UI_CUES_WIDTH = 50.0f;
         UIImage *next = [[UIImage imageNamed:@"next.png"] imageWithOverlayColor:[UIColor grayColor]];
         _crossLabel = [[UIImageView alloc] initWithImage:next];
         [self addSubview:_crossLabel];
+        
+        _worksLabel = [[UILabel alloc] initWithFrame:CGRectZero];
+        _worksLabel.font = fontDialogStrong;
+        [self addSubview:_worksLabel];
         
         // add a layer that overlays the cell adding a subtle gradient effect
         _gradientLayer = [CAGradientLayer layer];
@@ -87,6 +94,18 @@ const float UI_CUES_WIDTH = 50.0f;
         [self addSubview:_label];
 
         // create a label that renders the to-do item text
+        _estimatedWorksLabel = [[CrushStrikeLabel alloc] initWithFrame:CGRectNull];
+        _estimatedWorksLabel.textColor = [UIColor blackColor];
+        _estimatedWorksLabel.font = fontDialogStrong;
+        _estimatedWorksLabel.text = @"";
+        _estimatedWorksLabel.backgroundColor = [UIColor clearColor];
+        _estimatedWorksLabel.textAlignment = NSTextAlignmentRight;
+        _estimatedWorksLabel.contentVerticalAlignment = UIControlContentVerticalAlignmentCenter;
+        _estimatedWorksLabel.enabled = NO;
+        _estimatedWorksLabel.alpha = 0.3;
+        [self addSubview:_estimatedWorksLabel];
+        
+        // create a label that renders the to-do item text
         _workLabel = [[CrushStrikeLabel alloc] initWithFrame:CGRectNull];
         _workLabel.textColor = [UIColor whiteColor];
         _workLabel.font = fontDialogStrong;
@@ -96,7 +115,6 @@ const float UI_CUES_WIDTH = 50.0f;
         _workLabel.contentVerticalAlignment = UIControlContentVerticalAlignmentCenter;
         _workLabel.enabled = NO;
         [self addSubview:_workLabel];
-
         
         _label.delegate = self;
         _label.contentVerticalAlignment = UIControlContentVerticalAlignmentCenter;
@@ -123,12 +141,19 @@ const float LABEL_RIGHT_MARGIN = 10.0f;
     
     _workLabel.frame = CGRectMake(LABEL_LEFT_MARGIN, 0,
                               self.bounds.size.width - LABEL_LEFT_MARGIN*2,self.bounds.size.height);
+    _estimatedWorksLabel.frame = CGRectMake(LABEL_LEFT_MARGIN, 0,
+                                  self.bounds.size.width - LABEL_LEFT_MARGIN*2,self.bounds.size.height);
     
     // ensure the gradient layers occupies the full bounds
     _tickLabel.frame = CGRectMake(0,0,30.0,30.0);
     _tickLabel.center = CGPointMake(self.center.x + self.frame.size.width/2 + 30.0, self.frame.size.height/2);
     _crossLabel.frame = CGRectMake(0,0,30.0,30.0);
     _crossLabel.center = CGPointMake(self.center.x + self.frame.size.width/2 + 30.0, self.frame.size.height/2);
+    _worksLabel.frame = CGRectMake(0,0,40.0,30.0);
+    _worksLabel.center = CGPointMake(self.center.x - self.frame.size.width/2 - 40.0, self.frame.size.height/2);
+    _worksLabel.textColor = [UIColor whiteColor];
+    _worksLabel.backgroundColor = [UIColor clearColor];
+    _worksLabel.textAlignment = NSTextAlignmentRight;
 }
 
 -(void)setToDoItem:(CrushTaskObject *)todoItem
@@ -139,6 +164,10 @@ const float LABEL_RIGHT_MARGIN = 10.0f;
     for(int i=0;i<=(todoItem.works);i++)
     {
         _workLabel.text = [@"" stringByPaddingToLength:todoItem.works withString:@"|" startingAtIndex:0];
+    }
+    for(int i=0;i<=(todoItem.estimatedWorks);i++)
+    {
+        _estimatedWorksLabel.text = [@"" stringByPaddingToLength:todoItem.estimatedWorks withString:@"|" startingAtIndex:0];
     }
     _label.strikethrough = todoItem.completed;
     _label.strikethroughThickness = 2.0;
@@ -198,9 +227,12 @@ const float LABEL_RIGHT_MARGIN = 10.0f;
             // translate the center
             CGPoint translation = [recognizer translationInView:self];
             self.center = CGPointMake(_originalCenter.x + translation.x, _originalCenter.y);
+            
             // determine whether the item has been dragged far enough to initiate a delete / complete
             _deleteOnDragRelease = self.frame.origin.x < -self.frame.size.width / 2;
             _completeOnDragRelease = self.frame.origin.x < -self.frame.size.width / 4 && !_deleteOnDragRelease;
+            _estimateWorksOnDragRelease = self.frame.origin.x > self.frame.size.width / 10;
+            _estimatedWorks = (int) self.frame.origin.x / (self.frame.size.width / 10);
             
             // fade the contextual cues
             float cueAlpha = fabsf(self.frame.origin.x) / (self.frame.size.width / 2);
@@ -230,6 +262,14 @@ const float LABEL_RIGHT_MARGIN = 10.0f;
                 _crossLabel.image = [[UIImage imageNamed:@"cross.png"] imageWithOverlayColor:[UIColor whiteColor]];
                 _crossLabel.alpha = 0.0;
             }
+            if(_estimateWorksOnDragRelease)
+            {
+                for(int i=0;i<=(_estimatedWorks);i++)
+                {
+                    _worksLabel.text = [@"" stringByPaddingToLength:_estimatedWorks withString:@"|" startingAtIndex:0];
+                }
+                _worksLabel.alpha = cueAlpha;
+            }
         }
         
         // 3
@@ -256,6 +296,17 @@ const float LABEL_RIGHT_MARGIN = 10.0f;
                 [self.toDoItem editInDatabase];
                 _itemCompleteLayer.hidden = !_itemCompleteLayer.hidden;
                 _label.strikethrough = !_label.strikethrough;
+            }
+            
+            if (_estimateWorksOnDragRelease) {
+                // mark the item as complete and update the UI state
+                self.toDoItem.estimatedWorks = _estimatedWorks;
+                for(int i=0;i<=(_toDoItem.estimatedWorks);i++)
+                {
+                    _estimatedWorksLabel.text = [@"" stringByPaddingToLength:_toDoItem.estimatedWorks withString:@"|" startingAtIndex:0];
+                }
+                [self.toDoItem editInDatabase];
+                // change estimated works
             }
         }
     }

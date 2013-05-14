@@ -17,6 +17,7 @@ static sqlite3_stmt *insert_statement = nil;
 @synthesize uniqueId = _uniqueId;
 @synthesize text = _text;
 @synthesize works = _works;
+@synthesize estimatedWorks = _estimatedWorks;
 @synthesize completed = _completed;
 @synthesize deleted = _deleted;
 @synthesize dateCreated = _dateCreated;
@@ -66,6 +67,7 @@ static sqlite3_stmt *insert_statement = nil;
 			self.completed = sqlite3_column_int(init_statement,1);
             self.works = sqlite3_column_int(init_statement,2);
             self.ordering = sqlite3_column_int(init_statement,3);
+            self.estimatedWorks = sqlite3_column_int(init_statement,4);
         } else {
             self.text = @"Nothing";
         }
@@ -91,13 +93,14 @@ static sqlite3_stmt *insert_statement = nil;
 
 - (void) editInDatabase {
     if (dehydrate_statement == nil) {
-        const char *sql = "UPDATE tasks SET text = ? , completed = ? , works = ? , ordering = ? WHERE uniqueId=?";
+        const char *sql = "UPDATE tasks SET text = ? , completed = ? , works = ? , ordering = ? , estimatedWorks = ? WHERE uniqueId=?";
         if (sqlite3_prepare_v2(_database, sql, -1, &dehydrate_statement, NULL) != SQLITE_OK) {
             NSAssert1(0, @"Error: failed to prepare statement with message '%s'.", sqlite3_errmsg(_database));
         }
     }
     
-    sqlite3_bind_int(dehydrate_statement, 5, self.uniqueId);
+    sqlite3_bind_int(dehydrate_statement, 6, self.uniqueId);
+    sqlite3_bind_int(dehydrate_statement, 5, self.estimatedWorks);
     sqlite3_bind_int(dehydrate_statement, 4, self.ordering);
     sqlite3_bind_int(dehydrate_statement, 3, self.works);
     sqlite3_bind_int(dehydrate_statement, 2, self.completed);

@@ -19,15 +19,11 @@
 @property (nonatomic, retain) UILabel *relaxedCount;
 @property (nonatomic, retain) UILabel *taskCount;
 @property (nonatomic, assign) NSTimeInterval elapsedTime;
+@property (nonatomic, assign) NSTimeInterval timeLeft;
 
 // Variables that make the timer work
 @property (nonatomic, retain) NSString *currentMode;
-@property (nonatomic, assign) BOOL *running;
-
-// Buttons
-@property (nonatomic, retain) UIButton *buttonGoStop;
-@property (nonatomic, retain) UIButton *buttonNextTask;
-@property (nonatomic, retain) UIButton *buttonCompleteTask;
+@property (nonatomic, assign) BOOL running;
 
 // Arrays that hold the list labels
 @property (nonatomic, retain) NSMutableArray *taskLabels;
@@ -36,7 +32,7 @@
 @property (nonatomic, strong) CircularTimer *circularTimer;
 
 -(void)updateLabels;
--(void)nextTask;
+-(void)nextTaskWithAnimationDuration:(float)duration;
 -(void)addWork;
 -(void)completeTask;
 -(void)startCircularTimerWithTime:(int)time;

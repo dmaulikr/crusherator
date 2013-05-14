@@ -92,7 +92,7 @@ static CrushTaskDatabase *instance = NULL;
 
                         int works = sqlite3_column_int (statement, 3);
                         int ordering = sqlite3_column_int (statement, 4);
-                        
+                        int estimatedWorks = sqlite3_column_int (statement, 5);
 //
 //                      NSDateFormatter *dateFormat = [[NSDateFormatter alloc] init];
 //                      [dateFormat setDateFormat:@"yyyy-MM-dd HH:mm:ss"];
@@ -122,6 +122,7 @@ static CrushTaskDatabase *instance = NULL;
                         info.works = works;
                         info.completed = completed;
                         info.ordering = ordering;
+                        info.estimatedWorks = estimatedWorks;
     //                    info.dateCreated = dateCreated;
     //                    info.dateCompleted = dateCompleted;
     //                    info.dateDeleted = dateDeleted;

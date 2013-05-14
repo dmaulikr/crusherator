@@ -16,6 +16,7 @@
 
 @synthesize text;
 @synthesize works;
+@synthesize estimatedWorks;
 @synthesize task;
 
 - (id)initWithFrame:(CGRect)frame withTask:(CrushTaskObject *)item
@@ -39,6 +40,20 @@
         text.offset = -3.0;
         text.enabled = NO;
         [self addSubview:text];
+        
+        estimatedWorks = [[CrushStrikeLabel alloc] initWithFrame:(CGRectMake(0,0,self.frame.size.width,self.frame.size.height))];
+        estimatedWorks.backgroundColor = [UIColor clearColor];
+        estimatedWorks.font = fontDialogStrong;
+        estimatedWorks.textColor = [UIColor colorWithRed:0.0 green:0.0 blue:0.0 alpha:(0.3)];
+        estimatedWorks.alpha = 1.0;
+        estimatedWorks.textAlignment = NSTextAlignmentRight;
+        estimatedWorks.enabled = NO;
+        for(int i=0;i<=(task.estimatedWorks);i++)
+        {
+            estimatedWorks.text = [@"" stringByPaddingToLength:task.estimatedWorks withString:@"|" startingAtIndex:0];
+        }
+        
+        [self addSubview:estimatedWorks];
         
         works = [[CrushStrikeLabel alloc] initWithFrame:(CGRectMake(0,0,self.frame.size.width,self.frame.size.height))];
         works.backgroundColor = [UIColor clearColor];

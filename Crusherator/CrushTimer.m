@@ -17,10 +17,10 @@
 {
     // an array of to-do items
     CrushTaskDatabase *database;
+    UILabel *buttonLabel;
     
     // Variables that make the timer work
     NSTimeInterval startTime;
-    NSTimeInterval timeLeft;
     NSTimeInterval timerInterval;
     int defaultTasksOnScreen;
     int tasksOnScreen;
@@ -32,13 +32,6 @@
     // Options that will be changeable by the user in the future
     int lengthOfWorkBlocks;
     int lengthOfRelaxBlocks;
-    //    BOOL continuousMode;
-    //    BOOL ringEndWork;
-    //    BOOL ringEndPlay;
-    BOOL buzzEndWork;
-    BOOL buzzEndPlay;
-    //    BOOL soundDuringWork;
-    //    BOOL soundDuringPlay;
     
     // Statistics on work completed so far
     int workUnitsCompleted;
@@ -70,9 +63,6 @@
 
 // Timer interface
 @synthesize countdown;
-@synthesize buttonGoStop;
-@synthesize buttonNextTask;
-@synthesize buttonCompleteTask;
 @synthesize circularTimer;
 
 // List elements
@@ -98,8 +88,8 @@ const float WORK_CUES_WIDTH = 50.0f;
         database = [CrushTaskDatabase sharedInstance];
         taskList = database.taskInfos;
         
-        lengthOfRelaxBlocks = 5*60;
-        lengthOfWorkBlocks = 25*60;
+        lengthOfRelaxBlocks = 5;
+        lengthOfWorkBlocks = 25;
         
         // set page properties
         screenWidth = self.frame.size.width;
@@ -134,17 +124,14 @@ const float WORK_CUES_WIDTH = 50.0f;
         countdown.layer.masksToBounds = NO;
         [self addSubview:countdown];
         
-        
         // building the buttons
-        buttonGoStop = [UIButton buttonWithType:UIButtonTypeCustom];
-        [buttonGoStop setFrame:CGRectMake(widthButton,heightOutput-100,widthButton,heightButton)];
+        buttonLabel = [[UILabel alloc] initWithFrame:CGRectMake(widthButton,heightOutput-100,widthButton,heightButton)];
+        buttonLabel.textAlignment = NSTextAlignmentCenter;
+        [buttonLabel setFont:fontButton];
+        [buttonLabel setBackgroundColor:[UIColor clearColor]];
+        [buttonLabel setTextColor:UIColorFromRGB(0xFFFFFF)];
         
-        [buttonGoStop.titleLabel setFont:fontButton];
-        [buttonGoStop addTarget:self action:@selector(buttonPress:) forControlEvents:(UIControlEventTouchUpInside)];
-        [buttonGoStop setBackgroundColor:[UIColor clearColor]];
-        [buttonGoStop setTitleColor:UIColorFromRGB(0xFFFFFF) forState:UIControlStateNormal];
-        
-        [self addSubview:buttonGoStop];
+        [self addSubview:buttonLabel];
         
         // add a layer that overlays the cell adding a subtle gradient effect
         gradientHot = [CAGradientLayer layer];
@@ -168,7 +155,7 @@ const float WORK_CUES_WIDTH = 50.0f;
         taskLabels = [[NSMutableArray alloc]init];
         for (int i = 0; i<1; i++)
         {
-            [self nextTask];
+            [self nextTaskWithAnimationDuration:0.5];
         }
 
     }
@@ -185,7 +172,7 @@ const float WORK_CUES_WIDTH = 50.0f;
         timerInterval = lengthOfWorkBlocks;
         self.elapsedTime = 0;
         [self updateLabels];
-        [buttonGoStop setTitle:@"CRUSH!" forState:(UIControlStateNormal)];
+        [buttonLabel setText:@"CRUSH!"];
         gradientCold.hidden = YES;
         gradientHot.hidden = NO;
         [self.circularTimer removeFromSuperview];
@@ -197,7 +184,7 @@ const float WORK_CUES_WIDTH = 50.0f;
         currentMode = @"playReady";
         timerInterval = lengthOfRelaxBlocks;
         self.elapsedTime = 0;
-        [buttonGoStop setTitle:@"RELAX!" forState:(UIControlStateNormal)];
+        [buttonLabel setText:@"RELAX!"];
         gradientCold.hidden = NO;
         gradientHot.hidden = YES;
         [self addWork];
@@ -209,32 +196,32 @@ const float WORK_CUES_WIDTH = 50.0f;
     {
         self.running = FALSE;
         currentMode = @"workPaused";
-        [buttonGoStop setTitle:@"?!" forState:(UIControlStateNormal)];
+        [buttonLabel setText:@"?!"];
         NSLog(@"workPaused");
     }
     else if ([modeName isEqualToString:@"playPaused"])
     {
         self.running = FALSE;
         currentMode = @"playPaused";
-        [buttonGoStop setTitle:@"?!" forState:(UIControlStateNormal)];
+        [buttonLabel setText:@"?!"];
         NSLog(@"playPaused");
     }
     else if ([modeName isEqualToString:@"workRunning"])
     {
         self.running = TRUE;
         currentMode = @"workRunning";
-        [buttonGoStop setTitle:@"ll" forState:(UIControlStateNormal)];
-        NSLog(@"work timer set %f",timeLeft);
-        [self startCircularTimerWithTime:timeLeft];
+        [buttonLabel setText:@"ll"];
+        NSLog(@"work timer set %f",self.timeLeft);
+        [self startCircularTimerWithTime:self.timeLeft];
         NSLog(@"workRunning");
     }
     else if ([modeName isEqualToString:@"playRunning"])
     {
         self.running = TRUE;
         currentMode = @"playRunning";
-        [buttonGoStop setTitle:@"ll" forState:(UIControlStateNormal)];
-        NSLog(@"play timer set %f",timeLeft);
-        [self startCircularTimerWithTime:timeLeft];
+        [buttonLabel setText:@"ll"];
+        NSLog(@"play timer set %f",self.timeLeft);
+        [self startCircularTimerWithTime:self.timeLeft];
         NSLog(@"playRunning");
     }
 }
@@ -242,37 +229,37 @@ const float WORK_CUES_WIDTH = 50.0f;
 - (void)startCircularTimerWithTime:(int)time
 {
     // Initiate circular timer
-    int radius = 100;
-    int internalRadius = 70;
-    UIColor *circleStrokeColor = [UIColor whiteColor];
-    UIColor *activeCircleStrokeColor = ([currentMode isEqualToString:@"playRunning"]) ? [UIColor whiteColor]:[UIColor orangeColor];
-    NSDate *initialDate = [NSDate date];
-    NSDate *finalDate = [NSDate dateWithTimeInterval:time sinceDate:initialDate];
-    
-    self.circularTimer = [[CircularTimer alloc] initWithPosition:CGPointMake(0.0f, 0.0f)
-                                                          radius:radius
-                                                  internalRadius:internalRadius
-                                               circleStrokeColor:circleStrokeColor
-                                         activeCircleStrokeColor:activeCircleStrokeColor
-                                                     initialDate:initialDate
-                                                       finalDate:finalDate
-                                                   startCallback:^{
-                                                       //do something
-                                                   }
-                                                     endCallback:^{
-                                                         //do something
-                                                     }];
-    [self insertSubview:self.circularTimer belowSubview:countdown];
-    self.circularTimer.center = countdown.center;
+//    int radius = 100;
+//    int internalRadius = 70;
+//    UIColor *circleStrokeColor = [UIColor whiteColor];
+//    UIColor *activeCircleStrokeColor = ([currentMode isEqualToString:@"playRunning"]) ? [UIColor whiteColor]:[UIColor orangeColor];
+//    NSDate *initialDate = [NSDate date];
+//    NSDate *finalDate = [NSDate dateWithTimeInterval:time sinceDate:initialDate];
+//    
+//    self.circularTimer = [[CircularTimer alloc] initWithPosition:CGPointMake(0.0f, 0.0f)
+//                                                          radius:radius
+//                                                  internalRadius:internalRadius
+//                                               circleStrokeColor:circleStrokeColor
+//                                         activeCircleStrokeColor:activeCircleStrokeColor
+//                                                     initialDate:initialDate
+//                                                       finalDate:finalDate
+//                                                   startCallback:^{
+//                                                       //do something
+//                                                   }
+//                                                     endCallback:^{
+//                                                         //do something
+//                                                     }];
+//    [self insertSubview:self.circularTimer belowSubview:countdown];
+//    self.circularTimer.center = countdown.center;
 }
 
 // updates the time shown
 - (void)updateLabels
 {
     NSLog(@"updateLabels");
-    timeLeft = timerInterval - self.elapsedTime;
+    self.timeLeft = timerInterval - self.elapsedTime;
     NSLog(@"elapsedTime %f", self.elapsedTime);
-    NSInteger ti = (NSInteger)timeLeft;
+    NSInteger ti = (NSInteger)self.timeLeft;
     NSInteger seconds = ti % 60;
     NSInteger minutes = (ti / 60) % 60;
     //    NSInteger hours = (ti / 3600);
@@ -304,7 +291,7 @@ const float WORK_CUES_WIDTH = 50.0f;
 }
 
 // adds a new task and moves other tasks down
-- (void)nextTask
+- (void)nextTaskWithAnimationDuration:(float)duration
 {
     if(tasksOnScreen == database.taskInfos.count)
     {
@@ -324,7 +311,7 @@ const float WORK_CUES_WIDTH = 50.0f;
             jump = 1;
         }
         [UIView transitionWithView:taskListMember
-                          duration:0.5
+                          duration:duration
                            options:UIViewAnimationOptionCurveEaseOut
                         animations:^(void)
          {
@@ -343,7 +330,7 @@ const float WORK_CUES_WIDTH = 50.0f;
     taskLabel.center = CGPointMake(taskLabel.center.x+100,taskLabel.center.y);
     
     [UIView transitionWithView:taskLabel
-                      duration:1.0
+                      duration:duration*2
                        options:UIViewAnimationOptionCurveEaseInOut
                     animations:^(void)
      {
@@ -362,7 +349,7 @@ const float WORK_CUES_WIDTH = 50.0f;
      {
          if(item.completed)
          {
-             [self nextTask];
+             [self nextTaskWithAnimationDuration:0.1];
          }
      }
      ];
@@ -383,7 +370,7 @@ const float WORK_CUES_WIDTH = 50.0f;
     currentTaskLabel.text.text = item.text;
     [currentTaskLabel strike:(item.completed)];
     tasksCompleted++;
-    [self nextTask];
+    [self nextTaskWithAnimationDuration:0.5];
 }
 
 - (void)addWork
@@ -395,14 +382,5 @@ const float WORK_CUES_WIDTH = 50.0f;
     [self updateLabels];
     workUnitsCompleted++;
 }
-
-/*
-// Only override drawRect: if you perform custom drawing.
-// An empty implementation adversely affects performance during animation.
-- (void)drawRect:(CGRect)rect
-{
-    // Drawing code
-}
-*/
 
 @end

@@ -14,6 +14,7 @@
 
 @property (nonatomic,retain) CrushStrikeLabel *text;
 @property (nonatomic,retain) CrushStrikeLabel *works;
+@property (nonatomic,retain) CrushStrikeLabel *estimatedWorks;
 @property (nonatomic,retain) CrushTaskObject *task;
 
 - (id)initWithFrame:(CGRect)frame

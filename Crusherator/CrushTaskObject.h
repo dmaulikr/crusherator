@@ -16,6 +16,7 @@
     int _uniqueId;
     NSString *_text;
     int _works;
+    int _estimatedWorks;
     bool _completed;
     NSInteger _ordering;
 //    NSDate *_dateCreated;
@@ -28,6 +29,7 @@
 @property (nonatomic, assign) int uniqueId;
 @property (nonatomic, copy) NSString *text;
 @property (nonatomic, assign) int works;
+@property (nonatomic, assign) int estimatedWorks;
 @property (nonatomic, assign) bool completed;
 @property (nonatomic, assign) bool deleted;
 @property (nonatomic, assign) NSInteger ordering;
