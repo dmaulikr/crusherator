@@ -17,7 +17,7 @@
 @implementation CrushAppDelegate
 {
     CrushWorkViewController *viewController1;
-    CrushListTableViewController *viewController2;
+    UIPageViewController *viewController2;
     CrushSettingsViewController *viewController3;
 }
 
@@ -27,18 +27,40 @@
     // Override point for customization after application launch.
     if ([[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPhone) {
         viewController1 = [[CrushWorkViewController alloc] initWithNibName:@"CrushWorkViewController_iPhone" bundle:nil];
-        viewController2 = [[CrushListTableViewController alloc]initWithNibName:@"CrushListTableViewController_iPhone" bundle:nil];
+        
+        viewController2 = [[UIPageViewController alloc]
+                           initWithTransitionStyle:UIPageViewControllerTransitionStyleScroll
+                           navigationOrientation:UIPageViewControllerNavigationOrientationHorizontal
+                           options:@{UIPageViewControllerOptionInterPageSpacingKey : @20.0f}];
+        viewController2.dataSource = self;
+        viewController2.title = NSLocalizedString(@"List", @"List");
+        viewController2.tabBarItem.image = [UIImage imageNamed:@"second"];
+        CrushListTableViewController *pageZero = [CrushListTableViewController viewControllerForPageIndex:0];
+        [viewController2 setViewControllers:@[pageZero]
+                                  direction:UIPageViewControllerNavigationDirectionForward
+                                   animated:NO
+                                 completion:NULL];
+        
         viewController3 = [[CrushSettingsViewController alloc]initWithNibName:@"CrushSettingsViewController_iPhone" bundle:nil];
-    } else {
-        viewController1 = [[CrushWorkViewController alloc] initWithNibName:@"CrushWorkViewController_iPad" bundle:nil];
-        viewController2 = [[CrushListTableViewController alloc]initWithNibName:@"CrushListTableViewController_iPad" bundle:nil];
-        viewController3 = [[CrushSettingsViewController alloc]initWithNibName:@"CrushSettingsViewController_iPad" bundle:nil];
     }
     self.tabBarController = [[UITabBarController alloc] init];
     self.tabBarController.viewControllers = @[viewController1, viewController2, viewController3];
     self.window.rootViewController = self.tabBarController;
+    
     [self.window makeKeyAndVisible];
     return YES;
+}
+
+- (UIViewController *)pageViewController:(UIPageViewController *)pvc viewControllerBeforeViewController:(CrushListTableViewController *)vc
+{
+    NSInteger index = vc.pageIndex;
+    return [CrushListTableViewController viewControllerForPageIndex:(index - 1)];
+}
+
+- (UIViewController *)pageViewController:(UIPageViewController *)pvc viewControllerAfterViewController:(CrushListTableViewController *)vc
+{
+    NSInteger index = vc.pageIndex;
+    return [CrushListTableViewController viewControllerForPageIndex:(index + 1)];
 }
 
 - (void)applicationWillResignActive:(UIApplication *)application

@@ -27,4 +27,7 @@ CrushTableViewDataSource // Implements numberOfRows, rowForIndex, and adding Cru
 @property (nonatomic, retain) NSMutableArray *tasks;
 @property (nonatomic, assign) BOOL selfIsPrimaryList;
 
++ (CrushListTableViewController *)viewControllerForPageIndex:(NSInteger)pageIndex;
+- (NSInteger)pageIndex;
+
 @end

@@ -8,7 +8,7 @@
 
 #import <UIKit/UIKit.h>
 
-@interface CrushAppDelegate : UIResponder <UIApplicationDelegate, UITabBarControllerDelegate>
+@interface CrushAppDelegate : UIResponder <UIApplicationDelegate, UITabBarControllerDelegate, UIPageViewControllerDataSource>
 
 @property (strong, nonatomic) UIWindow *window;
 

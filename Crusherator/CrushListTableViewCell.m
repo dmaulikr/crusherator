@@ -25,6 +25,7 @@
 	UIImageView *_crossLabel;
     UILabel *_worksLabel;
     UIFont *fontDialogStrong;
+    UIFont *fontDialogHuge;
     BOOL _isBeingEdited;
     BOOL _gestureInProgress;
     CGFloat _scrollingRate;
@@ -45,6 +46,7 @@ const float UI_CUES_WIDTH = 50.0f;
     self = [super initWithStyle:style reuseIdentifier:reuseIdentifier];
     if (self) {
         fontDialogStrong = [UIFont fontWithName:@"Gotham Medium" size:15.0];
+        fontDialogHuge = [UIFont fontWithName:@"Gotham Medium" size:25.0];
         
         // add a tick and cross
         UIImage *check = [[UIImage imageNamed:@"check.png"] imageWithOverlayColor:[UIColor grayColor]];
@@ -56,7 +58,7 @@ const float UI_CUES_WIDTH = 50.0f;
         [self addSubview:_crossLabel];
         
         _worksLabel = [[UILabel alloc] initWithFrame:CGRectZero];
-        _worksLabel.font = fontDialogStrong;
+        _worksLabel.font = fontDialogHuge;
         [self addSubview:_worksLabel];
         
         // add a layer that overlays the cell adding a subtle gradient effect
@@ -149,8 +151,8 @@ const float LABEL_RIGHT_MARGIN = 10.0f;
     _tickLabel.center = CGPointMake(self.center.x + self.frame.size.width/2 + 30.0, self.frame.size.height/2);
     _crossLabel.frame = CGRectMake(0,0,30.0,30.0);
     _crossLabel.center = CGPointMake(self.center.x + self.frame.size.width/2 + 30.0, self.frame.size.height/2);
-    _worksLabel.frame = CGRectMake(0,0,40.0,30.0);
-    _worksLabel.center = CGPointMake(self.center.x - self.frame.size.width/2 - 40.0, self.frame.size.height/2);
+    _worksLabel.frame = CGRectMake(0,0,100.0,30.0);
+    _worksLabel.center = CGPointMake(self.center.x - self.frame.size.width/2 - 60.0, self.frame.size.height/2);
     _worksLabel.textColor = [UIColor whiteColor];
     _worksLabel.backgroundColor = [UIColor clearColor];
     _worksLabel.textAlignment = NSTextAlignmentRight;
@@ -192,9 +194,9 @@ const float LABEL_RIGHT_MARGIN = 10.0f;
         // Check for horizontal gesture
         
         if (fabsf(translation.x) > fabsf(translation.y)) {
-            if(fabsf(location.x)<=30)
+            if(fabsf(location.x)<=30 || fabsf(location.x)>=(self.frame.size.width-30))
             {
-                [self.delegate handlePan:gestureRecognizer];
+                [self handlePan:gestureRecognizer];
                 return NO;
             }
             return YES;

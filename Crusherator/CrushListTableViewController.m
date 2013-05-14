@@ -25,8 +25,9 @@
     CrushTableViewDragAddNew *_dragAddNew;
     CrushTableViewPinchToAddNew *_pinchAddNew;
     
-    UIPanGestureRecognizer *_swipe;
+//    UIPanGestureRecognizer *_swipe;
     CGPoint _originalCenter;
+    NSInteger _pageIndex;
 }
 
 @end
@@ -52,6 +53,27 @@
     return self;
 }
 
++ (CrushListTableViewController *)viewControllerForPageIndex:(NSInteger)pageIndex {
+    if (pageIndex >= 0 && pageIndex < 3) {
+        return [[self alloc] initWithPageIndex:pageIndex];
+    }
+    return nil;
+}
+
+- (id)initWithPageIndex:(NSInteger)pageIndex
+{
+    self = [self initWithNibName:@"CrushListTableViewController_iPhone" bundle:nil];
+    if (self) {
+        _pageIndex = pageIndex;
+    }
+    return self;
+}
+
+- (NSInteger)pageIndex
+{
+    return _pageIndex;
+}
+
 - (void)viewDidLoad
 {
     [super viewDidLoad];
@@ -60,10 +82,10 @@
     self.tableView.backgroundColor = [UIColor blackColor];
     [self.tableView registerClassForCells:[CrushListTableViewCell class]];
     
-    _swipe = [[UIPanGestureRecognizer alloc]
-                                   initWithTarget:self
-                                   action:@selector(handlePan:)];
-    [self.view addGestureRecognizer:_swipe];
+//    _swipe = [[UIPanGestureRecognizer alloc]
+//                                   initWithTarget:self
+//                                   action:@selector(handlePan:)];
+//    [self.view addGestureRecognizer:_swipe];
     
     _dragAddNew = [[CrushTableViewDragAddNew alloc] initWithTableView:self.tableView];
     _pinchAddNew = [[CrushTableViewPinchToAddNew alloc] initWithTableView:self.tableView];
@@ -295,74 +317,74 @@
     [_cellBeingEdited dismissKeyboard];
 }
 
--(BOOL)gestureRecognizerShouldBegin:(id)gestureRecognizer
-{
-    if(gestureRecognizer == _swipe)
-    {
-        UIPanGestureRecognizer *recognizer = (UIPanGestureRecognizer *)gestureRecognizer;
-        CGPoint translation = [recognizer translationInView:[self view]];
-        // Check for horizontal gesture
-        if (fabsf(translation.x) > fabsf(translation.y)) {
-            return YES;
-        }
-        else return NO;
-    }
-    else return NO;
-}
-
--(void)handlePan:(id)gestureRecognizer
-{
-    if(gestureRecognizer == _swipe)
-    {
-        UIPanGestureRecognizer *recognizer = (UIPanGestureRecognizer *)gestureRecognizer;
-        
-        // 1
-        if (recognizer.state == UIGestureRecognizerStateBegan) {
-            // if the gesture has just started, record the current centre location
-            _originalCenter = self.view.center;
-            _nextList = [[CrushListTableViewController alloc]initWithNibName:@"CrushListTableViewController_iPhone" bundle:nil];
-            _nextList.view.backgroundColor = [UIColor purpleColor];
-            _nextList.view.center = CGPointMake((self.view.center.x - self.view.frame.size.width),self.view.center.y);
-            [self.view addSubview:_nextList.view];
-        }
-        
-        // 2
-        if (recognizer.state == UIGestureRecognizerStateChanged) {
-            // translate the center
-            CGPoint translation = [recognizer translationInView:[self view]];
-            if (translation.x >= self.view.frame.size.width/2)
-            {
-                _nextListActive = TRUE;
-            }
-            else _nextListActive = FALSE;
-
-            self.view.center = CGPointMake(_originalCenter.x + translation.x, _originalCenter.y);
-        }
-        
-        // 3
-        if (recognizer.state == UIGestureRecognizerStateEnded) {
-            // the frame this cell would have had before being dragged
-            
-            if(!_nextListActive){
-                [UIView animateWithDuration:0.2
-                                animations:^{
-                                    self.view.center = _originalCenter;
-                                    _nextList.view.center = CGPointMake((self.view.center.x - self.view.frame.size.width),self.view.center.y);
-                                }
-                ];
-            }
-            else {
-                [UIView animateWithDuration:0.2
-                                 animations:^{
-                                     self.view.center = CGPointMake(_originalCenter.x + self.view.frame.size.width,_originalCenter.y);
-//                                     _nextList.view.center = CGPointMake((self.view.center.x - self.view.frame.size.width),self.view.center.y);
-                                 }
-                 ];
-
-            }
-        }
-    }
-}
+//-(BOOL)gestureRecognizerShouldBegin:(id)gestureRecognizer
+//{
+//    if(gestureRecognizer == _swipe)
+//    {
+//        UIPanGestureRecognizer *recognizer = (UIPanGestureRecognizer *)gestureRecognizer;
+//        CGPoint translation = [recognizer translationInView:[self view]];
+//        // Check for horizontal gesture
+//        if (fabsf(translation.x) > fabsf(translation.y)) {
+//            return YES;
+//        }
+//        else return NO;
+//    }
+//    else return NO;
+//}
+//
+//-(void)handlePan:(id)gestureRecognizer
+//{
+//    if(gestureRecognizer == _swipe)
+//    {
+//        UIPanGestureRecognizer *recognizer = (UIPanGestureRecognizer *)gestureRecognizer;
+//        
+//        // 1
+//        if (recognizer.state == UIGestureRecognizerStateBegan) {
+//            // if the gesture has just started, record the current centre location
+//            _originalCenter = self.view.center;
+//            _nextList = [[CrushListTableViewController alloc]initWithNibName:@"CrushListTableViewController_iPhone" bundle:nil];
+//            _nextList.view.backgroundColor = [UIColor purpleColor];
+//            _nextList.view.center = CGPointMake((self.view.center.x - self.view.frame.size.width),self.view.center.y);
+//            [self.view addSubview:_nextList.view];
+//        }
+//        
+//        // 2
+//        if (recognizer.state == UIGestureRecognizerStateChanged) {
+//            // translate the center
+//            CGPoint translation = [recognizer translationInView:[self view]];
+//            if (translation.x >= self.view.frame.size.width/2)
+//            {
+//                _nextListActive = TRUE;
+//            }
+//            else _nextListActive = FALSE;
+//
+//            self.view.center = CGPointMake(_originalCenter.x + translation.x, _originalCenter.y);
+//        }
+//        
+//        // 3
+//        if (recognizer.state == UIGestureRecognizerStateEnded) {
+//            // the frame this cell would have had before being dragged
+//            
+//            if(!_nextListActive){
+//                [UIView animateWithDuration:0.2
+//                                animations:^{
+//                                    self.view.center = _originalCenter;
+//                                    _nextList.view.center = CGPointMake((self.view.center.x - self.view.frame.size.width),self.view.center.y);
+//                                }
+//                ];
+//            }
+//            else {
+//                [UIView animateWithDuration:0.2
+//                                 animations:^{
+//                                     self.view.center = CGPointMake(_originalCenter.x + self.view.frame.size.width,_originalCenter.y);
+////                                     _nextList.view.center = CGPointMake((self.view.center.x - self.view.frame.size.width),self.view.center.y);
+//                                 }
+//                 ];
+//
+//            }
+//        }
+//    }
+//}
 
 
 @end
