@@ -26,7 +26,6 @@
     int tasksOnScreen;
     
     // Variables that make the task list work
-    NSMutableArray *taskList;
     CrushWorkTaskListItem *currentTask;
     
     // Options that will be changeable by the user in the future
@@ -86,10 +85,9 @@ const float WORK_CUES_WIDTH = 50.0f;
     if (self) {
         
         database = [CrushTaskDatabase sharedInstance];
-        taskList = database.taskInfos;
         
-        lengthOfRelaxBlocks = 5;
-        lengthOfWorkBlocks = 25;
+        lengthOfRelaxBlocks = 5*60;
+        lengthOfWorkBlocks = 25*60;
         
         // set page properties
         screenWidth = self.frame.size.width;
@@ -153,13 +151,22 @@ const float WORK_CUES_WIDTH = 50.0f;
         
         // task list
         taskLabels = [[NSMutableArray alloc]init];
-        for (int i = 0; i<1; i++)
-        {
-            [self nextTaskWithAnimationDuration:0.5];
-        }
 
     }
     return self;
+}
+
+-(NSMutableArray *)filteredTaskInfos
+{
+    NSMutableArray *filteredTaskInfos = [[NSMutableArray alloc] init];
+    for (CrushTaskObject *filterable in database.taskInfos)
+    {
+        if (filterable.category == (int) [[NSUserDefaults standardUserDefaults] floatForKey:@"listIndex"]+1)
+        {
+            [filteredTaskInfos addObject:filterable];
+        }
+    }
+    return filteredTaskInfos;
 }
 
 // changing modes dictates colors, button names, etc.
@@ -267,6 +274,7 @@ const float WORK_CUES_WIDTH = 50.0f;
     
     for (int i = 0; i<=taskLabels.count-1; i++)
     {
+        if (taskLabels.count == 0) break;
         CrushWorkTaskListItem *task = taskLabels[i];
         CrushTaskObject *item = task.task;
         for(int i=0;i<=(item.works);i++)
@@ -288,18 +296,24 @@ const float WORK_CUES_WIDTH = 50.0f;
     }
     tasksOnScreen = 0;
     taskLabels = [[NSMutableArray alloc] init];
+    for (int i = 0; i<1; i++)
+    {
+        [self nextTaskWithAnimationDuration:0.5];
+    }
 }
 
 // adds a new task and moves other tasks down
 - (void)nextTaskWithAnimationDuration:(float)duration
 {
-    if(tasksOnScreen == database.taskInfos.count)
+    if(tasksOnScreen == self.filteredTaskInfos.count)
     {
         [self clearTasks];
+        return;
     }
     
     for (int i=0;i<taskLabels.count;i++)
     {
+        if (taskLabels.count == 0) break;
         int jump = 0;
         CrushWorkTaskListItem *taskListMember = taskLabels[i];
         int labelBottom = (taskListMember.frame.origin.y+taskListMember.frame.size.height);
@@ -324,7 +338,7 @@ const float WORK_CUES_WIDTH = 50.0f;
          ];
     }
     
-    CrushTaskObject *item = database.taskInfos[tasksOnScreen];
+    CrushTaskObject *item = self.filteredTaskInfos[tasksOnScreen];
     CrushWorkTaskListItem *taskLabel = [[CrushWorkTaskListItem alloc] initWithFrame:(CGRectMake(indent,ypad,widthLabel,17.0)) withTask:item];
     taskLabel.alpha = 0.0;
     taskLabel.center = CGPointMake(taskLabel.center.x+100,taskLabel.center.y);

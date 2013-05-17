@@ -35,7 +35,7 @@
         viewController2.dataSource = self;
         viewController2.title = NSLocalizedString(@"List", @"List");
         viewController2.tabBarItem.image = [UIImage imageNamed:@"second"];
-        CrushListTableViewController *pageZero = [CrushListTableViewController viewControllerForPageIndex:0];
+        CrushListTableViewController *pageZero = [CrushListTableViewController viewControllerForPageIndex:(int) [[NSUserDefaults standardUserDefaults] floatForKey:@"listIndex"]];
         [viewController2 setViewControllers:@[pageZero]
                                   direction:UIPageViewControllerNavigationDirectionForward
                                    animated:NO
@@ -54,12 +54,24 @@
 - (UIViewController *)pageViewController:(UIPageViewController *)pvc viewControllerBeforeViewController:(CrushListTableViewController *)vc
 {
     NSInteger index = vc.pageIndex;
+    NSLog(@"index is %i",index);
+    
+    NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
+    [userDefaults setFloat:index
+                    forKey:@"listIndex"];
+    [userDefaults synchronize];
     return [CrushListTableViewController viewControllerForPageIndex:(index - 1)];
 }
 
 - (UIViewController *)pageViewController:(UIPageViewController *)pvc viewControllerAfterViewController:(CrushListTableViewController *)vc
 {
     NSInteger index = vc.pageIndex;
+    NSLog(@"index is %i",index);
+    
+    NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
+    [userDefaults setFloat:index
+                     forKey:@"listIndex"];
+    [userDefaults synchronize];
     return [CrushListTableViewController viewControllerForPageIndex:(index + 1)];
 }
 

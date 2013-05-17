@@ -22,7 +22,7 @@
 //    NSDate *_dateCreated;
 //    NSDate *_dateCompleted;
 //    NSDate *_dateDeleted;
-//    NSString *_category;
+    int _category;
 //    NSString *_project;
 }
 
@@ -36,7 +36,7 @@
 @property (nonatomic, copy) NSDate *dateCreated;
 @property (nonatomic, copy) NSDate *dateCompleted;
 @property (nonatomic, copy) NSDate *dateDeleted;
-@property (nonatomic, copy) NSString *category;
+@property (nonatomic, assign) int category;
 @property (nonatomic, copy) NSString *project;
 
 - (id)initWithUniqueId:(int)uniqueId

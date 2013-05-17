@@ -93,13 +93,14 @@ static sqlite3_stmt *insert_statement = nil;
 
 - (void) editInDatabase {
     if (dehydrate_statement == nil) {
-        const char *sql = "UPDATE tasks SET text = ? , completed = ? , works = ? , ordering = ? , estimatedWorks = ? WHERE uniqueId=?";
+        const char *sql = "UPDATE tasks SET text = ? , completed = ? , works = ? , ordering = ? , estimatedWorks = ? , category = ? WHERE uniqueId=?";
         if (sqlite3_prepare_v2(_database, sql, -1, &dehydrate_statement, NULL) != SQLITE_OK) {
             NSAssert1(0, @"Error: failed to prepare statement with message '%s'.", sqlite3_errmsg(_database));
         }
     }
     
-    sqlite3_bind_int(dehydrate_statement, 6, self.uniqueId);
+    sqlite3_bind_int(dehydrate_statement, 7, self.uniqueId);
+    sqlite3_bind_int(dehydrate_statement, 6, self.category);
     sqlite3_bind_int(dehydrate_statement, 5, self.estimatedWorks);
     sqlite3_bind_int(dehydrate_statement, 4, self.ordering);
     sqlite3_bind_int(dehydrate_statement, 3, self.works);

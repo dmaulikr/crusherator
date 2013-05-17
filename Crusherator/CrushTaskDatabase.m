@@ -93,6 +93,7 @@ static CrushTaskDatabase *instance = NULL;
                         int works = sqlite3_column_int (statement, 3);
                         int ordering = sqlite3_column_int (statement, 4);
                         int estimatedWorks = sqlite3_column_int (statement, 5);
+                        int category = sqlite3_column_int (statement, 6);
 //
 //                      NSDateFormatter *dateFormat = [[NSDateFormatter alloc] init];
 //                      [dateFormat setDateFormat:@"yyyy-MM-dd HH:mm:ss"];
@@ -126,7 +127,7 @@ static CrushTaskDatabase *instance = NULL;
     //                    info.dateCreated = dateCreated;
     //                    info.dateCompleted = dateCompleted;
     //                    info.dateDeleted = dateDeleted;
-    //                    info.category = category;
+                        info.category = category;
     //                    info.project = project;
                         [retval addObject:info];
                         NSLog(@"Database pull: %@, order %i",info.text,info.ordering);
@@ -171,11 +172,12 @@ static CrushTaskDatabase *instance = NULL;
     }
 }
 
--(CrushTaskObject *) addTask:(NSString *)text atIndex:(int)index {
+-(CrushTaskObject *) addTask:(NSString *)text atIndex:(int)index withPageIndex:(int)pageIndex {
 //    Need to make delegate to create uniqueId automatically
 	NSInteger uniqueId = [CrushTaskObject insertIntoDatabase:_database];
     CrushTaskObject *newTask = [[CrushTaskObject alloc]initWithUniqueId:uniqueId text:text];
     newTask.ordering = index;
+    newTask.category = pageIndex;
 	[retval insertObject:newTask atIndex:index];
     for (int i=0; i<retval.count; i++)
     {

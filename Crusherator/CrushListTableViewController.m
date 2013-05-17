@@ -18,9 +18,7 @@
     // the offset applied to cells when entering “edit mode”
     float _editingOffset;
     BOOL _cellIsBeingEdited;
-    BOOL _nextListActive;
     CrushListTableViewCell *_cellBeingEdited;
-    CrushListTableViewController *_nextList;
     
     CrushTableViewDragAddNew *_dragAddNew;
     CrushTableViewPinchToAddNew *_pinchAddNew;
@@ -54,7 +52,7 @@
 }
 
 + (CrushListTableViewController *)viewControllerForPageIndex:(NSInteger)pageIndex {
-    if (pageIndex >= 0 && pageIndex < 3) {
+    if (pageIndex >= 0 && pageIndex < 10) {
         return [[self alloc] initWithPageIndex:pageIndex];
     }
     return nil;
@@ -65,6 +63,7 @@
     self = [self initWithNibName:@"CrushListTableViewController_iPhone" bundle:nil];
     if (self) {
         _pageIndex = pageIndex;
+        NSLog(@"list generated with page index %i",pageIndex);
     }
     return self;
 }
@@ -105,9 +104,20 @@
 
 -(UIColor*)colorForIndex:(NSInteger)index
 {
-    NSUInteger itemCount = database.taskInfos.count - 1;
-    float val = ((float)index / (float)itemCount) * 0.6;
-    return [UIColor colorWithRed: 1.0 green:val blue: 0.0 alpha:1.0];
+    NSUInteger itemCount = self.filteredTaskInfos.count - 1;
+    
+    NSArray *colors = @[
+                        [UIColor colorWithRed:255.0 / 255.0 green:66.0 / 255.0 blue: 0.0 / 255.0 alpha:1.0],
+                        [UIColor colorWithRed:255.0 / 255.0 green:180.0 / 255.0 blue: 0.0 / 255.0 alpha:1.0],
+                        [UIColor colorWithRed:186.0 / 255.0 green:255.0 / 255.0 blue: 0.0 / 255.0 alpha:1.0],
+                        [UIColor colorWithRed:0.0 / 255.0 green:180.0 / 255.0 blue: 60.0 / 255.0 alpha:1.0],
+                        [UIColor colorWithRed:0.0 / 255.0 green:234.0 / 255.0 blue: 255.0 / 255.0 alpha:1.0],
+                        [UIColor colorWithRed:0.0 / 255.0 green:0.0 / 255.0 blue: 255.0 / 255.0 alpha:1.0],
+                        [UIColor colorWithRed:198.0 / 255.0 green:0.0 / 255.0 blue: 255.0 / 255.0 alpha:1.0],
+                        [UIColor colorWithRed:255.0 / 255.0 green:0.0 / 255.0 blue: 144.0 / 255.0 alpha:1.0]
+                        ];
+    
+    return colors[(_pageIndex%colors.count)];
 }
 
 #pragma mark - UITableViewDataDelegate protocol methods
@@ -124,13 +134,27 @@
 #pragma mark - CrushTableViewDataSource methods
 -(NSInteger)numberOfRows
 {
-    return database.taskInfos.count;
+    return self.filteredTaskInfos.count;
+}
+
+-(NSMutableArray *)filteredTaskInfos
+{
+    NSMutableArray *filteredTaskInfos = [[NSMutableArray alloc] init];
+    for (CrushTaskObject *filterable in database.taskInfos)
+    {
+        if (filterable.category == _pageIndex+1)
+        {
+            [filteredTaskInfos addObject:filterable];
+        }
+    }
+    return filteredTaskInfos;
 }
 
 -(CrushListTableViewCell *)cellForRow:(NSInteger)row
 {
     CrushListTableViewCell* cell = (CrushListTableViewCell*)[self.tableView dequeueReusableCell];
-    CrushTaskObject *item = database.taskInfos[row];
+    
+    CrushTaskObject *item = self.filteredTaskInfos[row];
     cell.toDoItem = item;
     cell.delegate = self;
     cell.backgroundColor = [self colorForIndex:row];
@@ -296,7 +320,7 @@
 
 -(void)itemAddedAtIndex:(NSInteger)index {
     // create the new item
-    CrushTaskObject* toDoItem = [database addTask:@"task name" atIndex:index];
+    CrushTaskObject* toDoItem = [database addTask:@"task name" atIndex:index withPageIndex:_pageIndex+1];
     
     // refresh the table
     [_tableView reloadData];

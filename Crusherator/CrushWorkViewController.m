@@ -19,6 +19,7 @@
 {
     // the timer
     CrushTimer *timer;
+    NSInteger listIndex;
     
     // timer handlers
     NSDate *timeBackgrounded;
@@ -126,7 +127,10 @@
 - (void)viewDidAppear:(BOOL)animated
 {
     [self.view setNeedsDisplay];
-    [timer updateLabels];
+    listIndex = (int) [[NSUserDefaults standardUserDefaults] floatForKey:@"listIndex"];
+    NSLog(@"work view loaded with index %i",listIndex);
+    
+    [timer clearTasks];
 }
 
 - (void)viewDidLoad

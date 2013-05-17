@@ -37,5 +37,6 @@
 -(void)completeTask;
 -(void)startCircularTimerWithTime:(int)time;
 -(void)changeModes:(NSString *)modeName;
+-(void)clearTasks;
 
 @end

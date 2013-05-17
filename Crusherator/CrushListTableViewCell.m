@@ -92,7 +92,11 @@ const float UI_CUES_WIDTH = 50.0f;
         _label.textColor = [UIColor whiteColor];
         _label.font = fontDialogStrong;
         _label.backgroundColor = [UIColor clearColor];
-        [_label addGestureRecognizer:longRecognizer];
+        _label.layer.shadowColor = [UIColor blackColor].CGColor;
+        _label.layer.shadowOffset = CGSizeMake(0.5,0.5);
+        _label.layer.shadowOpacity = 0.7;
+        _label.layer.shadowRadius = 0.5;
+        _label.clipsToBounds = NO;
         [self addSubview:_label];
 
         // create a label that renders the to-do item text
@@ -107,7 +111,7 @@ const float UI_CUES_WIDTH = 50.0f;
         _estimatedWorksLabel.alpha = 0.3;
         [self addSubview:_estimatedWorksLabel];
         
-        // create a label that renders the to-do item text
+        // create a label that renders the to-do item work count
         _workLabel = [[CrushStrikeLabel alloc] initWithFrame:CGRectNull];
         _workLabel.textColor = [UIColor whiteColor];
         _workLabel.font = fontDialogStrong;
@@ -116,6 +120,11 @@ const float UI_CUES_WIDTH = 50.0f;
         _workLabel.textAlignment = NSTextAlignmentRight;
         _workLabel.contentVerticalAlignment = UIControlContentVerticalAlignmentCenter;
         _workLabel.enabled = NO;
+        _workLabel.layer.shadowColor = [UIColor blackColor].CGColor;
+        _workLabel.layer.shadowOffset = CGSizeMake(0.5,0.5);
+        _workLabel.layer.shadowOpacity = 0.7;
+        _workLabel.layer.shadowRadius = 0.5;
+        _workLabel.clipsToBounds = NO;
         [self addSubview:_workLabel];
         
         _label.delegate = self;
@@ -194,7 +203,7 @@ const float LABEL_RIGHT_MARGIN = 10.0f;
         // Check for horizontal gesture
         
         if (fabsf(translation.x) > fabsf(translation.y)) {
-            if(fabsf(location.x)<=30 || fabsf(location.x)>=(self.frame.size.width-30))
+            if(fabsf(location.x)<=40 || fabsf(location.x)>=(self.frame.size.width-40))
             {
                 [self handlePan:gestureRecognizer];
                 return NO;
