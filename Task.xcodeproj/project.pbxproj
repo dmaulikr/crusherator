@@ -120,14 +120,14 @@
 /* Begin PBXFileReference section */
 		3514FE5017235DEA0043B2DA /* CrushWorkTaskListItem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CrushWorkTaskListItem.h; sourceTree = "<group>"; };
 		3514FE5117235DEA0043B2DA /* CrushWorkTaskListItem.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CrushWorkTaskListItem.m; sourceTree = "<group>"; };
-		351C8718171775890014968D /* Crusherator.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Crusherator.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		351C8718171775890014968D /* Task.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Task.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		351C871B171775890014968D /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		351C871D171775890014968D /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		351C871F171775890014968D /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
-		351C8723171775890014968D /* Crusherator-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "Crusherator-Info.plist"; sourceTree = "<group>"; };
+		351C8723171775890014968D /* Task-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "Task-Info.plist"; sourceTree = "<group>"; };
 		351C8725171775890014968D /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		351C8727171775890014968D /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
-		351C8729171775890014968D /* Crusherator-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Crusherator-Prefix.pch"; sourceTree = "<group>"; };
+		351C8729171775890014968D /* Task-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Task-Prefix.pch"; sourceTree = "<group>"; };
 		351C872A171775890014968D /* CrushAppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CrushAppDelegate.h; sourceTree = "<group>"; };
 		351C872B171775890014968D /* CrushAppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = CrushAppDelegate.m; sourceTree = "<group>"; };
 		351C872D171775890014968D /* Default.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Default.png; sourceTree = "<group>"; };
@@ -143,9 +143,9 @@
 		351C8745171775890014968D /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = en.lproj/CrushWorkViewController_iPad.xib; sourceTree = "<group>"; };
 		351C8748171775890014968D /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = en.lproj/CrushListTableViewController_iPhone.xib; sourceTree = "<group>"; };
 		351C874B171775890014968D /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = en.lproj/CrushListViewController_iPad.xib; sourceTree = "<group>"; };
-		351C8752171775890014968D /* CrusheratorTests.octest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = CrusheratorTests.octest; sourceTree = BUILT_PRODUCTS_DIR; };
+		351C8752171775890014968D /* TaskTests.octest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = TaskTests.octest; sourceTree = BUILT_PRODUCTS_DIR; };
 		351C8753171775890014968D /* SenTestingKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SenTestingKit.framework; path = Library/Frameworks/SenTestingKit.framework; sourceTree = DEVELOPER_DIR; };
-		351C875B171775890014968D /* CrusheratorTests-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "CrusheratorTests-Info.plist"; sourceTree = "<group>"; };
+		351C875B171775890014968D /* TaskTests-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "TaskTests-Info.plist"; sourceTree = "<group>"; };
 		351C875D171775890014968D /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		351C875F171775890014968D /* CrusheratorTests.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CrusheratorTests.h; sourceTree = "<group>"; };
 		351C8760171775890014968D /* CrusheratorTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = CrusheratorTests.m; sourceTree = "<group>"; };
@@ -280,8 +280,8 @@
 		351C8719171775890014968D /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				351C8718171775890014968D /* Crusherator.app */,
-				351C8752171775890014968D /* CrusheratorTests.octest */,
+				351C8718171775890014968D /* Task.app */,
+				351C8752171775890014968D /* TaskTests.octest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -325,10 +325,10 @@
 			children = (
 				351C879417178B1F0014968D /* Images */,
 				351C878A171783860014968D /* Fonts */,
-				351C8723171775890014968D /* Crusherator-Info.plist */,
+				351C8723171775890014968D /* Task-Info.plist */,
 				351C8724171775890014968D /* InfoPlist.strings */,
 				351C8727171775890014968D /* main.m */,
-				351C8729171775890014968D /* Crusherator-Prefix.pch */,
+				351C8729171775890014968D /* Task-Prefix.pch */,
 				351C872D171775890014968D /* Default.png */,
 				351C872F171775890014968D /* Default@2x.png */,
 				351C8731171775890014968D /* Default-568h@2x.png */,
@@ -349,7 +349,7 @@
 		351C875A171775890014968D /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
-				351C875B171775890014968D /* CrusheratorTests-Info.plist */,
+				351C875B171775890014968D /* TaskTests-Info.plist */,
 				351C875C171775890014968D /* InfoPlist.strings */,
 			);
 			name = "Supporting Files";
@@ -528,9 +528,9 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		351C8717171775890014968D /* Crusherator */ = {
+		351C8717171775890014968D /* Task */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 351C8764171775890014968D /* Build configuration list for PBXNativeTarget "Crusherator" */;
+			buildConfigurationList = 351C8764171775890014968D /* Build configuration list for PBXNativeTarget "Task" */;
 			buildPhases = (
 				351C8714171775890014968D /* Sources */,
 				351C8715171775890014968D /* Frameworks */,
@@ -540,14 +540,14 @@
 			);
 			dependencies = (
 			);
-			name = Crusherator;
+			name = Task;
 			productName = Crusherator;
-			productReference = 351C8718171775890014968D /* Crusherator.app */;
+			productReference = 351C8718171775890014968D /* Task.app */;
 			productType = "com.apple.product-type.application";
 		};
-		351C8751171775890014968D /* CrusheratorTests */ = {
+		351C8751171775890014968D /* TaskTests */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 351C8767171775890014968D /* Build configuration list for PBXNativeTarget "CrusheratorTests" */;
+			buildConfigurationList = 351C8767171775890014968D /* Build configuration list for PBXNativeTarget "TaskTests" */;
 			buildPhases = (
 				351C874D171775890014968D /* Sources */,
 				351C874E171775890014968D /* Frameworks */,
@@ -559,9 +559,9 @@
 			dependencies = (
 				351C8758171775890014968D /* PBXTargetDependency */,
 			);
-			name = CrusheratorTests;
+			name = TaskTests;
 			productName = CrusheratorTests;
-			productReference = 351C8752171775890014968D /* CrusheratorTests.octest */;
+			productReference = 351C8752171775890014968D /* TaskTests.octest */;
 			productType = "com.apple.product-type.bundle";
 		};
 /* End PBXNativeTarget section */
@@ -574,7 +574,7 @@
 				LastUpgradeCheck = 0460;
 				ORGANIZATIONNAME = Raj;
 			};
-			buildConfigurationList = 351C8713171775890014968D /* Build configuration list for PBXProject "Crusherator" */;
+			buildConfigurationList = 351C8713171775890014968D /* Build configuration list for PBXProject "Task" */;
 			compatibilityVersion = "Xcode 3.2";
 			developmentRegion = English;
 			hasScannedForEncodings = 0;
@@ -586,8 +586,8 @@
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				351C8717171775890014968D /* Crusherator */,
-				351C8751171775890014968D /* CrusheratorTests */,
+				351C8717171775890014968D /* Task */,
+				351C8751171775890014968D /* TaskTests */,
 			);
 		};
 /* End PBXProject section */
@@ -733,7 +733,7 @@
 /* Begin PBXTargetDependency section */
 		351C8758171775890014968D /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
-			target = 351C8717171775890014968D /* Crusherator */;
+			target = 351C8717171775890014968D /* Task */;
 			targetProxy = 351C8757171775890014968D /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
@@ -868,9 +868,9 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
-				GCC_PREFIX_HEADER = "Crusherator/Crusherator-Prefix.pch";
-				INFOPLIST_FILE = "Crusherator/Crusherator-Info.plist";
-				PRODUCT_NAME = "$(TARGET_NAME)";
+				GCC_PREFIX_HEADER = "Crusherator/Task-Prefix.pch";
+				INFOPLIST_FILE = "Crusherator/Task-Info.plist";
+				PRODUCT_NAME = Task;
 				WRAPPER_EXTENSION = app;
 			};
 			name = Debug;
@@ -879,9 +879,9 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
-				GCC_PREFIX_HEADER = "Crusherator/Crusherator-Prefix.pch";
-				INFOPLIST_FILE = "Crusherator/Crusherator-Info.plist";
-				PRODUCT_NAME = "$(TARGET_NAME)";
+				GCC_PREFIX_HEADER = "Crusherator/Task-Prefix.pch";
+				INFOPLIST_FILE = "Crusherator/Task-Info.plist";
+				PRODUCT_NAME = Task;
 				WRAPPER_EXTENSION = app;
 			};
 			name = Release;
@@ -896,8 +896,8 @@
 				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "Crusherator/Crusherator-Prefix.pch";
-				INFOPLIST_FILE = "CrusheratorTests/CrusheratorTests-Info.plist";
-				PRODUCT_NAME = "$(TARGET_NAME)";
+				INFOPLIST_FILE = "CrusheratorTests/TaskTests-Info.plist";
+				PRODUCT_NAME = TaskTests;
 				TEST_HOST = "$(BUNDLE_LOADER)";
 				WRAPPER_EXTENSION = octest;
 			};
@@ -913,8 +913,8 @@
 				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "Crusherator/Crusherator-Prefix.pch";
-				INFOPLIST_FILE = "CrusheratorTests/CrusheratorTests-Info.plist";
-				PRODUCT_NAME = "$(TARGET_NAME)";
+				INFOPLIST_FILE = "CrusheratorTests/TaskTests-Info.plist";
+				PRODUCT_NAME = TaskTests;
 				TEST_HOST = "$(BUNDLE_LOADER)";
 				WRAPPER_EXTENSION = octest;
 			};
@@ -923,7 +923,7 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		351C8713171775890014968D /* Build configuration list for PBXProject "Crusherator" */ = {
+		351C8713171775890014968D /* Build configuration list for PBXProject "Task" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				351C8762171775890014968D /* Debug */,
@@ -932,7 +932,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		351C8764171775890014968D /* Build configuration list for PBXNativeTarget "Crusherator" */ = {
+		351C8764171775890014968D /* Build configuration list for PBXNativeTarget "Task" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				351C8765171775890014968D /* Debug */,
@@ -941,7 +941,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		351C8767171775890014968D /* Build configuration list for PBXNativeTarget "CrusheratorTests" */ = {
+		351C8767171775890014968D /* Build configuration list for PBXNativeTarget "TaskTests" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				351C8768171775890014968D /* Debug */,

@@ -73,7 +73,7 @@ const float UI_CUES_WIDTH = 50.0f;
         
         // add a layer that renders a green background when an item is complete
         _itemCompleteLayer = [CALayer layer];
-        _itemCompleteLayer.backgroundColor = [[[UIColor alloc] initWithRed:0.0 green:0.6 blue:0.0 alpha:1.0] CGColor];
+        _itemCompleteLayer.backgroundColor = [[UIColor grayColor] CGColor];
         _itemCompleteLayer.hidden = YES;
         [self.layer insertSublayer:_itemCompleteLayer atIndex:0];
         
@@ -253,7 +253,10 @@ const float LABEL_RIGHT_MARGIN = 10.0f;
             {
                 UIColor *color;
                 if(self.toDoItem.completed) color = [UIColor redColor];
-                if(!self.toDoItem.completed) color = [UIColor greenColor];
+                if(!self.toDoItem.completed)
+                {
+                    color = [UIColor greenColor];
+                }
                 _tickLabel.image = [[UIImage imageNamed:@"check.png"] imageWithOverlayColor:color];
                 _tickLabel.alpha = 1.0;
             }
