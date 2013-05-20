@@ -202,15 +202,18 @@ const float LABEL_RIGHT_MARGIN = 10.0f;
         CGPoint location = [recognizer locationInView:[self superview]];
         // Check for horizontal gesture
         
+        if(fabsf(location.x)<=40 || fabsf(location.x)>=(self.frame.size.width-40))
+        {
+            NSLog(@"1");
+            return NO;
+        }
+        
         if (fabsf(translation.x) > fabsf(translation.y)) {
-            if(fabsf(location.x)<=40 || fabsf(location.x)>=(self.frame.size.width-40))
-            {
-                [self handlePan:gestureRecognizer];
-                return NO;
-            }
+            NSLog(@"2");
             return YES;
         }
-    else return NO;
+        else return NO;
+        NSLog(@"3");
     }
     
     if(gestureRecognizer == longRecognizer)
