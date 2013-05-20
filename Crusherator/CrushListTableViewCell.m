@@ -204,16 +204,13 @@ const float LABEL_RIGHT_MARGIN = 10.0f;
         
         if(fabsf(location.x)<=40 || fabsf(location.x)>=(self.frame.size.width-40))
         {
-            NSLog(@"1");
             return NO;
         }
         
         if (fabsf(translation.x) > fabsf(translation.y)) {
-            NSLog(@"2");
             return YES;
         }
         else return NO;
-        NSLog(@"3");
     }
     
     if(gestureRecognizer == longRecognizer)
@@ -313,6 +310,7 @@ const float LABEL_RIGHT_MARGIN = 10.0f;
                 [self.toDoItem editInDatabase];
                 _itemCompleteLayer.hidden = !_itemCompleteLayer.hidden;
                 _label.strikethrough = !_label.strikethrough;
+                [self.delegate cellBeingCompleted:self];
             }
             
             if (_estimateWorksOnDragRelease) {

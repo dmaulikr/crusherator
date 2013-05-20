@@ -20,6 +20,8 @@ typedef struct CrushTouchPoints CrushTouchPoints;
 // the indices of the upper and lower cells that are being pinched
 int _pointOneCellindex;
 int _pointTwoCellindex;
+int _pointOneCellOrdering;
+int _pointTwoCellOrdering;
 
 // the location of the touch points when the pinch began
 CrushTouchPoints _initialTouchPoints;
@@ -106,13 +108,15 @@ BOOL _pinchExceededRequiredDistance;
     _pointTwoCellindex = -100;
     NSArray* visibleCells = _tableView.visibleCells;
     for (int i=0; i < visibleCells.count; i++) {
-        UIView* cell = (UIView*)visibleCells[i];
+        CrushListTableViewCell* cell = (CrushListTableViewCell*)visibleCells[i];
         if ([self viewContainsPoint:cell withPoint:_initialTouchPoints.upper]) {
             _pointOneCellindex = i;
+            _pointOneCellOrdering = cell.toDoItem.ordering;
             NSLog(@"first cell is %i",i);
         }
         if ([self viewContainsPoint:cell withPoint:_initialTouchPoints.lower]) {
             _pointTwoCellindex = i;
+            _pointTwoCellOrdering = cell.toDoItem.ordering;
             NSLog(@"second cell is %i",i);
         }
     }
@@ -140,9 +144,8 @@ BOOL _pinchExceededRequiredDistance;
     
     if (_pinchExceededRequiredDistance) {
         // add a new item
-        int indexOffset = floor(_tableView.scrollView.contentOffset.y / SHC_ROW_HEIGHT);
-        [_tableView.dataSource itemAddedAtIndex:_pointTwoCellindex + indexOffset];
-        NSLog(@"item added at %i",_pointTwoCellindex + indexOffset);
+        [_tableView.dataSource itemAddedAtIndex:_pointTwoCellOrdering + 1];
+        NSLog(@"item added at %i",_pointTwoCellOrdering + 1);
     } else {
         // Otherwise animate back to position
         [UIView animateWithDuration:0.2f

@@ -194,6 +194,20 @@ static CrushTaskDatabase *instance = NULL;
     }
 }
 
+-(void)moveToEnd:(CrushTaskObject *)task {
+    // Shift order of all tasks below moved task
+    for(CrushTaskObject *object in [self taskInfosForPageIndex:task.category])
+    {
+        if(object.ordering < task.ordering)
+        {
+            object.ordering ++;
+            [object editInDatabase];
+        }
+    }
+
+    task.ordering = 1;
+}
+
 -(CrushTaskObject *) addTask:(NSString *)text atIndex:(int)index withPageIndex:(int)pageIndex {
 	
     // Shift order of all tasks above inserted task

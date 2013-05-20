@@ -29,6 +29,8 @@
 
 -(void)cellIsDoneBeingMoved:(CrushListTableViewCell *)cellBeingMoved;
 
+-(void)cellBeingCompleted:(CrushListTableViewCell *)cellBeingCompleted;
+
 -(void)cellIsBeingDragged:(CrushListTableViewCell *)cellBeingMoved to:(CGPoint)number;
 
 @end

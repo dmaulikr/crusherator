@@ -19,6 +19,7 @@
 + (CrushTaskDatabase *)sharedInstance;
 - (CrushTaskObject *)addTask:text atIndex:(int)index withPageIndex:(int)pageIndex;
 - (void)removeTask:task;
+- (void)moveToEnd:(CrushTaskObject *)task;
 - (sqlite3 *)databaseAccess;
 - (NSMutableArray *)taskInfosForPageIndex:(int)index;
 

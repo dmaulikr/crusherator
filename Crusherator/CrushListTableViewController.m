@@ -76,7 +76,7 @@
     [self.tableView registerClassForCells:[CrushListTableViewCell class]];
     
     _dragAddNew = [[CrushTableViewDragAddNew alloc] initWithTableView:self.tableView];
-//    _pinchAddNew = [[CrushTableViewPinchToAddNew alloc] initWithTableView:self.tableView];
+    _pinchAddNew = [[CrushTableViewPinchToAddNew alloc] initWithTableView:self.tableView];
 }
 
 //     Reloads data when switching back from list view
@@ -218,9 +218,16 @@
     {
         startAnimatingUp = TRUE;
     }
+    if(startAnimatingDown) [self moveCellDown:cellBeingMoved];
+    if(startAnimatingUp) [self moveCellUp:cellBeingMoved];
+    
+}
+
+-(void)moveCellDown:(CrushListTableViewCell *)cellBeingMoved
+{
     NSArray *visibleCells = (NSArray *)[self.tableView visibleCells];
     for(CrushListTableViewCell* cell in visibleCells) {
-        if (startAnimatingDown && ([visibleCells indexOfObject:cell] - [visibleCells indexOfObject:cellBeingMoved] == 1)) {
+        if ([visibleCells indexOfObject:cell] - [visibleCells indexOfObject:cellBeingMoved] == 1) {
             cell.toDoItem.ordering ++;
             cellBeingMoved.toDoItem.ordering --;
             [cell.toDoItem editInDatabase];
@@ -232,9 +239,13 @@
             }];
         }
     }
-    
+}
+
+-(void)moveCellUp:(CrushListTableViewCell *)cellBeingMoved
+{
+    NSArray *visibleCells = (NSArray *)[self.tableView visibleCells];
     for(CrushListTableViewCell* cell in visibleCells) {
-        if (startAnimatingUp && ([visibleCells indexOfObject:cell] - [visibleCells indexOfObject:cellBeingMoved] == -1)) {
+        if ([visibleCells indexOfObject:cell] - [visibleCells indexOfObject:cellBeingMoved] == -1) {
             cell.toDoItem.ordering --;
             cellBeingMoved.toDoItem.ordering ++;
             [cell.toDoItem editInDatabase];
@@ -245,6 +256,16 @@
             } completion:^(BOOL finished){
             }];
         }
+    }
+}
+
+-(void)cellBeingCompleted:(CrushListTableViewCell *)cellBeingCompleted
+{
+    for(int i = 0; i < cellBeingCompleted.toDoItem.ordering+1; i++)
+    {
+//        [self moveCellDown:cellBeingCompleted];
+//        [database moveToEnd:cellBeingCompleted.toDoItem];
+//        [self.tableView reloadData];
     }
 }
 
