@@ -192,11 +192,22 @@ static CrushTaskDatabase *instance = NULL;
 }
 
 -(CrushTaskObject *) addTask:(NSString *)text atIndex:(int)index withPageIndex:(int)pageIndex {
-	NSInteger uniqueId = [CrushTaskObject insertIntoDatabase:_database];
+	for (CrushTaskObject *object in [self taskInfosForPageIndex:pageIndex])
+    {
+        if (object.ordering >= index)
+        {
+            object.ordering ++;
+            [object editInDatabase];
+        }
+    }
+    
+    NSInteger uniqueId = [CrushTaskObject insertIntoDatabase:_database];
     CrushTaskObject *newTask = [[CrushTaskObject alloc]initWithUniqueId:uniqueId text:text];
+    [retval addObject:newTask];
     
     newTask.ordering = index;
     newTask.category = pageIndex;
+    [newTask editInDatabase];
 
     return newTask;
 }

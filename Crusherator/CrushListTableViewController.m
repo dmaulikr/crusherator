@@ -80,13 +80,8 @@
     self.tableView.backgroundColor = [UIColor blackColor];
     [self.tableView registerClassForCells:[CrushListTableViewCell class]];
     
-//    _swipe = [[UIPanGestureRecognizer alloc]
-//                                   initWithTarget:self
-//                                   action:@selector(handlePan:)];
-//    [self.view addGestureRecognizer:_swipe];
-    
     _dragAddNew = [[CrushTableViewDragAddNew alloc] initWithTableView:self.tableView];
-    _pinchAddNew = [[CrushTableViewPinchToAddNew alloc] initWithTableView:self.tableView];
+//    _pinchAddNew = [[CrushTableViewPinchToAddNew alloc] initWithTableView:self.tableView];
 }
 
 //     Reloads data when switching back from list view
@@ -102,9 +97,7 @@
 }
 
 -(UIColor*)colorForIndex:(NSInteger)index
-{
-    NSUInteger itemCount = self.filteredTaskInfos.count - 1;
-    
+{   
     NSArray *colors = @[
                         [UIColor colorWithRed:255.0 / 255.0 green:66.0 / 255.0 blue: 0.0 / 255.0 alpha:1.0],
                         [UIColor colorWithRed:255.0 / 255.0 green:180.0 / 255.0 blue: 0.0 / 255.0 alpha:1.0],
@@ -305,12 +298,13 @@
 -(void)itemAdded
 {
     // create the new item
-    [self itemAddedAtIndex:[self filteredTaskInfos].count];
+    [self itemAddedAtIndex:[self filteredTaskInfos].count+1];
 }
 
 -(void)itemAddedAtIndex:(NSInteger)index {
     // create the new item
     CrushTaskObject* toDoItem = [database addTask:@"task name" atIndex:index withPageIndex:_pageIndex+1];
+    NSLog(@"%@ added: order %i, index %i",toDoItem.text,toDoItem.ordering,toDoItem.category);
     
     // refresh the table
     [_tableView reloadData];
