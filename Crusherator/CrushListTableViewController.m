@@ -299,6 +299,11 @@
                              }
                          }];
     }
+    
+    if([editingCell.toDoItem.text isEqualToString:@""])
+    {
+        [self toDoItemDeleted:editingCell.toDoItem];
+    }
 }
 
 -(BOOL)cellShouldBeginEditing:(CrushListTableViewCell *)cell
