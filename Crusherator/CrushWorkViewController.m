@@ -122,7 +122,6 @@
 {
     [self.view setNeedsDisplay];
     listIndex = (int) [[NSUserDefaults standardUserDefaults] floatForKey:@"listIndex"];
-    NSLog(@"work view loaded with index %i",listIndex);
     
     [timer clearTasks];
 }

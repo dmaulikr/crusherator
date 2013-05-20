@@ -73,7 +73,7 @@ const float UI_CUES_WIDTH = 50.0f;
         
         // add a layer that renders a green background when an item is complete
         _itemCompleteLayer = [CALayer layer];
-        _itemCompleteLayer.backgroundColor = [[UIColor grayColor] CGColor];
+        _itemCompleteLayer.backgroundColor = [[UIColor blackColor] CGColor];
         _itemCompleteLayer.hidden = YES;
         [self.layer insertSublayer:_itemCompleteLayer atIndex:0];
         

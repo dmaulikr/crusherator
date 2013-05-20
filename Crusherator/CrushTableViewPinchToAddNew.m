@@ -109,9 +109,11 @@ BOOL _pinchExceededRequiredDistance;
         UIView* cell = (UIView*)visibleCells[i];
         if ([self viewContainsPoint:cell withPoint:_initialTouchPoints.upper]) {
             _pointOneCellindex = i;
+            NSLog(@"first cell is %i",i);
         }
         if ([self viewContainsPoint:cell withPoint:_initialTouchPoints.lower]) {
             _pointTwoCellindex = i;
+            NSLog(@"second cell is %i",i);
         }
     }
     
@@ -140,6 +142,7 @@ BOOL _pinchExceededRequiredDistance;
         // add a new item
         int indexOffset = floor(_tableView.scrollView.contentOffset.y / SHC_ROW_HEIGHT);
         [_tableView.dataSource itemAddedAtIndex:_pointTwoCellindex + indexOffset];
+        NSLog(@"item added at %i",_pointTwoCellindex + indexOffset);
     } else {
         // Otherwise animate back to position
         [UIView animateWithDuration:0.2f

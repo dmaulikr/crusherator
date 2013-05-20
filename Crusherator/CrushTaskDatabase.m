@@ -130,7 +130,7 @@ static CrushTaskDatabase *instance = NULL;
                         info.category = category;
     //                    info.project = project;
                         [retval addObject:info];
-                        NSLog(@"Database pull: %@, order %i",info.text,info.ordering);
+                        NSLog(@"Database pull: %@, order %i, index %i",info.text,info.ordering,info.category);
                     }
                 }
                 // "Finalize" the statement - releases the resources associated with the statement.
@@ -155,6 +155,25 @@ static CrushTaskDatabase *instance = NULL;
     }
 }
 
+- (NSMutableArray *)taskInfosForPageIndex:(int)index
+{
+    // Returns an array of task objects (ordered) in the category specified
+    
+    NSMutableArray *filteredList = [[NSMutableArray alloc] init];
+    for(CrushTaskObject *object in [self taskInfos])
+    {
+        if(object.category == index+1) [filteredList addObject:object];
+    }
+    
+    NSSortDescriptor *sortDescriptor;
+    sortDescriptor = [[NSSortDescriptor alloc] initWithKey:@"ordering"
+                                                 ascending:NO];
+    NSArray *sortDescriptors = [NSArray arrayWithObject:sortDescriptor];
+    NSArray *sortedArray;
+    sortedArray = [filteredList sortedArrayUsingDescriptors:sortDescriptors];
+    return (NSMutableArray*)sortedArray;
+}
+
 -(void)removeTask:(CrushTaskObject *)task {
 	NSUInteger index = [retval indexOfObject:task];
     
@@ -173,18 +192,23 @@ static CrushTaskDatabase *instance = NULL;
 }
 
 -(CrushTaskObject *) addTask:(NSString *)text atIndex:(int)index withPageIndex:(int)pageIndex {
-//    Need to make delegate to create uniqueId automatically
-	NSInteger uniqueId = [CrushTaskObject insertIntoDatabase:_database];
+	for (CrushTaskObject *object in [self taskInfosForPageIndex:pageIndex])
+    {
+        if (object.ordering >= index)
+        {
+            object.ordering ++;
+            [object editInDatabase];
+        }
+    }
+    
+    NSInteger uniqueId = [CrushTaskObject insertIntoDatabase:_database];
     CrushTaskObject *newTask = [[CrushTaskObject alloc]initWithUniqueId:uniqueId text:text];
+    [retval addObject:newTask];
+    
     newTask.ordering = index;
     newTask.category = pageIndex;
-	[retval insertObject:newTask atIndex:index];
-    for (int i=0; i<retval.count; i++)
-    {
-        CrushTaskObject *task = retval[i];
-        task.ordering = retval.count - i - 1;
-        [task editInDatabase];
-    }
+    [newTask editInDatabase];
+
     return newTask;
 }
 
