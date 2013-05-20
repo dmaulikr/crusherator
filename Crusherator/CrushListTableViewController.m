@@ -63,7 +63,6 @@
     self = [self initWithNibName:@"CrushListTableViewController_iPhone" bundle:nil];
     if (self) {
         _pageIndex = pageIndex;
-        NSLog(@"list generated with page index %i",pageIndex);
     }
     return self;
 }
@@ -109,7 +108,6 @@
     NSArray *colors = @[
                         [UIColor colorWithRed:255.0 / 255.0 green:66.0 / 255.0 blue: 0.0 / 255.0 alpha:1.0],
                         [UIColor colorWithRed:255.0 / 255.0 green:180.0 / 255.0 blue: 0.0 / 255.0 alpha:1.0],
-                        [UIColor colorWithRed:186.0 / 255.0 green:255.0 / 255.0 blue: 0.0 / 255.0 alpha:1.0],
                         [UIColor colorWithRed:0.0 / 255.0 green:180.0 / 255.0 blue: 60.0 / 255.0 alpha:1.0],
                         [UIColor colorWithRed:0.0 / 255.0 green:234.0 / 255.0 blue: 255.0 / 255.0 alpha:1.0],
                         [UIColor colorWithRed:0.0 / 255.0 green:0.0 / 255.0 blue: 255.0 / 255.0 alpha:1.0],
@@ -139,15 +137,7 @@
 
 -(NSMutableArray *)filteredTaskInfos
 {
-    NSMutableArray *filteredTaskInfos = [[NSMutableArray alloc] init];
-    for (CrushTaskObject *filterable in database.taskInfos)
-    {
-        if (filterable.category == _pageIndex+1)
-        {
-            [filteredTaskInfos addObject:filterable];
-        }
-    }
-    return filteredTaskInfos;
+    return [database taskInfosForPageIndex:_pageIndex];
 }
 
 -(CrushListTableViewCell *)cellForRow:(NSInteger)row
@@ -315,7 +305,7 @@
 -(void)itemAdded
 {
     // create the new item
-    [self itemAddedAtIndex:0];
+    [self itemAddedAtIndex:[self filteredTaskInfos].count];
 }
 
 -(void)itemAddedAtIndex:(NSInteger)index {

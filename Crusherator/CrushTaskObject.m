@@ -113,7 +113,7 @@ static sqlite3_stmt *insert_statement = nil;
     }
     sqlite3_reset(dehydrate_statement);
     
-    NSLog(@"%@ edited; %i, %i, %i",self.text,self.completed,self.works,self.ordering);
+    NSLog(@"%@ edited: order %i, index %i",self.text,self.ordering,self.category);
 }
 
 -(void) deleteFromDatabase {

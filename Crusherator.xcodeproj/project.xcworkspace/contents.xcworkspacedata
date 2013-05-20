@@ -2,6 +2,6 @@
 <Workspace
    version = "1.0">
    <FileRef
-      location = "self:Task.xcodeproj">
+      location = "self:Crusherator.xcodeproj">
    </FileRef>
 </Workspace>

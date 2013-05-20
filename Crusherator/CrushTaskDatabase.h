@@ -21,6 +21,7 @@
 - (CrushTaskObject *)addTask:text atIndex:(int)index withPageIndex:(int)pageIndex;
 - (void)removeTask:task;
 - (sqlite3 *)databaseAccess;
+- (NSMutableArray *)taskInfosForPageIndex:(int)index;
 
 @property (nonatomic, retain) NSMutableArray *retval;
 

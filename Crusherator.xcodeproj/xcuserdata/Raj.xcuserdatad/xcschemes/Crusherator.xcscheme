@@ -16,8 +16,8 @@
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "351C8717171775890014968D"
                BuildableName = "Task.app"
-               BlueprintName = "Task"
-               ReferencedContainer = "container:Task.xcodeproj">
+               BlueprintName = "Crusherator"
+               ReferencedContainer = "container:Crusherator.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
       </BuildActionEntries>
@@ -34,8 +34,8 @@
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "351C8751171775890014968D"
                BuildableName = "TaskTests.octest"
-               BlueprintName = "TaskTests"
-               ReferencedContainer = "container:Task.xcodeproj">
+               BlueprintName = "CrusheratorTests"
+               ReferencedContainer = "container:Crusherator.xcodeproj">
             </BuildableReference>
          </TestableReference>
       </Testables>
@@ -44,8 +44,8 @@
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "351C8717171775890014968D"
             BuildableName = "Task.app"
-            BlueprintName = "Task"
-            ReferencedContainer = "container:Task.xcodeproj">
+            BlueprintName = "Crusherator"
+            ReferencedContainer = "container:Crusherator.xcodeproj">
          </BuildableReference>
       </MacroExpansion>
    </TestAction>
@@ -63,8 +63,8 @@
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "351C8717171775890014968D"
             BuildableName = "Task.app"
-            BlueprintName = "Task"
-            ReferencedContainer = "container:Task.xcodeproj">
+            BlueprintName = "Crusherator"
+            ReferencedContainer = "container:Crusherator.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
       <AdditionalOptions>
@@ -81,8 +81,8 @@
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "351C8717171775890014968D"
             BuildableName = "Task.app"
-            BlueprintName = "Task"
-            ReferencedContainer = "container:Task.xcodeproj">
+            BlueprintName = "Crusherator"
+            ReferencedContainer = "container:Crusherator.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
    </ProfileAction>
