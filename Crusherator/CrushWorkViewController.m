@@ -21,12 +21,6 @@
     CrushTimer *timer;
     NSInteger listIndex;
     
-    // timer handlers
-    NSDate *timeBackgrounded;
-    NSString *modeBackgrounded;
-    NSTimeInterval timeElapsedWhenBackgrounded;
-    NSTimeInterval timeLeftWhenBackgrounded;
-    
     // Gesture variables
     UIPanGestureRecognizer *panRecognizer;
     UITapGestureRecognizer *tapRecognizer;
@@ -147,30 +141,47 @@
     bgTask = [app beginBackgroundTaskWithExpirationHandler:^{
         [app endBackgroundTask:bgTask];
     }];
+    
     [NSTimer scheduledTimerWithTimeInterval:1.0 target:self selector:@selector(incrementTimer) userInfo:nil repeats:YES];
     
 }
 
 - (void)moveToBackground
-{    
-    
-    if([timer.currentMode isEqual:@"workRunning"] || [timer.currentMode isEqual:@"playRunning"])
-    {
+{
         [self scheduleAlarmForDate:[NSDate dateWithTimeInterval:timer.timeLeft sinceDate:[NSDate date]] withMessage:@"Session over."];
-        timeBackgrounded = [NSDate date];
-        modeBackgrounded = timer.currentMode;
-        timeElapsedWhenBackgrounded = timer.elapsedTime;
-        timeLeftWhenBackgrounded = timer.timeLeft;
+        NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
+        [userDefaults setObject:[NSDate date]
+                        forKey:@"timeBackgrounded"];
+        [userDefaults synchronize];
+        
+        [userDefaults setObject:timer.currentMode
+                         forKey:@"modeBackgrounded"];
+        NSLog(@"modeBackgrounded is %@",timer.currentMode);
+        [userDefaults synchronize];
+        
+        [userDefaults setInteger:timer.elapsedTime
+                         forKey:@"timeElapsedWhenBackgrounded"];
+        [userDefaults synchronize];
+        
+        [userDefaults setInteger:timer.timeLeft
+                         forKey:@"timeLeftWhenBackgrounded"];
+        [userDefaults synchronize];
+        
         timer.running = FALSE;
-    }
 }
 
 - (void)moveToForeground
 {
+    NSDate *timeBackgrounded = [[NSUserDefaults standardUserDefaults] objectForKey:@"timeBackgrounded"];
+    NSString *modeBackgrounded = [[NSUserDefaults standardUserDefaults] objectForKey:@"modeBackgrounded"];
+    NSLog(@"modeBackgrounded is %@",timer.currentMode);
+    NSTimeInterval timeElapsedWhenBackgrounded = [[NSUserDefaults standardUserDefaults] integerForKey:@"timeElapsedWhenBackgrounded"];
+    NSTimeInterval timeLeftWhenBackgrounded = [[NSUserDefaults standardUserDefaults] integerForKey:@"timeLeftWhenBackgrounded"];
     double timePassed = [[NSDate date] timeIntervalSinceDate:timeBackgrounded];
     
     [timer changeModes:modeBackgrounded];
-    if([timer.currentMode isEqual:@"workRunning"] || [timer.currentMode isEqual:@"playRunning"])
+    
+    if([modeBackgrounded isEqual:@"workRunning"] || [modeBackgrounded isEqual:@"playRunning"])
     {
         timer.elapsedTime = timeElapsedWhenBackgrounded;
         if(continuousMode)
@@ -184,12 +195,12 @@
         }
         timer.running = TRUE;
     }
+    else return;
 }
 
 // pressing button changes modes
 - (void)buttonPress
 {
-    NSLog(@"called it");
     if ([timer.currentMode isEqual:@"workReady"])
     {
         [timer changeModes:@"workRunning"];
@@ -235,7 +246,7 @@
         {
             [timer changeModes:@"playReady"];
             if(continuousMode) [timer changeModes:@"playRunning"];
-            [self vibrate];
+            if(buzzEndPlay)[self vibrate];
             [self stopMusic];
             workUnitsCompleted++;
         }
@@ -243,7 +254,7 @@
         {
             [timer changeModes:@"workReady"];
             if(continuousMode) [timer changeModes:@"workRunning"];
-            [self vibrate];
+            if(buzzEndWork)[self vibrate];
             relaxUnitsCompleted++;
         }
     }

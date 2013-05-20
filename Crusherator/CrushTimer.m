@@ -261,11 +261,10 @@ const float WORK_CUES_WIDTH = 50.0f;
 }
 
 // updates the time shown
+
 - (void)updateLabels
 {
-    NSLog(@"updateLabels");
     self.timeLeft = timerInterval - self.elapsedTime;
-    NSLog(@"elapsedTime %f", self.elapsedTime);
     NSInteger ti = (NSInteger)self.timeLeft;
     NSInteger seconds = ti % 60;
     NSInteger minutes = (ti / 60) % 60;

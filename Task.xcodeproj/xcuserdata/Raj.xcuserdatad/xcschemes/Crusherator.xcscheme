@@ -15,7 +15,7 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "351C8717171775890014968D"
-               BuildableName = "Crusherator.app"
+               BuildableName = "Task.app"
                BlueprintName = "Task"
                ReferencedContainer = "container:Task.xcodeproj">
             </BuildableReference>
@@ -33,7 +33,7 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "351C8751171775890014968D"
-               BuildableName = "CrusheratorTests.octest"
+               BuildableName = "TaskTests.octest"
                BlueprintName = "TaskTests"
                ReferencedContainer = "container:Task.xcodeproj">
             </BuildableReference>
@@ -43,7 +43,7 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "351C8717171775890014968D"
-            BuildableName = "Crusherator.app"
+            BuildableName = "Task.app"
             BlueprintName = "Task"
             ReferencedContainer = "container:Task.xcodeproj">
          </BuildableReference>
@@ -62,7 +62,7 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "351C8717171775890014968D"
-            BuildableName = "Crusherator.app"
+            BuildableName = "Task.app"
             BlueprintName = "Task"
             ReferencedContainer = "container:Task.xcodeproj">
          </BuildableReference>
@@ -80,7 +80,7 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "351C8717171775890014968D"
-            BuildableName = "Crusherator.app"
+            BuildableName = "Task.app"
             BlueprintName = "Task"
             ReferencedContainer = "container:Task.xcodeproj">
          </BuildableReference>

@@ -30,7 +30,17 @@
         self.title = NSLocalizedString(@"Settings", @"Settings");
         self.tabBarItem.image = [UIImage imageNamed:@"settings"];
         
-        _settings = @[@"Play music",@"Shuffle music", @"Play ticking sound", @"Alarm when done", @"Autostart", @"Enable pausing", @"Enable cancelling"];
+        _settings = @[
+                      @"Play music",
+                      @"Buzz at end of work",
+                      @"Buzz at end of play",
+                      @"Shuffle music",
+                      @"Play ticking sound",
+                      @"Alarm when done",
+                      @"Autostart",
+                      @"Enable pausing",
+                      @"Enable cancelling"
+                      ];
         
         _fontDialogStrong = [UIFont fontWithName:@"Gotham Medium" size:15.0];
     }
