@@ -80,29 +80,6 @@
 		35B11A9F171BA96F00F143F5 /* libsqlite3.0.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 35B11A9E171BA96F00F143F5 /* libsqlite3.0.dylib */; };
 		35B11AA1171BA97800F143F5 /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 35B11AA0171BA97800F143F5 /* AudioToolbox.framework */; };
 		35C7D5F517195A530043C374 /* CrushListTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 35C7D5F417195A530043C374 /* CrushListTableViewCell.m */; };
-		35D0E4CB1726797B00A4D6CF /* .gitignore in Resources */ = {isa = PBXBuildFile; fileRef = 35D0E4731726797B00A4D6CF /* .gitignore */; };
-		35D0E4CC1726797B00A4D6CF /* .gitmodules in Resources */ = {isa = PBXBuildFile; fileRef = 35D0E4741726797B00A4D6CF /* .gitmodules */; };
-		35D0E4CD1726797B00A4D6CF /* TSMessage.m in Sources */ = {isa = PBXBuildFile; fileRef = 35D0E4771726797B00A4D6CF /* TSMessage.m */; };
-		35D0E4CE1726797B00A4D6CF /* LICENCE in Resources */ = {isa = PBXBuildFile; fileRef = 35D0E4791726797B00A4D6CF /* LICENCE */; };
-		35D0E4CF1726797B00A4D6CF /* README.md in Resources */ = {isa = PBXBuildFile; fileRef = 35D0E47A1726797B00A4D6CF /* README.md */; };
-		35D0E4D01726797B00A4D6CF /* UIColor+MLColorAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = 35D0E47C1726797B00A4D6CF /* UIColor+MLColorAdditions.m */; };
-		35D0E4E91726797B00A4D6CF /* design.json in Resources */ = {isa = PBXBuildFile; fileRef = 35D0E4B71726797B00A4D6CF /* design.json */; };
-		35D0E4EA1726797B00A4D6CF /* NotificationBackgroundError.png in Resources */ = {isa = PBXBuildFile; fileRef = 35D0E4B91726797B00A4D6CF /* NotificationBackgroundError.png */; };
-		35D0E4EB1726797B00A4D6CF /* NotificationBackgroundError@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 35D0E4BA1726797B00A4D6CF /* NotificationBackgroundError@2x.png */; };
-		35D0E4EC1726797B00A4D6CF /* NotificationBackgroundErrorIcon.png in Resources */ = {isa = PBXBuildFile; fileRef = 35D0E4BB1726797B00A4D6CF /* NotificationBackgroundErrorIcon.png */; };
-		35D0E4ED1726797B00A4D6CF /* NotificationBackgroundErrorIcon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 35D0E4BC1726797B00A4D6CF /* NotificationBackgroundErrorIcon@2x.png */; };
-		35D0E4EE1726797B00A4D6CF /* NotificationBackgroundMessage.png in Resources */ = {isa = PBXBuildFile; fileRef = 35D0E4BD1726797B00A4D6CF /* NotificationBackgroundMessage.png */; };
-		35D0E4EF1726797B00A4D6CF /* NotificationBackgroundMessage@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 35D0E4BE1726797B00A4D6CF /* NotificationBackgroundMessage@2x.png */; };
-		35D0E4F01726797B00A4D6CF /* NotificationBackgroundSuccess.png in Resources */ = {isa = PBXBuildFile; fileRef = 35D0E4BF1726797B00A4D6CF /* NotificationBackgroundSuccess.png */; };
-		35D0E4F11726797B00A4D6CF /* NotificationBackgroundSuccess@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 35D0E4C01726797B00A4D6CF /* NotificationBackgroundSuccess@2x.png */; };
-		35D0E4F21726797B00A4D6CF /* NotificationBackgroundSuccessIcon.png in Resources */ = {isa = PBXBuildFile; fileRef = 35D0E4C11726797B00A4D6CF /* NotificationBackgroundSuccessIcon.png */; };
-		35D0E4F31726797B00A4D6CF /* NotificationBackgroundSuccessIcon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 35D0E4C21726797B00A4D6CF /* NotificationBackgroundSuccessIcon@2x.png */; };
-		35D0E4F41726797B00A4D6CF /* NotificationBackgroundWarning.png in Resources */ = {isa = PBXBuildFile; fileRef = 35D0E4C31726797B00A4D6CF /* NotificationBackgroundWarning.png */; };
-		35D0E4F51726797B00A4D6CF /* NotificationBackgroundWarning@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 35D0E4C41726797B00A4D6CF /* NotificationBackgroundWarning@2x.png */; };
-		35D0E4F61726797B00A4D6CF /* NotificationBackgroundWarningIcon.png in Resources */ = {isa = PBXBuildFile; fileRef = 35D0E4C51726797B00A4D6CF /* NotificationBackgroundWarningIcon.png */; };
-		35D0E4F71726797B00A4D6CF /* NotificationBackgroundWarningIcon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 35D0E4C61726797B00A4D6CF /* NotificationBackgroundWarningIcon@2x.png */; };
-		35D0E4F81726797B00A4D6CF /* TSMessages.podspec in Resources */ = {isa = PBXBuildFile; fileRef = 35D0E4C71726797B00A4D6CF /* TSMessages.podspec */; };
-		35D0E4F91726797B00A4D6CF /* TSMessageView.m in Sources */ = {isa = PBXBuildFile; fileRef = 35D0E4CA1726797B00A4D6CF /* TSMessageView.m */; };
 		35E6204F1736F0E400DF78DC /* CircularTimer.m in Sources */ = {isa = PBXBuildFile; fileRef = 35E6204E1736F0E400DF78DC /* CircularTimer.m */; };
 		35E620501736F2CA00DF78DC /* CircularTimer.m in Sources */ = {isa = PBXBuildFile; fileRef = 35E6204E1736F0E400DF78DC /* CircularTimer.m */; };
 /* End PBXBuildFile section */
@@ -207,32 +184,6 @@
 		35B11AA0171BA97800F143F5 /* AudioToolbox.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AudioToolbox.framework; path = System/Library/Frameworks/AudioToolbox.framework; sourceTree = SDKROOT; };
 		35C7D5F317195A530043C374 /* CrushListTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CrushListTableViewCell.h; sourceTree = "<group>"; };
 		35C7D5F417195A530043C374 /* CrushListTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CrushListTableViewCell.m; sourceTree = "<group>"; };
-		35D0E4731726797B00A4D6CF /* .gitignore */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = .gitignore; sourceTree = "<group>"; };
-		35D0E4741726797B00A4D6CF /* .gitmodules */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = .gitmodules; sourceTree = "<group>"; };
-		35D0E4761726797B00A4D6CF /* TSMessage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TSMessage.h; sourceTree = "<group>"; };
-		35D0E4771726797B00A4D6CF /* TSMessage.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TSMessage.m; sourceTree = "<group>"; };
-		35D0E4791726797B00A4D6CF /* LICENCE */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = LICENCE; sourceTree = "<group>"; };
-		35D0E47A1726797B00A4D6CF /* README.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = README.md; sourceTree = "<group>"; };
-		35D0E47B1726797B00A4D6CF /* UIColor+MLColorAdditions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIColor+MLColorAdditions.h"; sourceTree = "<group>"; };
-		35D0E47C1726797B00A4D6CF /* UIColor+MLColorAdditions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIColor+MLColorAdditions.m"; sourceTree = "<group>"; };
-		35D0E4B71726797B00A4D6CF /* design.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = design.json; sourceTree = "<group>"; };
-		35D0E4B91726797B00A4D6CF /* NotificationBackgroundError.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = NotificationBackgroundError.png; sourceTree = "<group>"; };
-		35D0E4BA1726797B00A4D6CF /* NotificationBackgroundError@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "NotificationBackgroundError@2x.png"; sourceTree = "<group>"; };
-		35D0E4BB1726797B00A4D6CF /* NotificationBackgroundErrorIcon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = NotificationBackgroundErrorIcon.png; sourceTree = "<group>"; };
-		35D0E4BC1726797B00A4D6CF /* NotificationBackgroundErrorIcon@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "NotificationBackgroundErrorIcon@2x.png"; sourceTree = "<group>"; };
-		35D0E4BD1726797B00A4D6CF /* NotificationBackgroundMessage.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = NotificationBackgroundMessage.png; sourceTree = "<group>"; };
-		35D0E4BE1726797B00A4D6CF /* NotificationBackgroundMessage@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "NotificationBackgroundMessage@2x.png"; sourceTree = "<group>"; };
-		35D0E4BF1726797B00A4D6CF /* NotificationBackgroundSuccess.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = NotificationBackgroundSuccess.png; sourceTree = "<group>"; };
-		35D0E4C01726797B00A4D6CF /* NotificationBackgroundSuccess@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "NotificationBackgroundSuccess@2x.png"; sourceTree = "<group>"; };
-		35D0E4C11726797B00A4D6CF /* NotificationBackgroundSuccessIcon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = NotificationBackgroundSuccessIcon.png; sourceTree = "<group>"; };
-		35D0E4C21726797B00A4D6CF /* NotificationBackgroundSuccessIcon@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "NotificationBackgroundSuccessIcon@2x.png"; sourceTree = "<group>"; };
-		35D0E4C31726797B00A4D6CF /* NotificationBackgroundWarning.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = NotificationBackgroundWarning.png; sourceTree = "<group>"; };
-		35D0E4C41726797B00A4D6CF /* NotificationBackgroundWarning@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "NotificationBackgroundWarning@2x.png"; sourceTree = "<group>"; };
-		35D0E4C51726797B00A4D6CF /* NotificationBackgroundWarningIcon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = NotificationBackgroundWarningIcon.png; sourceTree = "<group>"; };
-		35D0E4C61726797B00A4D6CF /* NotificationBackgroundWarningIcon@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "NotificationBackgroundWarningIcon@2x.png"; sourceTree = "<group>"; };
-		35D0E4C71726797B00A4D6CF /* TSMessages.podspec */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = TSMessages.podspec; sourceTree = "<group>"; };
-		35D0E4C91726797B00A4D6CF /* TSMessageView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TSMessageView.h; sourceTree = "<group>"; };
-		35D0E4CA1726797B00A4D6CF /* TSMessageView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TSMessageView.m; sourceTree = "<group>"; };
 		35E6204D1736F0E400DF78DC /* CircularTimer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CircularTimer.h; sourceTree = "<group>"; };
 		35E6204E1736F0E400DF78DC /* CircularTimer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CircularTimer.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -265,6 +216,37 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		351A76C1174ACD8A007108ED /* Database */ = {
+			isa = PBXGroup;
+			children = (
+				35B11A9B171BA31800F143F5 /* CrushTaskDatabase.h */,
+				35B11A9C171BA31800F143F5 /* CrushTaskDatabase.m */,
+				35B11A98171B918400F143F5 /* CrushTaskObject.h */,
+				35B11A99171B918400F143F5 /* CrushTaskObject.m */,
+			);
+			name = Database;
+			sourceTree = "<group>";
+		};
+		351A76C2174ACD98007108ED /* Settings */ = {
+			isa = PBXGroup;
+			children = (
+				35A71C8F172A5F7F00F05C47 /* CrushSettingsViewController.h */,
+				35A71C90172A5F8000F05C47 /* CrushSettingsViewController.m */,
+			);
+			name = Settings;
+			sourceTree = "<group>";
+		};
+		351A76C3174ACE99007108ED /* Gestures */ = {
+			isa = PBXGroup;
+			children = (
+				354FBB12171B30C0003D57DF /* CrushTableViewDragAddNew.h */,
+				354FBB13171B30C0003D57DF /* CrushTableViewDragAddNew.m */,
+				355FF029172F132800D7ED68 /* CrushTableViewPinchToAddNew.h */,
+				355FF02A172F132800D7ED68 /* CrushTableViewPinchToAddNew.m */,
+			);
+			name = Gestures;
+			sourceTree = "<group>";
+		};
 		351C870F171775890014968D = {
 			isa = PBXGroup;
 			children = (
@@ -304,16 +286,13 @@
 		351C8721171775890014968D /* Crusherator */ = {
 			isa = PBXGroup;
 			children = (
-				35E6204D1736F0E400DF78DC /* CircularTimer.h */,
-				35E6204E1736F0E400DF78DC /* CircularTimer.m */,
 				351C872A171775890014968D /* CrushAppDelegate.h */,
 				351C872B171775890014968D /* CrushAppDelegate.m */,
-				35A71C8F172A5F7F00F05C47 /* CrushSettingsViewController.h */,
-				35A71C90172A5F8000F05C47 /* CrushSettingsViewController.m */,
-				35B11A9B171BA31800F143F5 /* CrushTaskDatabase.h */,
-				35B11A9C171BA31800F143F5 /* CrushTaskDatabase.m */,
+				351A76C2174ACD98007108ED /* Settings */,
+				351A76C1174ACD8A007108ED /* Database */,
 				35C7D5F717195C7A0043C374 /* Work */,
 				35C7D5F617195C670043C374 /* List */,
+				351A76C3174ACE99007108ED /* Gestures */,
 				35C7D5F817195C990043C374 /* Resources */,
 				351C8722171775890014968D /* Supporting Files */,
 			);
@@ -400,12 +379,6 @@
 				354FBB0E171AFA1A003D57DF /* CrushTableView.h */,
 				354FBB0F171AFA1A003D57DF /* CrushTableView.m */,
 				354FBB11171AFDEB003D57DF /* CrushTableViewDataSource.h */,
-				354FBB12171B30C0003D57DF /* CrushTableViewDragAddNew.h */,
-				354FBB13171B30C0003D57DF /* CrushTableViewDragAddNew.m */,
-				355FF029172F132800D7ED68 /* CrushTableViewPinchToAddNew.h */,
-				355FF02A172F132800D7ED68 /* CrushTableViewPinchToAddNew.m */,
-				354FBB0B171AD994003D57DF /* CrushStrikeLabel.h */,
-				354FBB0C171AD994003D57DF /* CrushStrikeLabel.m */,
 			);
 			name = List;
 			sourceTree = "<group>";
@@ -415,14 +388,12 @@
 			children = (
 				351C8733171775890014968D /* CrushWorkViewController.h */,
 				351C8734171775890014968D /* CrushWorkViewController.m */,
-				35789868174173A200A11D49 /* CrushTimer.h */,
-				35789869174173A200A11D49 /* CrushTimer.m */,
-				355FF034172F508500D7ED68 /* UIImage+CrushImage.h */,
-				355FF035172F508500D7ED68 /* UIImage+CrushImage.m */,
 				3514FE5017235DEA0043B2DA /* CrushWorkTaskListItem.h */,
 				3514FE5117235DEA0043B2DA /* CrushWorkTaskListItem.m */,
-				35B11A98171B918400F143F5 /* CrushTaskObject.h */,
-				35B11A99171B918400F143F5 /* CrushTaskObject.m */,
+				35789868174173A200A11D49 /* CrushTimer.h */,
+				35789869174173A200A11D49 /* CrushTimer.m */,
+				35E6204D1736F0E400DF78DC /* CircularTimer.h */,
+				35E6204E1736F0E400DF78DC /* CircularTimer.m */,
 			);
 			name = Work;
 			sourceTree = "<group>";
@@ -430,12 +401,15 @@
 		35C7D5F817195C990043C374 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				354FBB0B171AD994003D57DF /* CrushStrikeLabel.h */,
+				354FBB0C171AD994003D57DF /* CrushStrikeLabel.m */,
+				355FF034172F508500D7ED68 /* UIImage+CrushImage.h */,
+				355FF035172F508500D7ED68 /* UIImage+CrushImage.m */,
 				351A76BE174ABE5F007108ED /* taskList.sqlite3 */,
 				358A017517420DCD0056CD0B /* boxing-bell.wav */,
 				355FF039172F5B7E00D7ED68 /* cross.png */,
 				355FF037172F542F00D7ED68 /* next.png */,
 				355FF02C172F47FD00D7ED68 /* check.png */,
-				35D0E4721726797B00A4D6CF /* Messages */,
 				351C8736171775890014968D /* first.png */,
 				351C8738171775890014968D /* first@2x.png */,
 				351C873D171775890014968D /* second.png */,
@@ -449,80 +423,6 @@
 				351C874A171775890014968D /* CrushListViewController_iPad.xib */,
 			);
 			name = Resources;
-			sourceTree = "<group>";
-		};
-		35D0E4721726797B00A4D6CF /* Messages */ = {
-			isa = PBXGroup;
-			children = (
-				35D0E4731726797B00A4D6CF /* .gitignore */,
-				35D0E4741726797B00A4D6CF /* .gitmodules */,
-				35D0E4751726797B00A4D6CF /* Classes */,
-				35D0E4B61726797B00A4D6CF /* Resources */,
-				35D0E4C71726797B00A4D6CF /* TSMessages.podspec */,
-				35D0E4C81726797B00A4D6CF /* Views */,
-			);
-			name = Messages;
-			path = "TSMessages-master";
-			sourceTree = "<group>";
-		};
-		35D0E4751726797B00A4D6CF /* Classes */ = {
-			isa = PBXGroup;
-			children = (
-				35D0E4761726797B00A4D6CF /* TSMessage.h */,
-				35D0E4771726797B00A4D6CF /* TSMessage.m */,
-				35D0E4781726797B00A4D6CF /* UIColorAdditions */,
-			);
-			path = Classes;
-			sourceTree = "<group>";
-		};
-		35D0E4781726797B00A4D6CF /* UIColorAdditions */ = {
-			isa = PBXGroup;
-			children = (
-				35D0E4791726797B00A4D6CF /* LICENCE */,
-				35D0E47A1726797B00A4D6CF /* README.md */,
-				35D0E47B1726797B00A4D6CF /* UIColor+MLColorAdditions.h */,
-				35D0E47C1726797B00A4D6CF /* UIColor+MLColorAdditions.m */,
-			);
-			path = UIColorAdditions;
-			sourceTree = "<group>";
-		};
-		35D0E4B61726797B00A4D6CF /* Resources */ = {
-			isa = PBXGroup;
-			children = (
-				35D0E4B71726797B00A4D6CF /* design.json */,
-				35D0E4B81726797B00A4D6CF /* Images */,
-			);
-			path = Resources;
-			sourceTree = "<group>";
-		};
-		35D0E4B81726797B00A4D6CF /* Images */ = {
-			isa = PBXGroup;
-			children = (
-				35D0E4B91726797B00A4D6CF /* NotificationBackgroundError.png */,
-				35D0E4BA1726797B00A4D6CF /* NotificationBackgroundError@2x.png */,
-				35D0E4BB1726797B00A4D6CF /* NotificationBackgroundErrorIcon.png */,
-				35D0E4BC1726797B00A4D6CF /* NotificationBackgroundErrorIcon@2x.png */,
-				35D0E4BD1726797B00A4D6CF /* NotificationBackgroundMessage.png */,
-				35D0E4BE1726797B00A4D6CF /* NotificationBackgroundMessage@2x.png */,
-				35D0E4BF1726797B00A4D6CF /* NotificationBackgroundSuccess.png */,
-				35D0E4C01726797B00A4D6CF /* NotificationBackgroundSuccess@2x.png */,
-				35D0E4C11726797B00A4D6CF /* NotificationBackgroundSuccessIcon.png */,
-				35D0E4C21726797B00A4D6CF /* NotificationBackgroundSuccessIcon@2x.png */,
-				35D0E4C31726797B00A4D6CF /* NotificationBackgroundWarning.png */,
-				35D0E4C41726797B00A4D6CF /* NotificationBackgroundWarning@2x.png */,
-				35D0E4C51726797B00A4D6CF /* NotificationBackgroundWarningIcon.png */,
-				35D0E4C61726797B00A4D6CF /* NotificationBackgroundWarningIcon@2x.png */,
-			);
-			path = Images;
-			sourceTree = "<group>";
-		};
-		35D0E4C81726797B00A4D6CF /* Views */ = {
-			isa = PBXGroup;
-			children = (
-				35D0E4C91726797B00A4D6CF /* TSMessageView.h */,
-				35D0E4CA1726797B00A4D6CF /* TSMessageView.m */,
-			);
-			path = Views;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -618,26 +518,6 @@
 				351C879317178B180014968D /* ButtonHighlighted@2x.png in Resources */,
 				35A4B5E61719400B00D1C36F /* crusherator-iconx1.png in Resources */,
 				35A4B5E81719401000D1C36F /* crusherator-icon.png in Resources */,
-				35D0E4CB1726797B00A4D6CF /* .gitignore in Resources */,
-				35D0E4CC1726797B00A4D6CF /* .gitmodules in Resources */,
-				35D0E4CE1726797B00A4D6CF /* LICENCE in Resources */,
-				35D0E4CF1726797B00A4D6CF /* README.md in Resources */,
-				35D0E4E91726797B00A4D6CF /* design.json in Resources */,
-				35D0E4EA1726797B00A4D6CF /* NotificationBackgroundError.png in Resources */,
-				35D0E4EB1726797B00A4D6CF /* NotificationBackgroundError@2x.png in Resources */,
-				35D0E4EC1726797B00A4D6CF /* NotificationBackgroundErrorIcon.png in Resources */,
-				35D0E4ED1726797B00A4D6CF /* NotificationBackgroundErrorIcon@2x.png in Resources */,
-				35D0E4EE1726797B00A4D6CF /* NotificationBackgroundMessage.png in Resources */,
-				35D0E4EF1726797B00A4D6CF /* NotificationBackgroundMessage@2x.png in Resources */,
-				35D0E4F01726797B00A4D6CF /* NotificationBackgroundSuccess.png in Resources */,
-				35D0E4F11726797B00A4D6CF /* NotificationBackgroundSuccess@2x.png in Resources */,
-				35D0E4F21726797B00A4D6CF /* NotificationBackgroundSuccessIcon.png in Resources */,
-				35D0E4F31726797B00A4D6CF /* NotificationBackgroundSuccessIcon@2x.png in Resources */,
-				35D0E4F41726797B00A4D6CF /* NotificationBackgroundWarning.png in Resources */,
-				35D0E4F51726797B00A4D6CF /* NotificationBackgroundWarning@2x.png in Resources */,
-				35D0E4F61726797B00A4D6CF /* NotificationBackgroundWarningIcon.png in Resources */,
-				35D0E4F71726797B00A4D6CF /* NotificationBackgroundWarningIcon@2x.png in Resources */,
-				35D0E4F81726797B00A4D6CF /* TSMessages.podspec in Resources */,
 				35A71C93172A605400F05C47 /* settings@2x.png in Resources */,
 				35A71C98172A611F00F05C47 /* CrushSettingsViewController_iPad.xib in Resources */,
 				35A71C99172A611F00F05C47 /* CrushSettingsViewController_iPhone.xib in Resources */,
@@ -709,9 +589,6 @@
 				35B11A9A171B918400F143F5 /* CrushTaskObject.m in Sources */,
 				35B11A9D171BA31800F143F5 /* CrushTaskDatabase.m in Sources */,
 				3514FE5217235DEA0043B2DA /* CrushWorkTaskListItem.m in Sources */,
-				35D0E4CD1726797B00A4D6CF /* TSMessage.m in Sources */,
-				35D0E4D01726797B00A4D6CF /* UIColor+MLColorAdditions.m in Sources */,
-				35D0E4F91726797B00A4D6CF /* TSMessageView.m in Sources */,
 				35A71C91172A5F8000F05C47 /* CrushSettingsViewController.m in Sources */,
 				355FF02B172F132800D7ED68 /* CrushTableViewPinchToAddNew.m in Sources */,
 				355FF036172F508500D7ED68 /* UIImage+CrushImage.m in Sources */,

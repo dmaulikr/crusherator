@@ -73,21 +73,9 @@ static sqlite3_stmt *insert_statement = nil;
         }
         // Reset the statement for future reuse.
         sqlite3_reset(init_statement);
-//        
-//        self.uniqueId = uniqueId;
-//        self.text = text;
-//        self.works = FALSE;
-//        self.completed = FALSE;
-//        self.deleted = FALSE;
-//        self.dateCreated = [NSDate date];
-//        self.dateCompleted = NULL;
-//        self.dateDeleted = NULL;
-//        self.category = NULL;
-//        self.project = NULL;
     }
     
     _uniqueId = uniqueId;
-    
     return self;
 }
 

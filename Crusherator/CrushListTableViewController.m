@@ -41,11 +41,6 @@
     {
         // access database
         database = [CrushTaskDatabase sharedInstance];
-        self.tasks = database.taskInfos;
-
-        //
-        self.title = NSLocalizedString(@"List", @"List");
-        self.tabBarItem.image = [UIImage imageNamed:@"second"];
         
     }
     return self;

@@ -11,8 +11,7 @@
 
 @implementation CrushTaskDatabase
 
-static NSMutableArray *retval = NULL;
-
+static NSMutableArray *allTasks = NULL;
 static CrushTaskDatabase *instance = NULL;
 
 + (CrushTaskDatabase *)sharedInstance
@@ -28,6 +27,7 @@ static CrushTaskDatabase *instance = NULL;
 
 - (id)init {
     if ((self = [super init])) {
+        
         // First, test for existence.
         BOOL success;
         NSFileManager *fileManager = [NSFileManager defaultManager];
@@ -37,9 +37,11 @@ static CrushTaskDatabase *instance = NULL;
         NSString *writableDBPath = [documentsDirectory stringByAppendingPathComponent:@"taskList.sqlite3"];
         success = [fileManager fileExistsAtPath:writableDBPath];
         if (success) return self;
+        
         // The writable database does not exist, so copy the default to the appropriate location.
         NSString *defaultDBPath = [[[NSBundle mainBundle] resourcePath] stringByAppendingPathComponent:@"taskList.sqlite3"];
         success = [fileManager copyItemAtPath:defaultDBPath toPath:writableDBPath error:&error];
+        
         if (!success) {
             NSAssert1(0, @"Failed to create writable database file with message '%@'.", defaultDBPath);
         }
@@ -66,20 +68,25 @@ static CrushTaskDatabase *instance = NULL;
     return NULL;
 }
 
-- (NSMutableArray *)taskInfos {
-    if(retval.count == 0)
+- (NSMutableArray *)arrayWithAllTasks {
+    if(allTasks.count == 0)
     {
-        retval = [[NSMutableArray alloc] init];
+        allTasks = [[NSMutableArray alloc] init];
         NSString *path = self.databasePath;
         if (sqlite3_open([path UTF8String], &_database) == SQLITE_OK) {
+            
             // Open the database. The database was prepared outside the application.
             if (sqlite3_open([path UTF8String], &_database) == SQLITE_OK) {
-                // Get the primary key for all books.
+                
+                // Get the primary key for all tasks.
                 const char *sql = "SELECT * FROM tasks ORDER BY ordering DESC";
                 sqlite3_stmt *statement;
+                
                 // Preparing a statement compiles the SQL query into a byte-code program in the SQLite library.
+                
                 // The third parameter is either the length of the SQL string or -1 to read up to the first null terminator.
                 if (sqlite3_prepare_v2(_database, sql, -1, &statement, NULL) == SQLITE_OK) {
+                    
                     // We "step" through the results - once for each row.
                     while (sqlite3_step(statement) == SQLITE_ROW) {
                         int uniqueId = sqlite3_column_int (statement, 0);
@@ -88,12 +95,12 @@ static CrushTaskDatabase *instance = NULL;
                         NSString *text = [NSString stringWithFormat:(@"%s"),textChars];
                         
                         int completedZeroOne = sqlite3_column_int (statement, 2);
-                        bool completed = (completedZeroOne == 1)? true : false;
+                        bool accessedCompleted = (completedZeroOne == 1)? true : false;
 
-                        int works = sqlite3_column_int (statement, 3);
-                        int ordering = sqlite3_column_int (statement, 4);
-                        int estimatedWorks = sqlite3_column_int (statement, 5);
-                        int category = sqlite3_column_int (statement, 6);
+                        int accessedWorks = sqlite3_column_int (statement, 3);
+                        int accessedOrdering = sqlite3_column_int (statement, 4);
+                        int accessedEstimatedWorks = sqlite3_column_int (statement, 5);
+                        int accessedCategory = sqlite3_column_int (statement, 6);
 //
 //                      NSDateFormatter *dateFormat = [[NSDateFormatter alloc] init];
 //                      [dateFormat setDateFormat:@"yyyy-MM-dd HH:mm:ss"];
@@ -116,51 +123,43 @@ static CrushTaskDatabase *instance = NULL;
 //                      char *projectChars = (char *) sqlite3_column_text(statement, 8);
 //                      NSString *project = [NSString stringWithFormat:(@"%s"),projectChars];
 //                    
-                        CrushTaskObject *info = [[CrushTaskObject alloc]
+                        CrushTaskObject *accessedTask = [[CrushTaskObject alloc]
                                                initWithUniqueId:uniqueId
                                                text:text];
                         
-                        info.works = works;
-                        info.completed = completed;
-                        info.ordering = ordering;
-                        info.estimatedWorks = estimatedWorks;
+                        accessedTask.works = accessedWorks;
+                        accessedTask.completed = accessedCompleted;
+                        accessedTask.ordering = accessedOrdering;
+                        accessedTask.estimatedWorks = accessedEstimatedWorks;
     //                    info.dateCreated = dateCreated;
     //                    info.dateCompleted = dateCompleted;
     //                    info.dateDeleted = dateDeleted;
-                        info.category = category;
+                        accessedTask.category = accessedCategory;
     //                    info.project = project;
-                        [retval addObject:info];
-                        NSLog(@"Database pull: %@, order %i, index %i",info.text,info.ordering,info.category);
+                        [allTasks addObject:accessedTask];
+                        
+                        NSLog(@"Accessed task: %@, order %i, index %i",accessedTask.text,accessedTask.ordering,accessedTask.category);
                     }
                 }
+                
                 // "Finalize" the statement - releases the resources associated with the statement.
                 sqlite3_finalize(statement);
             } else {
+                
                 // Even though the open failed, call close to properly clean up resources.
                 sqlite3_close(_database);
                 NSAssert1(0, @"Failed to open database with message '%s'.", sqlite3_errmsg(_database));
-                // Additional error handling, as appropriate...
             }
         }
-        return retval;
-        }
-    else {
-        NSSortDescriptor *sortDescriptor;
-        sortDescriptor = [[NSSortDescriptor alloc] initWithKey:@"ordering"
-                                                      ascending:NO];
-        NSArray *sortDescriptors = [NSArray arrayWithObject:sortDescriptor];
-        NSArray *sortedArray;
-        sortedArray = [retval sortedArrayUsingDescriptors:sortDescriptors];
-        return (NSMutableArray*)sortedArray;
     }
+    return allTasks;
 }
 
 - (NSMutableArray *)taskInfosForPageIndex:(int)index
 {
-    // Returns an array of task objects (ordered) in the category specified
-    
+    // Returns an array of task objects (ordered) in the category (index) specified
     NSMutableArray *filteredList = [[NSMutableArray alloc] init];
-    for(CrushTaskObject *object in [self taskInfos])
+    for(CrushTaskObject *object in [self arrayWithAllTasks])
     {
         if(object.category == index+1) [filteredList addObject:object];
     }
@@ -175,13 +174,17 @@ static CrushTaskDatabase *instance = NULL;
 }
 
 -(void)removeTask:(CrushTaskObject *)task {
-	NSUInteger index = [retval indexOfObject:task];
-    
+	
+    // Find task index in allTasks
+    NSUInteger index = [allTasks indexOfObject:task];
     if (index == NSNotFound) return;
     
+    // Delete task from database & allTasks
     [task deleteFromDatabase];
-    [retval removeObject:task];
-    for(CrushTaskObject *object in retval)
+    [allTasks removeObject:task];
+    
+    // Shift order of all tasks above deleted task
+    for(CrushTaskObject *object in [self taskInfosForPageIndex:task.category])
     {
         if(object.ordering > task.ordering)
         {
@@ -192,7 +195,9 @@ static CrushTaskDatabase *instance = NULL;
 }
 
 -(CrushTaskObject *) addTask:(NSString *)text atIndex:(int)index withPageIndex:(int)pageIndex {
-	for (CrushTaskObject *object in [self taskInfosForPageIndex:pageIndex])
+	
+    // Shift order of all tasks above inserted task
+    for (CrushTaskObject *object in [self taskInfosForPageIndex:pageIndex])
     {
         if (object.ordering >= index)
         {
@@ -201,12 +206,14 @@ static CrushTaskDatabase *instance = NULL;
         }
     }
     
+    // Add task to database and allTasks
     NSInteger uniqueId = [CrushTaskObject insertIntoDatabase:_database];
     CrushTaskObject *newTask = [[CrushTaskObject alloc]initWithUniqueId:uniqueId text:text];
-    [retval addObject:newTask];
+    [allTasks addObject:newTask];
     
     newTask.ordering = index;
     newTask.category = pageIndex;
+    
     [newTask editInDatabase];
 
     return newTask;

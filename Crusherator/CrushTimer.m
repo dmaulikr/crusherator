@@ -158,15 +158,8 @@ const float WORK_CUES_WIDTH = 50.0f;
 
 -(NSMutableArray *)filteredTaskInfos
 {
-    NSMutableArray *filteredTaskInfos = [[NSMutableArray alloc] init];
-    for (CrushTaskObject *filterable in database.taskInfos)
-    {
-        if (filterable.category == (int) [[NSUserDefaults standardUserDefaults] floatForKey:@"listIndex"]+1)
-        {
-            [filteredTaskInfos addObject:filterable];
-        }
-    }
-    return filteredTaskInfos;
+    int index = [[NSUserDefaults standardUserDefaults] floatForKey:@"listIndex"];
+    return [database taskInfosForPageIndex:index];
 }
 
 // changing modes dictates colors, button names, etc.

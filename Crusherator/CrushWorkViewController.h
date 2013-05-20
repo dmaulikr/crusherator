@@ -9,7 +9,6 @@
 #import <UIKit/UIKit.h>
 #import "CrushListTableViewController.h"
 #import "CrushWorkTaskListItem.h"
-#import "TSMessage.h"
 #import "CircularTimer.h"
 
 @interface CrushWorkViewController : UIViewController
