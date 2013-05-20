@@ -8,6 +8,8 @@
 
 /* Begin PBXBuildFile section */
 		3514FE5217235DEA0043B2DA /* CrushWorkTaskListItem.m in Sources */ = {isa = PBXBuildFile; fileRef = 3514FE5117235DEA0043B2DA /* CrushWorkTaskListItem.m */; };
+		351A76BF174ABE5F007108ED /* taskList.sqlite3 in Resources */ = {isa = PBXBuildFile; fileRef = 351A76BE174ABE5F007108ED /* taskList.sqlite3 */; };
+		351A76C0174ABE5F007108ED /* taskList.sqlite3 in Resources */ = {isa = PBXBuildFile; fileRef = 351A76BE174ABE5F007108ED /* taskList.sqlite3 */; };
 		351C871C171775890014968D /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 351C871B171775890014968D /* UIKit.framework */; };
 		351C871E171775890014968D /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 351C871D171775890014968D /* Foundation.framework */; };
 		351C8720171775890014968D /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 351C871F171775890014968D /* CoreGraphics.framework */; };
@@ -103,8 +105,6 @@
 		35D0E4F91726797B00A4D6CF /* TSMessageView.m in Sources */ = {isa = PBXBuildFile; fileRef = 35D0E4CA1726797B00A4D6CF /* TSMessageView.m */; };
 		35E6204F1736F0E400DF78DC /* CircularTimer.m in Sources */ = {isa = PBXBuildFile; fileRef = 35E6204E1736F0E400DF78DC /* CircularTimer.m */; };
 		35E620501736F2CA00DF78DC /* CircularTimer.m in Sources */ = {isa = PBXBuildFile; fileRef = 35E6204E1736F0E400DF78DC /* CircularTimer.m */; };
-		35F7981C172A2AF2003D86CC /* taskList.sqlite3 in Resources */ = {isa = PBXBuildFile; fileRef = 35F7981B172A2AF2003D86CC /* taskList.sqlite3 */; };
-		35F7981D172A2AF2003D86CC /* taskList.sqlite3 in Resources */ = {isa = PBXBuildFile; fileRef = 35F7981B172A2AF2003D86CC /* taskList.sqlite3 */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -120,6 +120,7 @@
 /* Begin PBXFileReference section */
 		3514FE5017235DEA0043B2DA /* CrushWorkTaskListItem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CrushWorkTaskListItem.h; sourceTree = "<group>"; };
 		3514FE5117235DEA0043B2DA /* CrushWorkTaskListItem.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CrushWorkTaskListItem.m; sourceTree = "<group>"; };
+		351A76BE174ABE5F007108ED /* taskList.sqlite3 */ = {isa = PBXFileReference; lastKnownFileType = file; path = taskList.sqlite3; sourceTree = "<group>"; };
 		351C8718171775890014968D /* Crusherator.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Crusherator.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		351C871B171775890014968D /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		351C871D171775890014968D /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
@@ -234,7 +235,6 @@
 		35D0E4CA1726797B00A4D6CF /* TSMessageView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TSMessageView.m; sourceTree = "<group>"; };
 		35E6204D1736F0E400DF78DC /* CircularTimer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CircularTimer.h; sourceTree = "<group>"; };
 		35E6204E1736F0E400DF78DC /* CircularTimer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CircularTimer.m; sourceTree = "<group>"; };
-		35F7981B172A2AF2003D86CC /* taskList.sqlite3 */ = {isa = PBXFileReference; lastKnownFileType = file; path = taskList.sqlite3; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -430,11 +430,11 @@
 		35C7D5F817195C990043C374 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				351A76BE174ABE5F007108ED /* taskList.sqlite3 */,
 				358A017517420DCD0056CD0B /* boxing-bell.wav */,
 				355FF039172F5B7E00D7ED68 /* cross.png */,
 				355FF037172F542F00D7ED68 /* next.png */,
 				355FF02C172F47FD00D7ED68 /* check.png */,
-				35F7981B172A2AF2003D86CC /* taskList.sqlite3 */,
 				35D0E4721726797B00A4D6CF /* Messages */,
 				351C8736171775890014968D /* first.png */,
 				351C8738171775890014968D /* first@2x.png */,
@@ -638,7 +638,6 @@
 				35D0E4F61726797B00A4D6CF /* NotificationBackgroundWarningIcon.png in Resources */,
 				35D0E4F71726797B00A4D6CF /* NotificationBackgroundWarningIcon@2x.png in Resources */,
 				35D0E4F81726797B00A4D6CF /* TSMessages.podspec in Resources */,
-				35F7981C172A2AF2003D86CC /* taskList.sqlite3 in Resources */,
 				35A71C93172A605400F05C47 /* settings@2x.png in Resources */,
 				35A71C98172A611F00F05C47 /* CrushSettingsViewController_iPad.xib in Resources */,
 				35A71C99172A611F00F05C47 /* CrushSettingsViewController_iPhone.xib in Resources */,
@@ -646,6 +645,7 @@
 				355FF038172F542F00D7ED68 /* next.png in Resources */,
 				355FF03A172F5B7E00D7ED68 /* cross.png in Resources */,
 				358A017617420DCD0056CD0B /* boxing-bell.wav in Resources */,
+				351A76BF174ABE5F007108ED /* taskList.sqlite3 in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -670,7 +670,7 @@
 				351C87871717837F0014968D /* Gotham-UltraItalic.ttf in Resources */,
 				351C87881717837F0014968D /* Gotham-XLight.ttf in Resources */,
 				351C87891717837F0014968D /* Gotham-XLightItalic.ttf in Resources */,
-				35F7981D172A2AF2003D86CC /* taskList.sqlite3 in Resources */,
+				351A76C0174ABE5F007108ED /* taskList.sqlite3 in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
