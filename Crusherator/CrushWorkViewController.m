@@ -71,6 +71,8 @@
         
         continuousMode = FALSE;
         
+        listIndex = (int) [[NSUserDefaults standardUserDefaults] floatForKey:@"listIndex"];
+        
         panRecognizer = [[UIPanGestureRecognizer alloc] initWithTarget:self action:@selector(handlePan:)];
         [self.view addGestureRecognizer:panRecognizer];
         
@@ -121,9 +123,10 @@
 - (void)viewDidAppear:(BOOL)animated
 {
     [self.view setNeedsDisplay];
-    listIndex = (int) [[NSUserDefaults standardUserDefaults] floatForKey:@"listIndex"];
     
-    [timer clearTasks];
+    if((int) [[NSUserDefaults standardUserDefaults] floatForKey:@"listIndex"] != listIndex) [timer clearTasks];
+       
+    listIndex = (int) [[NSUserDefaults standardUserDefaults] floatForKey:@"listIndex"];
 }
 
 - (void)viewDidLoad
@@ -131,6 +134,7 @@
     [super viewDidLoad];
     
     timer = [[CrushTimer alloc] initWithFrame:self.view.frame];
+    [timer clearTasks];
     [self.view addSubview:timer];
         
 // initiate the timer

@@ -24,8 +24,8 @@
     self = [super initWithFrame:frame];
     if (self) {
 //        [self setBackgroundColor:[UIColor blackColor]];
-        fontDialog = [UIFont fontWithName:@"Gotham Light" size:15.0];
-        fontDialogStrong = [UIFont fontWithName:@"Gotham Medium" size:15.0];
+        fontDialog = [UIFont fontWithName:@"Gotham Light" size:12.0];
+        fontDialogStrong = [UIFont fontWithName:@"Gotham Medium" size:12.0];
         
         text = [[CrushStrikeLabel alloc] initWithFrame:(CGRectMake(0,0,self.frame.size.width,self.frame.size.height))];
         task = item;

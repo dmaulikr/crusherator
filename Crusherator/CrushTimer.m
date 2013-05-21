@@ -93,19 +93,19 @@ const float WORK_CUES_WIDTH = 50.0f;
         screenWidth = self.frame.size.width;
         screenHeight = self.frame.size.height;
         heightButton = screenHeight*.1;
-        ypad = screenHeight*.05;
+        ypad = screenWidth*.05;
         heightOutput = screenHeight;
         heightOutputText = 80.0;
         heightDialogText = 15.0;
-        indent = screenWidth*.15;
+        indent = screenWidth*.05;
         widthLabel = screenWidth-(2*indent);
         widthButton = screenWidth/3.0;
         
         // fonts and colors
-        fontCountdown = [UIFont fontWithName:@"Gotham Medium" size:heightOutputText];
+        fontCountdown = [UIFont fontWithName:@"Helvetica" size:heightOutputText];
         fontButton = [UIFont fontWithName:@"Gotham Medium" size:20.0];
         fontDialog = [UIFont fontWithName:@"Gotham Light" size:heightDialogText];
-        fontDialogStrong = [UIFont fontWithName:@"Gotham Medium" size:15.0];
+        fontDialogStrong = [UIFont fontWithName:@"Gotham Medium" size:heightDialogText];
         [self setBackgroundColor:[UIColor blackColor]];
         
         // text field for results
@@ -118,7 +118,7 @@ const float WORK_CUES_WIDTH = 50.0f;
         countdown.layer.shadowColor = [UIColor blackColor].CGColor;
         countdown.layer.shadowOffset = CGSizeMake(0.0, 0.0);
         countdown.layer.shadowRadius = 5.0;
-        countdown.layer.shadowOpacity = 0.4;
+        countdown.layer.shadowOpacity = 0.6;
         countdown.layer.masksToBounds = NO;
         [self addSubview:countdown];
         
@@ -127,7 +127,8 @@ const float WORK_CUES_WIDTH = 50.0f;
         buttonLabel.textAlignment = NSTextAlignmentCenter;
         [buttonLabel setFont:fontButton];
         [buttonLabel setBackgroundColor:[UIColor clearColor]];
-        [buttonLabel setTextColor:UIColorFromRGB(0xFFFFFF)];
+        [buttonLabel setTextColor:UIColorFromRGB(0x000000)];
+        [buttonLabel setAlpha:0.5f];
         
         [self addSubview:buttonLabel];
         
@@ -331,7 +332,7 @@ const float WORK_CUES_WIDTH = 50.0f;
     }
     
     CrushTaskObject *item = self.filteredTaskInfos[tasksOnScreen];
-    CrushWorkTaskListItem *taskLabel = [[CrushWorkTaskListItem alloc] initWithFrame:(CGRectMake(indent,ypad,widthLabel,17.0)) withTask:item];
+    CrushWorkTaskListItem *taskLabel = [[CrushWorkTaskListItem alloc] initWithFrame:(CGRectMake(indent,ypad,widthLabel,14.0)) withTask:item];
     taskLabel.alpha = 0.0;
     taskLabel.center = CGPointMake(taskLabel.center.x+100,taskLabel.center.y);
     
@@ -342,7 +343,7 @@ const float WORK_CUES_WIDTH = 50.0f;
      {
          taskLabel.center = CGPointMake(taskLabel.center.x-100,taskLabel.center.y);
          taskLabel.alpha = 1.0;
-         taskLabel.transform = CGAffineTransformMakeScale(1.2, 1.2);
+//         taskLabel.transform = CGAffineTransformMakeScale(1.2, 1.2);
          taskLabel.layer.shadowColor = [UIColor blackColor].CGColor;
          taskLabel.layer.shadowOffset = CGSizeMake(3.0, 3.0);
          taskLabel.layer.shadowRadius = 4.0;
