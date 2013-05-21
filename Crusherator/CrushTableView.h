@@ -33,5 +33,6 @@
 -(CrushListTableViewCell*) cellForRow:(NSInteger)row;
 
 @property (nonatomic, assign, readonly) UIScrollView* scrollView;
+@property (nonatomic, assign, assign) UIColor* color;
 
 @end

@@ -72,6 +72,7 @@
     [super viewDidLoad];
     
     self.tableView.dataSource = self;
+    self.tableView.color = [self colorForIndex:[database taskInfosForPageIndex:_pageIndex].count];
     self.tableView.backgroundColor = [UIColor blackColor];
     [self.tableView registerClassForCells:[CrushListTableViewCell class]];
     

@@ -181,9 +181,21 @@ const float LABEL_RIGHT_MARGIN = 10.0f;
     {
         _estimatedWorksLabel.text = [@"" stringByPaddingToLength:todoItem.estimatedWorks withString:@"|" startingAtIndex:0];
     }
-    _label.strikethrough = todoItem.completed;
-    _label.strikethroughThickness = 2.0;
-    _itemCompleteLayer.hidden = !todoItem.completed;
+    
+    if(todoItem.completed)
+    {
+        _label.strikethrough = TRUE;
+        _label.strikethroughThickness = 2.0;
+        _itemCompleteLayer.hidden = FALSE;
+        _label.alpha = 0.5;
+    }
+    else
+    {
+        _label.strikethrough = FALSE;
+        _label.strikethroughThickness = 2.0;
+        _itemCompleteLayer.hidden = TRUE;
+        _label.alpha = 1.0;
+    }
 }
 
 - (void)setSelected:(BOOL)selected animated:(BOOL)animated
@@ -238,13 +250,13 @@ const float LABEL_RIGHT_MARGIN = 10.0f;
         if (recognizer.state == UIGestureRecognizerStateChanged) {
             // translate the center
             CGPoint translation = [recognizer translationInView:self];
-            self.center = CGPointMake(_originalCenter.x + translation.x, _originalCenter.y);
+            self.center = CGPointMake(_originalCenter.x + translation.x*1/2, _originalCenter.y);
             
             // determine whether the item has been dragged far enough to initiate a delete / complete
-            _deleteOnDragRelease = self.frame.origin.x < -self.frame.size.width / 2;
-            _completeOnDragRelease = self.frame.origin.x < -self.frame.size.width / 4 && !_deleteOnDragRelease;
-            _estimateWorksOnDragRelease = self.frame.origin.x > self.frame.size.width / 10;
-            _estimatedWorks = (int) self.frame.origin.x / (self.frame.size.width / 10);
+            _deleteOnDragRelease = translation.x < -self.frame.size.width / 2;
+            _completeOnDragRelease = translation.x < -self.frame.size.width / 4 && !_deleteOnDragRelease;
+            _estimateWorksOnDragRelease = translation.x > self.frame.size.width / 10;
+            _estimatedWorks = (int) translation.x / (self.frame.size.width / 10);
             
             // fade the contextual cues
             float cueAlpha = fabsf(self.frame.origin.x) / (self.frame.size.width / 2);
@@ -253,10 +265,15 @@ const float LABEL_RIGHT_MARGIN = 10.0f;
             if(_completeOnDragRelease)
             {
                 UIColor *color;
-                if(self.toDoItem.completed) color = [UIColor redColor];
+                if(self.toDoItem.completed)
+                {
+                    color = [UIColor redColor];
+//                    [self superview].backgroundColor = [UIColor colorWithRed:56.0 / 255.0 green:120.0 / 255.0 blue:39.0 / 255.0 alpha:1.0];
+                }
                 if(!self.toDoItem.completed)
                 {
                     color = [UIColor greenColor];
+//                    [self superview].backgroundColor = [UIColor colorWithRed:56.0 / 255.0 green:120.0 / 255.0 blue:39.0 / 255.0 alpha:1.0];
                 }
                 _tickLabel.image = [[UIImage imageNamed:@"check.png"] imageWithOverlayColor:color];
                 _tickLabel.alpha = 1.0;
@@ -268,6 +285,7 @@ const float LABEL_RIGHT_MARGIN = 10.0f;
             }
             if(_deleteOnDragRelease)
             {
+//                [self superview].backgroundColor = [UIColor redColor];
                 _crossLabel.image = [[UIImage imageNamed:@"cross.png"] imageWithOverlayColor:[UIColor redColor]];
                 _crossLabel.alpha = cueAlpha;
                 _tickLabel.alpha = 0.0;
@@ -279,6 +297,7 @@ const float LABEL_RIGHT_MARGIN = 10.0f;
             }
             if(_estimateWorksOnDragRelease)
             {
+//                [self superview].backgroundColor = [UIColor yellowColor];
                 for(int i=0;i<=(_estimatedWorks);i++)
                 {
                     _worksLabel.text = [@"" stringByPaddingToLength:_estimatedWorks withString:@"|" startingAtIndex:0];
@@ -292,6 +311,8 @@ const float LABEL_RIGHT_MARGIN = 10.0f;
             // the frame this cell would have had before being dragged
             CGRect originalFrame = CGRectMake(0, self.frame.origin.y,
                                               self.bounds.size.width, self.bounds.size.height);
+            [self superview].backgroundColor = [UIColor blackColor];
+            
             if (!_deleteOnDragRelease) {
                 // if the item is not being deleted, snap back to the original location
                 [UIView animateWithDuration:0.2
@@ -311,6 +332,10 @@ const float LABEL_RIGHT_MARGIN = 10.0f;
                 [self.toDoItem editInDatabase];
                 _itemCompleteLayer.hidden = !_itemCompleteLayer.hidden;
                 _label.strikethrough = !_label.strikethrough;
+                float alpha;
+                if (_itemCompleteLayer) alpha = 0.5;
+                else alpha = 1.0;
+                _label.alpha = alpha;
                 [self.delegate cellBeingCompleted:self];
             }
             

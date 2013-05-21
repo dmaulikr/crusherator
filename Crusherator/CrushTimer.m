@@ -102,7 +102,7 @@ const float WORK_CUES_WIDTH = 50.0f;
         widthButton = screenWidth/3.0;
         
         // fonts and colors
-        fontCountdown = [UIFont fontWithName:@"Helvetica" size:heightOutputText];
+        fontCountdown = [UIFont fontWithName:@"AvenirNext-Bold" size:heightOutputText];
         fontButton = [UIFont fontWithName:@"Gotham Medium" size:20.0];
         fontDialog = [UIFont fontWithName:@"Gotham Light" size:heightDialogText];
         fontDialogStrong = [UIFont fontWithName:@"Gotham Medium" size:heightDialogText];
@@ -127,7 +127,7 @@ const float WORK_CUES_WIDTH = 50.0f;
         buttonLabel.textAlignment = NSTextAlignmentCenter;
         [buttonLabel setFont:fontButton];
         [buttonLabel setBackgroundColor:[UIColor clearColor]];
-        [buttonLabel setTextColor:UIColorFromRGB(0x000000)];
+        [buttonLabel setTextColor:UIColorFromRGB(0xFFFFFF)];
         [buttonLabel setAlpha:0.5f];
         
         [self addSubview:buttonLabel];

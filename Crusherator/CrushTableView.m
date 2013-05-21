@@ -20,6 +20,8 @@
     Class _cellClass;
 }
 
+@synthesize color;
+
 -(id)initWithCoder:(NSCoder *)aDecoder {
     self = [super initWithCoder:aDecoder];
     if (self) {
@@ -27,6 +29,7 @@
         [self addSubview:_scrollView];
         _scrollView.backgroundColor = [UIColor clearColor];
         self.backgroundColor = [UIColor clearColor];
+        _scrollView.bounces = YES;
         
          _reuseCells = [[NSMutableSet alloc] init];
         _scrollView.delegate = self;

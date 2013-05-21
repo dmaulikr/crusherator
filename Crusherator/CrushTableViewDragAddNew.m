@@ -28,8 +28,8 @@
 //    self = [super init];
     if (self) {
         _placeholderCell = [[CrushListTableViewCell alloc] init];
-        _placeholderCell.backgroundColor = [UIColor blackColor];
         _tableView = tableView;
+        _placeholderCell.backgroundColor = tableView.color;
         _tableView.delegate = self;
     }
     return self;

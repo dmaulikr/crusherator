@@ -129,16 +129,22 @@
     listIndex = (int) [[NSUserDefaults standardUserDefaults] floatForKey:@"listIndex"];
 }
 
-- (void)viewDidLoad
+- (void)layoutTimer
 {
-    [super viewDidLoad];
-    
+    // initiate the timer
     timer = [[CrushTimer alloc] initWithFrame:self.view.frame];
     [timer clearTasks];
     [self.view addSubview:timer];
-        
-// initiate the timer
     [timer changeModes:@"workReady"];
+    [self moveToForeground];
+}
+
+- (void)viewDidLoad
+{
+    [super viewDidLoad];
+
+    [self layoutTimer];
+    
     UIBackgroundTaskIdentifier bgTask =0;
     UIApplication  *app = [UIApplication sharedApplication];
     bgTask = [app beginBackgroundTaskWithExpirationHandler:^{
@@ -187,6 +193,7 @@
     if([modeBackgrounded isEqual:@"workRunning"] || [modeBackgrounded isEqual:@"playRunning"])
     {
         timer.elapsedTime = timeElapsedWhenBackgrounded;
+        timer.timeLeft = timeLeftWhenBackgrounded;
         if(continuousMode)
         {
             // continuous mode handling
@@ -345,10 +352,10 @@
         if (recognizer.state == UIGestureRecognizerStateChanged) {
             // translate the center
             CGPoint translation = [recognizer translationInView:self.view];
-            self.view.center = CGPointMake(_originalCenter.x + translation.x, _originalCenter.y);
+            self.view.center = CGPointMake(_originalCenter.x + translation.x*1/2, _originalCenter.y);
             // determine whether the item has been dragged far enough to initiate a delete / complete
-            _nextOnDragRelease = self.view.frame.origin.x < -self.view.frame.size.width / 2;
-            _completeOnDragRelease = self.view.frame.origin.x < -self.view.frame.size.width / 4 && !_nextOnDragRelease;
+            _nextOnDragRelease = translation.x < -self.view.frame.size.width / 2;
+            _completeOnDragRelease = translation.x < -self.view.frame.size.width / 4 && !_nextOnDragRelease;
             
             // fade the contextual cues
             float cueAlpha = fabsf(self.view.frame.origin.x) / (self.view.frame.size.width / 2);

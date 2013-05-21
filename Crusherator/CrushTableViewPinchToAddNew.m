@@ -41,8 +41,8 @@ BOOL _pinchExceededRequiredDistance;
     self = [super init];
     if (self) {
         _placeholderCell = [[CrushListTableViewCell alloc] init];
-        _placeholderCell.backgroundColor = [UIColor blackColor];
         _tableView = tableView;
+        _placeholderCell.backgroundColor = tableView.color;
         // add a pinch recognizer
         UIGestureRecognizer* recognizer = [[UIPinchGestureRecognizer alloc] initWithTarget:self action:@selector(handlePinch:)];
         [_tableView addGestureRecognizer:recognizer];
