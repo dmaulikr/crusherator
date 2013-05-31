@@ -94,6 +94,10 @@
 
 -(UIColor*)colorForIndex:(NSInteger)index
 {   
+    int numberOfLists = 10;
+    float hue = (1.0/numberOfLists)*_pageIndex;
+    float adjustment = (0.1/self.filteredTaskInfos.count)*index;
+    
     NSArray *colors = @[
                         [UIColor colorWithRed:255.0 / 255.0 green:66.0 / 255.0 blue: 0.0 / 255.0 alpha:1.0],
                         [UIColor colorWithRed:255.0 / 255.0 green:180.0 / 255.0 blue: 0.0 / 255.0 alpha:1.0],
@@ -104,7 +108,11 @@
                         [UIColor colorWithRed:255.0 / 255.0 green:0.0 / 255.0 blue: 144.0 / 255.0 alpha:1.0]
                         ];
     
-    return colors[(_pageIndex%colors.count)];
+//    UIColor *color = colors[(_pageIndex%colors.count)];
+    
+    UIColor *color = [UIColor colorWithHue:hue+adjustment saturation:1.0 brightness:0.5 alpha:1.0];
+    
+    return color;
 }
 
 #pragma mark - UITableViewDataDelegate protocol methods
