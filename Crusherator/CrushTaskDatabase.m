@@ -184,7 +184,7 @@ static CrushTaskDatabase *instance = NULL;
     [allTasks removeObject:task];
     
     // Shift order of all tasks above deleted task
-    for(CrushTaskObject *object in [self taskInfosForPageIndex:task.category])
+    for(CrushTaskObject *object in [self taskInfosForPageIndex:task.category-1])
     {
         if(object.ordering > task.ordering)
         {
@@ -194,24 +194,24 @@ static CrushTaskDatabase *instance = NULL;
     }
 }
 
--(void)moveToEnd:(CrushTaskObject *)task {
-    // Shift order of all tasks below moved task
-    for(CrushTaskObject *object in [self taskInfosForPageIndex:task.category])
-    {
-        if(object.ordering < task.ordering)
-        {
-            object.ordering ++;
-            [object editInDatabase];
-        }
-    }
-
-    task.ordering = 1;
-}
+//-(void)moveToEnd:(CrushTaskObject *)task {
+//    // Shift order of all tasks below moved task
+//    for(CrushTaskObject *object in [self taskInfosForPageIndex:task.category])
+//    {
+//        if(object.ordering < task.ordering)
+//        {
+//            object.ordering ++;
+//            [object editInDatabase];
+//        }
+//    }
+//
+//    task.ordering = 1;
+//}
 
 -(CrushTaskObject *) addTask:(NSString *)text atIndex:(int)index withPageIndex:(int)pageIndex {
 	
     // Shift order of all tasks above inserted task
-    for (CrushTaskObject *object in [self taskInfosForPageIndex:pageIndex])
+    for (CrushTaskObject *object in [self taskInfosForPageIndex:pageIndex-1])
     {
         if (object.ordering >= index)
         {

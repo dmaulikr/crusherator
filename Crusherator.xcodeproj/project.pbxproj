@@ -7,9 +7,9 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		350E35AC1759526E007D0E48 /* taskList.sqlite3 in Resources */ = {isa = PBXBuildFile; fileRef = 350E35AB1759526E007D0E48 /* taskList.sqlite3 */; };
+		350E35AD1759526E007D0E48 /* taskList.sqlite3 in Resources */ = {isa = PBXBuildFile; fileRef = 350E35AB1759526E007D0E48 /* taskList.sqlite3 */; };
 		3514FE5217235DEA0043B2DA /* CrushWorkTaskListItem.m in Sources */ = {isa = PBXBuildFile; fileRef = 3514FE5117235DEA0043B2DA /* CrushWorkTaskListItem.m */; };
-		351A76BF174ABE5F007108ED /* taskList.sqlite3 in Resources */ = {isa = PBXBuildFile; fileRef = 351A76BE174ABE5F007108ED /* taskList.sqlite3 */; };
-		351A76C0174ABE5F007108ED /* taskList.sqlite3 in Resources */ = {isa = PBXBuildFile; fileRef = 351A76BE174ABE5F007108ED /* taskList.sqlite3 */; };
 		351C871C171775890014968D /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 351C871B171775890014968D /* UIKit.framework */; };
 		351C871E171775890014968D /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 351C871D171775890014968D /* Foundation.framework */; };
 		351C8720171775890014968D /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 351C871F171775890014968D /* CoreGraphics.framework */; };
@@ -95,9 +95,9 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		350E35AB1759526E007D0E48 /* taskList.sqlite3 */ = {isa = PBXFileReference; lastKnownFileType = file; path = taskList.sqlite3; sourceTree = "<group>"; };
 		3514FE5017235DEA0043B2DA /* CrushWorkTaskListItem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CrushWorkTaskListItem.h; sourceTree = "<group>"; };
 		3514FE5117235DEA0043B2DA /* CrushWorkTaskListItem.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CrushWorkTaskListItem.m; sourceTree = "<group>"; };
-		351A76BE174ABE5F007108ED /* taskList.sqlite3 */ = {isa = PBXFileReference; lastKnownFileType = file; path = taskList.sqlite3; sourceTree = "<group>"; };
 		351C8718171775890014968D /* Crusherator.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Crusherator.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		351C871B171775890014968D /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		351C871D171775890014968D /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
@@ -401,11 +401,11 @@
 		35C7D5F817195C990043C374 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				350E35AB1759526E007D0E48 /* taskList.sqlite3 */,
 				354FBB0B171AD994003D57DF /* CrushStrikeLabel.h */,
 				354FBB0C171AD994003D57DF /* CrushStrikeLabel.m */,
 				355FF034172F508500D7ED68 /* UIImage+CrushImage.h */,
 				355FF035172F508500D7ED68 /* UIImage+CrushImage.m */,
-				351A76BE174ABE5F007108ED /* taskList.sqlite3 */,
 				358A017517420DCD0056CD0B /* boxing-bell.wav */,
 				355FF039172F5B7E00D7ED68 /* cross.png */,
 				355FF037172F542F00D7ED68 /* next.png */,
@@ -525,7 +525,7 @@
 				355FF038172F542F00D7ED68 /* next.png in Resources */,
 				355FF03A172F5B7E00D7ED68 /* cross.png in Resources */,
 				358A017617420DCD0056CD0B /* boxing-bell.wav in Resources */,
-				351A76BF174ABE5F007108ED /* taskList.sqlite3 in Resources */,
+				350E35AC1759526E007D0E48 /* taskList.sqlite3 in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -550,7 +550,7 @@
 				351C87871717837F0014968D /* Gotham-UltraItalic.ttf in Resources */,
 				351C87881717837F0014968D /* Gotham-XLight.ttf in Resources */,
 				351C87891717837F0014968D /* Gotham-XLightItalic.ttf in Resources */,
-				351A76C0174ABE5F007108ED /* taskList.sqlite3 in Resources */,
+				350E35AD1759526E007D0E48 /* taskList.sqlite3 in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -24,6 +24,7 @@
     UIImageView *_tickLabel;
 	UIImageView *_crossLabel;
     UILabel *_worksLabel;
+    UILabel *_order;
     UIFont *fontDialogStrong;
     UIFont *fontDialogHuge;
     BOOL _isBeingEdited;
@@ -101,6 +102,19 @@ const float UI_CUES_WIDTH = 50.0f;
         [self addSubview:_label];
 
         // create a label that renders the to-do item text
+        _order = [[UILabel alloc] initWithFrame:CGRectNull];
+        _order.textColor = [UIColor whiteColor];
+        _order.font = fontDialogStrong;
+        _order.alpha = 0.2;
+        _order.backgroundColor = [UIColor clearColor];
+        _order.layer.shadowColor = [UIColor blackColor].CGColor;
+        _order.layer.shadowOffset = CGSizeMake(0.5,0.5);
+        _order.layer.shadowOpacity = 0.7;
+        _order.layer.shadowRadius = 0.5;
+        _order.clipsToBounds = NO;
+        [self addSubview:_order];
+        
+        // create a label that renders the to-do item text
         _estimatedWorksLabel = [[CrushStrikeLabel alloc] initWithFrame:CGRectNull];
         _estimatedWorksLabel.textColor = [UIColor blackColor];
         _estimatedWorksLabel.font = fontDialogStrong;
@@ -153,6 +167,8 @@ const float LABEL_RIGHT_MARGIN = 10.0f;
     
     _workLabel.frame = CGRectMake(LABEL_LEFT_MARGIN, 0,
                               self.bounds.size.width - LABEL_LEFT_MARGIN*2,self.bounds.size.height);
+    _order.frame = CGRectMake(0, 0,
+                                  self.bounds.size.width - LABEL_LEFT_MARGIN,LABEL_LEFT_MARGIN*2);
     _estimatedWorksLabel.frame = CGRectMake(LABEL_LEFT_MARGIN, 0,
                                   self.bounds.size.width - LABEL_LEFT_MARGIN*2,self.bounds.size.height);
     
@@ -173,6 +189,7 @@ const float LABEL_RIGHT_MARGIN = 10.0f;
     _toDoItem = todoItem;
     // we must update all the visual state associated with the model item
     _label.text = todoItem.text;
+    _order.text = [NSString stringWithFormat:@"%i",todoItem.ordering];
     for(int i=0;i<=(todoItem.works);i++)
     {
         _workLabel.text = [@"" stringByPaddingToLength:todoItem.works withString:@"|" startingAtIndex:0];
@@ -333,8 +350,8 @@ const float LABEL_RIGHT_MARGIN = 10.0f;
                 _itemCompleteLayer.hidden = !_itemCompleteLayer.hidden;
                 _label.strikethrough = !_label.strikethrough;
                 float alpha;
-                if (_itemCompleteLayer) alpha = 0.5;
-                else alpha = 1.0;
+                if (self.toDoItem.completed) alpha = 0.5;
+                if (!self.toDoItem.completed) alpha = 1.0;
                 _label.alpha = alpha;
                 [self.delegate cellBeingCompleted:self];
             }
@@ -396,7 +413,7 @@ const float LABEL_RIGHT_MARGIN = 10.0f;
                 [self.delegate cellIsBeingDragged:self to:snapShotView.center];
         }
         if (recognizer.state == UIGestureRecognizerStateEnded)
-        {   
+        {
             [self.delegate cellIsDoneBeingMoved:self];
         }
     }

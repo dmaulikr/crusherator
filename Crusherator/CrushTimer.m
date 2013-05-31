@@ -102,7 +102,7 @@ const float WORK_CUES_WIDTH = 50.0f;
         widthButton = screenWidth/3.0;
         
         // fonts and colors
-        fontCountdown = [UIFont fontWithName:@"AvenirNext-Bold" size:heightOutputText];
+        fontCountdown = [UIFont fontWithName:@"HelveticaNeue-Medium" size:heightOutputText];
         fontButton = [UIFont fontWithName:@"Gotham Medium" size:20.0];
         fontDialog = [UIFont fontWithName:@"Gotham Light" size:heightDialogText];
         fontDialogStrong = [UIFont fontWithName:@"Gotham Medium" size:heightDialogText];
