@@ -29,7 +29,7 @@
 
 @property (nonatomic, strong) CircularTimer *circularTimer;
 
-- (void) moveToBackground;
-- (void) moveToForeground;
+- (void) saveState;
+- (void) reloadState;
 
 @end

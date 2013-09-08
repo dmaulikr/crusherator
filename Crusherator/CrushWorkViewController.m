@@ -18,12 +18,12 @@
 @interface CrushWorkViewController ()
 {
     // the timer
-    CrushTimer *timer;
-    NSInteger listIndex;
+    CrushTimer *_timer;
+    NSInteger _listIndex;
     
     // Gesture variables
-    UIPanGestureRecognizer *panRecognizer;
-    UITapGestureRecognizer *tapRecognizer;
+    UIPanGestureRecognizer *_panRecognizer;
+    UITapGestureRecognizer *_tapRecognizer;
     CGPoint _originalCenter;
     BOOL _completeOnDragRelease;
     BOOL _nextOnDragRelease;
@@ -66,39 +66,52 @@
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
     if (self) {
         
-        self.title = NSLocalizedString(@"Work", @"Work");
-        self.tabBarItem.image = [UIImage imageNamed:@"first"];
-        
+        // adjust settings
         continuousMode = FALSE;
-        
-        listIndex = (int) [[NSUserDefaults standardUserDefaults] floatForKey:@"listIndex"];
-        
-        panRecognizer = [[UIPanGestureRecognizer alloc] initWithTarget:self action:@selector(handlePan:)];
-        [self.view addGestureRecognizer:panRecognizer];
-        
-        tapRecognizer = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(buttonPress)];
-        [timer addGestureRecognizer:tapRecognizer];
-        
-        // add a tick and cross
-        UIImage *check = [[UIImage imageNamed:@"check.png"] imageWithOverlayColor:[UIColor grayColor]];
-        _tickLabel = [[UIImageView alloc] initWithImage:check];
-        [self.view addSubview:_tickLabel];
-        
-        UIImage *next = [[UIImage imageNamed:@"next.png"] imageWithOverlayColor:[UIColor grayColor]];
-        _crossLabel = [[UIImageView alloc] initWithImage:next];
-        [self.view addSubview:_crossLabel];
-        
-        // ensure the gradient layers occupies the full bounds
-        _tickLabel.frame = CGRectMake(0,0,50.0,50.0);
-        _tickLabel.center = CGPointMake(self.view.center.x + self.view.frame.size.width/2 + 50.0, self.view.center.y);
-        _crossLabel.frame = CGRectMake(0,0,50.0,50.0);
-        _crossLabel.center = CGPointMake(self.view.center.x + self.view.frame.size.width/2 + 50.0, self.view.center.y);
+        _listIndex = (int) [[NSUserDefaults standardUserDefaults] floatForKey:@"listIndex"];
+        [self addGestureRecognizers];
+        [self layoutTimer];
+        [self reloadState];
         
     }
     return self;
 }
 
-- (void)scheduleAlarmForDate:(NSDate*)theDate withMessage:(NSString*)message
+- (void)viewDidLoad
+{
+    [super viewDidLoad];
+}
+
+- (void)viewDidAppear:(BOOL)animated
+{
+    if((int) [[NSUserDefaults standardUserDefaults] floatForKey:@"listIndex"] != _listIndex) [_timer clearTasks];
+    _listIndex = (int) [[NSUserDefaults standardUserDefaults] floatForKey:@"listIndex"];
+}
+
+- (void)addGestureRecognizers
+{
+    // add gesture objects
+    _panRecognizer = [[UIPanGestureRecognizer alloc] initWithTarget:self action:@selector(handlePan:)];
+    [self.view addGestureRecognizer:_panRecognizer];
+    _tapRecognizer = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(buttonPress)];
+    [self.view addGestureRecognizer:_tapRecognizer];
+    
+    // add gesture icons
+    UIImage *check = [[UIImage imageNamed:@"check.png"] imageWithOverlayColor:[UIColor grayColor]];
+    _tickLabel = [[UIImageView alloc] initWithImage:check];
+    [self.view addSubview:_tickLabel];
+    UIImage *next = [[UIImage imageNamed:@"next.png"] imageWithOverlayColor:[UIColor grayColor]];
+    _crossLabel = [[UIImageView alloc] initWithImage:next];
+    [self.view addSubview:_crossLabel];
+    
+    // layout gesture icons
+    _tickLabel.frame = CGRectMake(0,0,50.0,50.0);
+    _tickLabel.center = CGPointMake(self.view.center.x + self.view.frame.size.width/2 + 50.0, self.view.center.y);
+    _crossLabel.frame = CGRectMake(0,0,50.0,50.0);
+    _crossLabel.center = CGPointMake(self.view.center.x + self.view.frame.size.width/2 + 50.0, self.view.center.y);
+}
+
+- (void)scheduleAlarmForDate:(NSDate*)date withMessage:(NSString*)message
 {
     UIApplication* app = [UIApplication sharedApplication];
     NSArray* oldNotifications = [app scheduledLocalNotifications];
@@ -111,7 +124,7 @@
     UILocalNotification* alarm = [[UILocalNotification alloc] init];
     if (alarm)
     {
-        alarm.fireDate = theDate;
+        alarm.fireDate = date;
         alarm.timeZone = [NSTimeZone defaultTimeZone];
         alarm.repeatInterval = 0;
         alarm.soundName = @"boxing-bell.wav";
@@ -120,90 +133,73 @@
     }
 }
 
-- (void)viewDidAppear:(BOOL)animated
-{
-    [self.view setNeedsDisplay];
-    
-    if((int) [[NSUserDefaults standardUserDefaults] floatForKey:@"listIndex"] != listIndex) [timer clearTasks];
-       
-    listIndex = (int) [[NSUserDefaults standardUserDefaults] floatForKey:@"listIndex"];
-}
-
 - (void)layoutTimer
 {
-    // initiate the timer
-    timer = [[CrushTimer alloc] initWithFrame:self.view.frame];
-    [timer clearTasks];
-    [self.view addSubview:timer];
-    [timer changeModes:@"workReady"];
-    [self moveToForeground];
-}
-
-- (void)viewDidLoad
-{
-    [super viewDidLoad];
-
-    [self layoutTimer];
-    
+    // instantiate timer object
     UIBackgroundTaskIdentifier bgTask =0;
     UIApplication  *app = [UIApplication sharedApplication];
     bgTask = [app beginBackgroundTaskWithExpirationHandler:^{
         [app endBackgroundTask:bgTask];
     }];
-    
     [NSTimer scheduledTimerWithTimeInterval:1.0 target:self selector:@selector(incrementTimer) userInfo:nil repeats:YES];
     
+    // instantiate timer
+    _timer = [[CrushTimer alloc] initWithFrame:CGRectMake(0,0,self.view.frame.size.width,self.view.frame.size.height)];
+    [_timer clearTasks];
+    [self.view addSubview:_timer];
+    [_timer changeModes:@"workReady"];
 }
 
-- (void)moveToBackground
+- (void)saveState
 {
-        [self scheduleAlarmForDate:[NSDate dateWithTimeInterval:timer.timeLeft sinceDate:[NSDate date]] withMessage:@"Session over."];
+        if (_timer.running && [_timer.currentMode isEqualToString:@"workRunning"])[self scheduleAlarmForDate:[NSDate dateWithTimeInterval:_timer.timeLeft sinceDate:[NSDate date]] withMessage:@"Work is over. Time to rest!"];
+        if (_timer.running && [_timer.currentMode isEqualToString:@"playRunning"])[self scheduleAlarmForDate:[NSDate dateWithTimeInterval:_timer.timeLeft sinceDate:[NSDate date]] withMessage:@"Alright buddy. Back to work!"];
         NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
         [userDefaults setObject:[NSDate date]
                         forKey:@"timeBackgrounded"];
         [userDefaults synchronize];
         
-        [userDefaults setObject:timer.currentMode
+        [userDefaults setObject:_timer.currentMode
                          forKey:@"modeBackgrounded"];
-        NSLog(@"modeBackgrounded is %@",timer.currentMode);
+        NSLog(@"modeBackgrounded is %@",_timer.currentMode);
         [userDefaults synchronize];
         
-        [userDefaults setInteger:timer.elapsedTime
+        [userDefaults setInteger:_timer.elapsedTime
                          forKey:@"timeElapsedWhenBackgrounded"];
         [userDefaults synchronize];
         
-        [userDefaults setInteger:timer.timeLeft
+        [userDefaults setInteger:_timer.timeLeft
                          forKey:@"timeLeftWhenBackgrounded"];
         [userDefaults synchronize];
         
-        timer.running = FALSE;
+        _timer.running = FALSE;
 }
 
-- (void)moveToForeground
+- (void)reloadState
 {
     NSDate *timeBackgrounded = [[NSUserDefaults standardUserDefaults] objectForKey:@"timeBackgrounded"];
     NSString *modeBackgrounded = [[NSUserDefaults standardUserDefaults] objectForKey:@"modeBackgrounded"];
-    NSLog(@"modeBackgrounded is %@",timer.currentMode);
+    NSLog(@"modeBackgrounded is %@",_timer.currentMode);
     NSTimeInterval timeElapsedWhenBackgrounded = [[NSUserDefaults standardUserDefaults] integerForKey:@"timeElapsedWhenBackgrounded"];
     NSTimeInterval timeLeftWhenBackgrounded = [[NSUserDefaults standardUserDefaults] integerForKey:@"timeLeftWhenBackgrounded"];
     double timePassed = [[NSDate date] timeIntervalSinceDate:timeBackgrounded];
     
-    [timer changeModes:modeBackgrounded];
+    [_timer changeModes:modeBackgrounded];
     
     if([modeBackgrounded isEqual:@"workRunning"] || [modeBackgrounded isEqual:@"playRunning"])
     {
-        timer.elapsedTime = timeElapsedWhenBackgrounded;
-        timer.timeLeft = timeLeftWhenBackgrounded;
+        _timer.elapsedTime = timeElapsedWhenBackgrounded;
+        _timer.timeLeft = timeLeftWhenBackgrounded;
         if(continuousMode)
         {
             // continuous mode handling
         }
         else
         {
-            if (timePassed<timeLeftWhenBackgrounded) timer.elapsedTime += timePassed;
-            else timer.elapsedTime += timeLeftWhenBackgrounded;
+            if (timePassed<timeLeftWhenBackgrounded) _timer.elapsedTime += timePassed;
+            else _timer.elapsedTime += timeLeftWhenBackgrounded;
         }
-        timer.running = TRUE;
+        _timer.running = TRUE;
     }
     else return;
 }
@@ -211,36 +207,37 @@
 // pressing button changes modes
 - (void)buttonPress
 {
-    if ([timer.currentMode isEqual:@"workReady"])
+    NSLog(@"tapped");
+    if ([_timer.currentMode isEqual:@"workReady"])
     {
-        [timer changeModes:@"workRunning"];
+        [_timer changeModes:@"workRunning"];
         [self startMusic];
     }
-    else if ([timer.currentMode isEqual:@"workRunning"])
+    else if ([_timer.currentMode isEqual:@"workRunning"])
     {
-        [timer changeModes:@"workPaused"];
+        [_timer changeModes:@"workPaused"];
         [self stopMusic];
     }
-    else if ([timer.currentMode isEqual:@"workPaused"])
+    else if ([_timer.currentMode isEqual:@"workPaused"])
     {
-        [timer changeModes:@"workRunning"];
-        [self scheduleAlarmForDate:[NSDate dateWithTimeInterval:timer.timeLeft sinceDate:[NSDate date]] withMessage:@"Session over. Do something relaxing!"];
+        [_timer changeModes:@"workRunning"];
+        [self scheduleAlarmForDate:[NSDate dateWithTimeInterval:_timer.timeLeft sinceDate:[NSDate date]] withMessage:@"Session over. Do something relaxing!"];
         [self startMusic];
     }
-    else if ([timer.currentMode isEqual:@"playReady"])
+    else if ([_timer.currentMode isEqual:@"playReady"])
     {
-        [timer changeModes:@"playRunning"];
-        [self scheduleAlarmForDate:[NSDate dateWithTimeInterval:timer.timeLeft sinceDate:[NSDate date]] withMessage:@"Relaxed? Great. It's time to work!"];
+        [_timer changeModes:@"playRunning"];
+        [self scheduleAlarmForDate:[NSDate dateWithTimeInterval:_timer.timeLeft sinceDate:[NSDate date]] withMessage:@"Relaxed? Great. It's time to work!"];
         [self stopMusic];
     }
-    else if ([timer.currentMode isEqual:@"playRunning"])
+    else if ([_timer.currentMode isEqual:@"playRunning"])
     {
-        [timer changeModes:@"playPaused"];
+        [_timer changeModes:@"playPaused"];
         [self stopMusic];
     }
-    else if ([timer.currentMode isEqual:@"playPaused"])
+    else if ([_timer.currentMode isEqual:@"playPaused"])
     {
-        [timer changeModes:@"playRunning"];
+        [_timer changeModes:@"playRunning"];
         [self stopMusic];
     }
 }
@@ -248,22 +245,22 @@
 // timer increments (only when running) and changes modes if it hits zero
 - (void)incrementTimer
 {
-    if (timer.running)
+    if (_timer.running)
     {
-        timer.elapsedTime++;
-        [timer updateLabels];
-        if((timer.timeLeft<=0) && ([timer.currentMode isEqualToString:@"workRunning"]))
+        _timer.elapsedTime++;
+        [_timer updateLabels];
+        if((_timer.timeLeft<=0) && ([_timer.currentMode isEqualToString:@"workRunning"]))
         {
-            [timer changeModes:@"playReady"];
-            if(continuousMode) [timer changeModes:@"playRunning"];
+            [_timer changeModes:@"playReady"];
+            if(continuousMode) [_timer changeModes:@"playRunning"];
             if(buzzEndPlay)[self vibrate];
             [self stopMusic];
             workUnitsCompleted++;
         }
-        else if((timer.timeLeft<=0) && ([timer.currentMode isEqualToString:@"playRunning"]))
+        else if((_timer.timeLeft<=0) && ([_timer.currentMode isEqualToString:@"playRunning"]))
         {
-            [timer changeModes:@"workReady"];
-            if(continuousMode) [timer changeModes:@"workRunning"];
+            [_timer changeModes:@"workReady"];
+            if(continuousMode) [_timer changeModes:@"workRunning"];
             if(buzzEndWork)[self vibrate];
             relaxUnitsCompleted++;
         }
@@ -276,7 +273,13 @@
     MPMediaQuery *query = [[MPMediaQuery alloc] init];
     [query setGroupingType:MPMediaGroupingPlaylist];
     NSArray *collection = [query collections];
-//    if(collection[3]) [player setQueueWithItemCollection:collection[3]];
+    
+    for (MPMediaPlaylist *playlist in collection)
+    {
+        NSLog([playlist valueForProperty:MPMediaPlaylistPropertyName]);
+    }
+    
+    if(collection[3]) [player setQueueWithItemCollection:collection[3]];
     [player setShuffleMode:(MPMusicShuffleModeSongs)];
     [player play];
     NSLog(@"%@",collection);
@@ -322,7 +325,7 @@
 
 -(BOOL)gestureRecognizerShouldBegin:(id)gestureRecognizer
 {
-    if(gestureRecognizer == panRecognizer)
+    if(gestureRecognizer == _panRecognizer)
     {
         UIPanGestureRecognizer *recognizer = (UIPanGestureRecognizer *)gestureRecognizer;
         CGPoint translation = [recognizer translationInView:[self view]];
@@ -338,7 +341,7 @@
 
 -(void)handlePan:(id)gestureRecognizer
 {
-    if(gestureRecognizer == panRecognizer)
+    if(gestureRecognizer == _panRecognizer)
     {
         UIPanGestureRecognizer *recognizer = (UIPanGestureRecognizer *)gestureRecognizer;
         
@@ -394,12 +397,12 @@
             }
             if (_nextOnDragRelease) {
                 // notify the delegate that this item should be deleted
-                [timer nextTaskWithAnimationDuration:0.5];
+                [_timer nextTaskWithAnimationDuration:0.5];
             }
             
             if (_completeOnDragRelease) {
                 // mark the item as complete and update the UI state
-                [timer completeTask];
+                [_timer completeTask];
                 tasksCompleted++;
             }
             
@@ -412,5 +415,27 @@
     }
 }
 
+- (BOOL)shouldAutorotate
+
+{
+    return NO;
+}
+
+UIDeviceOrientation currentOrientation;
+
+- (void)deviceOrientationDidChange:(NSNotification *)notification {
+    //Obtaining the current device orientation
+    UIDeviceOrientation orientation = [[UIDevice currentDevice] orientation];
+    
+    //Ignoring specific orientations
+    if (orientation == UIDeviceOrientationFaceUp || orientation == UIDeviceOrientationFaceDown || orientation == UIDeviceOrientationUnknown || currentOrientation == orientation) {
+        return;
+    }
+    [NSObject cancelPreviousPerformRequestsWithTarget:self selector:@selector(relayoutLayers) object:nil];
+    //Responding only to changes in landscape or portrait
+    currentOrientation = orientation;
+    //
+//    [self performSelector:@selector(orientationChangedMethod) withObject:nil afterDelay:0];
+}
 
 @end

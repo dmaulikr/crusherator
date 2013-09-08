@@ -102,7 +102,7 @@ const float WORK_CUES_WIDTH = 50.0f;
         widthButton = screenWidth/3.0;
         
         // fonts and colors
-        fontCountdown = [UIFont fontWithName:@"HelveticaNeue-Medium" size:heightOutputText];
+        fontCountdown = [UIFont fontWithName:@"Gotham Medium" size:heightOutputText];
         fontButton = [UIFont fontWithName:@"Gotham Medium" size:20.0];
         fontDialog = [UIFont fontWithName:@"Gotham Light" size:heightDialogText];
         fontDialogStrong = [UIFont fontWithName:@"Gotham Medium" size:heightDialogText];
@@ -230,28 +230,28 @@ const float WORK_CUES_WIDTH = 50.0f;
 - (void)startCircularTimerWithTime:(int)time
 {
     // Initiate circular timer
-//    int radius = 100;
-//    int internalRadius = 70;
-//    UIColor *circleStrokeColor = [UIColor whiteColor];
-//    UIColor *activeCircleStrokeColor = ([currentMode isEqualToString:@"playRunning"]) ? [UIColor whiteColor]:[UIColor orangeColor];
-//    NSDate *initialDate = [NSDate date];
-//    NSDate *finalDate = [NSDate dateWithTimeInterval:time sinceDate:initialDate];
-//    
-//    self.circularTimer = [[CircularTimer alloc] initWithPosition:CGPointMake(0.0f, 0.0f)
-//                                                          radius:radius
-//                                                  internalRadius:internalRadius
-//                                               circleStrokeColor:circleStrokeColor
-//                                         activeCircleStrokeColor:activeCircleStrokeColor
-//                                                     initialDate:initialDate
-//                                                       finalDate:finalDate
-//                                                   startCallback:^{
-//                                                       //do something
-//                                                   }
-//                                                     endCallback:^{
-//                                                         //do something
-//                                                     }];
-//    [self insertSubview:self.circularTimer belowSubview:countdown];
-//    self.circularTimer.center = countdown.center;
+    int radius = 100;
+    int internalRadius = 70;
+    UIColor *circleStrokeColor = [UIColor whiteColor];
+    UIColor *activeCircleStrokeColor = ([currentMode isEqualToString:@"playRunning"]) ? [UIColor whiteColor]:[UIColor orangeColor];
+    NSDate *initialDate = [NSDate date];
+    NSDate *finalDate = [NSDate dateWithTimeInterval:time sinceDate:initialDate];
+    
+    self.circularTimer = [[CircularTimer alloc] initWithPosition:CGPointMake(0.0f, 0.0f)
+                                                          radius:radius
+                                                  internalRadius:internalRadius
+                                               circleStrokeColor:circleStrokeColor
+                                         activeCircleStrokeColor:activeCircleStrokeColor
+                                                     initialDate:initialDate
+                                                       finalDate:finalDate
+                                                   startCallback:^{
+                                                       //do something
+                                                   }
+                                                     endCallback:^{
+                                                         //do something
+                                                     }];
+    [self insertSubview:self.circularTimer belowSubview:countdown];
+    self.circularTimer.center = countdown.center;
 }
 
 // updates the time shown
@@ -333,7 +333,7 @@ const float WORK_CUES_WIDTH = 50.0f;
     
     CrushTaskObject *item = self.filteredTaskInfos[tasksOnScreen];
     CrushWorkTaskListItem *taskLabel = [[CrushWorkTaskListItem alloc] initWithFrame:(CGRectMake(indent,ypad,widthLabel,14.0)) withTask:item];
-    taskLabel.alpha = 0.0;
+    taskLabel.alpha = 1.0;
     taskLabel.center = CGPointMake(taskLabel.center.x+100,taskLabel.center.y);
     
     [UIView transitionWithView:taskLabel

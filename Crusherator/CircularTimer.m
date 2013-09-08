@@ -58,8 +58,8 @@ activeCircleStrokeColor:(UIColor *)activeCircleStrokeColor
 {    
     [self customizeAppearance];
     if ([self.finalDate compare:self.initialDate] == NSOrderedAscending) {
-        NSLog(@"Final date is smaller than initial.");
-    } else {    
+//        NSLog(@"Final date is smaller than initial.");
+    } else {
         self.percentageCompleted = 0.0f;
         self.running = NO;
         if ([self worthToRun]) {

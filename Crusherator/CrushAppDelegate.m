@@ -27,6 +27,8 @@
     // Override point for customization after application launch.
     if ([[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPhone) {
         viewController1 = [[CrushWorkViewController alloc] initWithNibName:@"CrushWorkViewController_iPhone" bundle:nil];
+        viewController1.title = NSLocalizedString(@"Work", @"Work");
+        viewController1.tabBarItem.image = [UIImage imageNamed:@"first"];
         
         viewController2 = [[UIPageViewController alloc]
                            initWithTransitionStyle:UIPageViewControllerTransitionStyleScroll
@@ -54,7 +56,7 @@
 - (UIViewController *)pageViewController:(UIPageViewController *)pvc viewControllerBeforeViewController:(CrushListTableViewController *)vc
 {
     NSInteger index = vc.pageIndex;
-    NSLog(@"index is %i",index);
+//    NSLog(@"index is %i",index);
     
     NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
     [userDefaults setFloat:index
@@ -66,7 +68,7 @@
 - (UIViewController *)pageViewController:(UIPageViewController *)pvc viewControllerAfterViewController:(CrushListTableViewController *)vc
 {
     NSInteger index = vc.pageIndex;
-    NSLog(@"index is %i",index);
+//    NSLog(@"index is %i",index);
     
     NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
     [userDefaults setFloat:index
@@ -78,39 +80,39 @@
 - (void)applicationWillResignActive:(UIApplication *)application
 {
     [[UIApplication sharedApplication] setIdleTimerDisabled:YES];
-    NSLog(@"willresignactive");
+//    NSLog(@"willresignactive");
     // To do: save current time
-    [viewController1 moveToBackground];
+    [viewController1 saveState];
     // Sent when the application is about to move from active to inactive state. This can occur for certain types of temporary interruptions (such as an incoming phone call or SMS message) or when the user quits the application and it begins the transition to the background state.
     // Use this method to pause ongoing tasks, disable timers, and throttle down OpenGL ES frame rates. Games should use this method to pause the game.
 }
 
 - (void)applicationDidEnterBackground:(UIApplication *)application
 {
-    NSLog(@"didenterbackground");
-    [viewController1 moveToBackground];
+//    NSLog(@"didenterbackground");
+    [viewController1 saveState];
     // Use this method to release shared resources, save user data, invalidate timers, and store enough application state information to restore your application to its current state in case it is terminated later.
     // If your application supports background execution, this method is called instead of applicationWillTerminate: when the user quits.
 }
 
 - (void)applicationWillEnterForeground:(UIApplication *)application
 {
-    NSLog(@"willenterforeground");
-    [viewController1 moveToForeground];
+//    NSLog(@"willenterforeground");
+    [viewController1 reloadState];
     // Called as part of the transition from the background to the inactive state; here you can undo many of the changes made on entering the background.
 }
 
 - (void)applicationDidBecomeActive:(UIApplication *)application
 {
-    NSLog(@"didbecomeactive");
-    [viewController1 moveToForeground];
+//    NSLog(@"didbecomeactive");
+    [viewController1 reloadState];
     // Restart any tasks that were paused (or not yet started) while the application was inactive. If the application was previously in the background, optionally refresh the user interface.
 }
 
 - (void)applicationWillTerminate:(UIApplication *)application
 {
-    NSLog(@"willterminate");
-    [viewController1 moveToBackground];
+//    NSLog(@"willterminate");
+    [viewController1 saveState];
     // Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
 }
 
